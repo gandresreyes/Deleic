@@ -1,0 +1,569 @@
+{
+  "seo": {
+    "title": "Medicina Estética en León | Deleic",
+    "description": "Ácido hialurónico, hilos tensores, bioestimuladores, mesoterapia, PRP y más. Medicina estética con resultados naturales en León. Consulta sin compromiso."
+  },
+  "hero": {
+    "eyebrow": "Medicina estética",
+    "titulo": "Belleza, armonía y resultados naturales.",
+    "subtitulo": "Cuando la estética necesita un paso más, la medicina estética lo da. Tratamientos faciales y corporales con técnicas avanzadas, siempre a partir de una valoración sin compromiso.",
+    "ctaPrincipal": {
+      "texto": "Reservar valoración",
+      "href": "https://wa.me/34647716971?text=Hola%2C%20me%20gustar%C3%ADa%20reservar%20una%20valoraci%C3%B3n%20de%20medicina%20est%C3%A9tica%20en%20Deleic."
+    },
+    "ctaSecundario": {
+      "texto": "Ver tratamientos",
+      "href": "#tratamientos"
+    },
+    "imagen": "/img/medicinaEstetica/hero.webp",
+    "imagenAlt": "Medicina estética facial en Deleic, León"
+  },
+  "intro": {
+    "eyebrow": "Nuestro enfoque",
+    "titulo": "Cuando la estética necesita un paso más",
+    "texto": "Hay técnicas estéticas que, por sí solas, se quedan cortas. En esos casos, la medicina estética completa el trabajo de cabina: rellena, tensa o regenera donde hace falta para conseguir un resultado óptimo y natural.",
+    "pilares": [
+      {
+        "titulo": "Complementa la cabina",
+        "texto": "Cuando una técnica estética se queda corta, la medicina estética la lleva más lejos."
+      },
+      {
+        "titulo": "Resultado natural",
+        "texto": "El objetivo no es transformarte, sino que te veas mejor sin que se note el cambio."
+      },
+      {
+        "titulo": "Valoración sin compromiso",
+        "texto": "Antes de proponerte nada, analizamos la zona y lo que buscas."
+      }
+    ]
+  },
+  "tratamientos": {
+    "eyebrow": "Tratamientos y tarifas",
+    "titulo": "Tratamientos médico-estéticos",
+    "texto": "Todos nuestros tratamientos con sus precios, agrupados por lo que quieres conseguir.",
+    "grupos": [
+      {
+        "titulo": "Rellenar y definir",
+        "texto": "Volumen, hidratación y contorno donde la piel lo ha perdido.",
+        "items": [
+          {
+            "nombre": "Ácido hialurónico",
+            "resumen": "Hidratación, calidad de piel y volumen.",
+            "texto": "En medicina estética aporta hidratación, mejora la calidad de la piel y devuelve volumen. Disponemos de distintos tipos según la zona y el objetivo.",
+            "duracion": "6-12 meses, pudiendo ser mayor según la capacidad de cada piel de retener el ácido hialurónico",
+            "precios": [
+              {
+                "concepto": "Relleno de surcos y arrugas",
+                "precio": "250€/vial"
+              },
+              {
+                "concepto": "Perfilado e hidratación de labios",
+                "precio": "250€/vial"
+              },
+              {
+                "concepto": "Relleno y volumen de labios",
+                "precio": "350€/vial"
+              },
+              {
+                "concepto": "Ojeras, rinomodelación o proyección de mentón",
+                "precio": "280€ (2.ª sesión: 250€)"
+              }
+            ]
+          },
+          {
+            "nombre": "Rejuvenecimiento con 5 ml de ácido hialurónico",
+            "resumen": "Armonización de rostro, cuello, escote o manos.",
+            "texto": "Armonización facial, de cuello, escote o manos. Recupera volúmenes, mejora proporciones y consigue un aspecto más rejuvenecido, de forma personalizada.",
+            "nota": "No es válido para ojeras.",
+            "precios": [
+              {
+                "concepto": "5 ml",
+                "precio": "599€"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "titulo": "Tensar y reafirmar",
+        "texto": "Firmeza y estímulo del colágeno, sin cirugía.",
+        "items": [
+          {
+            "nombre": "Hilos tensores",
+            "resumen": "Estimulan y tensan el tejido.",
+            "texto": "Los hilos monofilamento son lisos, sin espículas: no tienen un efecto de tracción inmediato, sino que estimulan y remodelan el tejido. Los espiculados, tipo arpón, tienen pequeñas estructuras que se anclan al tejido y producen un efecto de tensado y reposición.",
+            "duracion": "Monofilamento: 1 año aprox. · Espiculados: 12-18 meses",
+            "precios": [
+              {
+                "concepto": "Monofilamento (20 hilos)",
+                "precio": "250€"
+              },
+              {
+                "concepto": "Espiculados · 4 hilos",
+                "precio": "350€"
+              },
+              {
+                "concepto": "Espiculados · 6 hilos",
+                "precio": "399€"
+              },
+              {
+                "concepto": "Espiculados · 8 hilos",
+                "precio": "570€"
+              }
+            ]
+          },
+          {
+            "nombre": "Hidroxiapatita cálcica (tipo Radiesse)",
+            "resumen": "Soporte, tensado y remodelación del colágeno.",
+            "texto": "Inyectable que produce un efecto de soporte y tensado, además de remodelar el colágeno.",
+            "duracion": "8-18 meses",
+            "precios": [
+              {
+                "concepto": "1 vial",
+                "precio": "299€"
+              },
+              {
+                "concepto": "3 viales",
+                "precio": "840€"
+              },
+              {
+                "concepto": "Híbrido: 1 vial de ácido hialurónico de relleno + 1 vial de hidroxiapatita",
+                "precio": "580€"
+              }
+            ]
+          },
+          {
+            "nombre": "Carboximetilcelulosa (tipo Ellanse)",
+            "resumen": "Inductor de colágeno sin generar volumen.",
+            "texto": "Inductor del colágeno con efecto tensor que mejora la piel sin generar volumen.",
+            "duracion": "12 meses",
+            "precios": [
+              {
+                "concepto": "1 vial",
+                "precio": "299€"
+              }
+            ]
+          },
+          {
+            "nombre": "Ultracol",
+            "resumen": "Lifting natural con polidioxanona líquida.",
+            "texto": "Inyectable inductor del colágeno elaborado con polidioxanona líquida; equivale a 1400 hilos monofilamento. Efecto lifting natural: a las 4 semanas se aprecia un aumento natural del volumen gracias a la estimulación del colágeno. Se recomienda repetir a los 4-6 meses para prolongar y potenciar el efecto.",
+            "precios": [
+              {
+                "concepto": "1 sesión",
+                "precio": "599€"
+              }
+            ]
+          },
+          {
+            "nombre": "Ácido poliláctico (PLLA)",
+            "resumen": "Bioestimulador de colágeno de efecto progresivo.",
+            "texto": "Bioestimulador de colágeno que estimula su producción de forma progresiva. Se usa sobre todo para la flacidez y la pérdida de firmeza, y para mejorar la calidad y el grosor de la piel. Los resultados son progresivos, de semanas a meses después, y pueden mantenerse hasta dos años.",
+            "nota": "Se prepara 24 horas antes.",
+            "precios": [
+              {
+                "concepto": "1 sesión",
+                "precio": "499€"
+              }
+            ]
+          },
+          {
+            "nombre": "Colágeno Karisma",
+            "resumen": "Mejora textura, calidad de piel y flacidez.",
+            "texto": "Dispositivo médico inyectable reabsorbible de clase III que combina colágeno, ácido hialurónico de alto peso molecular y carboximetilcelulosa. Aporta una cadena de colágeno que favorece la producción propia y mejora la textura, la calidad de la piel, los signos de envejecimiento y la flacidez.",
+            "precios": [
+              {
+                "concepto": "1 sesión",
+                "precio": "320€"
+              },
+              {
+                "concepto": "2 sesiones",
+                "precio": "600€"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "titulo": "Calidad de la piel",
+        "texto": "Hidratación, renovación y reparación desde dentro.",
+        "items": [
+          {
+            "nombre": "Biorevitalización (Rebok 50)",
+            "resumen": "Hidratación, elasticidad y aspecto general.",
+            "texto": "Inyectable de ácido hialurónico de alto peso molecular y aminoácidos para mejorar la piel, su hidratación, su elasticidad y su aspecto general. Se aplica en facial y cuello, escote completo, manos, brazos...",
+            "precios": [
+              {
+                "concepto": "1 sesión",
+                "precio": "280€"
+              },
+              {
+                "concepto": "Pack 3 sesiones",
+                "precio": "750€"
+              }
+            ]
+          },
+          {
+            "nombre": "Mesoterapia facial (ácido hialurónico + péptidos)",
+            "resumen": "Hidrata, mejora la piel y reafirma.",
+            "texto": "Infiltración superficial de pequeñas cantidades de sustancias para mejorar determinados aspectos de la calidad de la piel. Con ácido hialurónico y péptidos hidratamos, mejoramos el estado de la piel y reafirmamos.",
+            "duracion": "4 meses aprox.",
+            "precios": [
+              {
+                "concepto": "Zona periocular",
+                "precio": "150€"
+              },
+              {
+                "concepto": "Zona periocular · 2 sesiones",
+                "precio": "250€"
+              },
+              {
+                "concepto": "Facial completo",
+                "precio": "250€"
+              }
+            ]
+          },
+          {
+            "nombre": "Polinucleótidos",
+            "resumen": "Reparación y renovación de la piel.",
+            "texto": "Inyectables que mejoran la calidad cutánea y favorecen la renovación y reparación de la piel: mejoran su estado, las estrías, las cicatrices y las marcas de acné, y retrasan el envejecimiento tisular. Son fracciones naturales de ADN y ARN.",
+            "precios": [
+              {
+                "concepto": "1 sesión",
+                "precio": "180€"
+              }
+            ]
+          },
+          {
+            "nombre": "Exosomas",
+            "resumen": "Regeneración de la piel y del entorno del folículo.",
+            "texto": "Mensajeros celulares que favorecen la regeneración y la calidad de la piel. En capilar, favorecen el entorno del folículo y mejoran el crecimiento y la calidad del cabello.",
+            "precios": [
+              {
+                "concepto": "1 sesión",
+                "precio": "290€"
+              },
+              {
+                "concepto": "Pack 2 sesiones (iguales o combinadas)",
+                "precio": "350€"
+              }
+            ]
+          },
+          {
+            "nombre": "PRP facial",
+            "resumen": "Regeneración con el plasma de tu propia sangre.",
+            "texto": "Plasma rico en plaquetas obtenido de tu propia sangre. Se procesa para concentrar plaquetas y factores asociados a la reparación tisular, que después se aplican mediante infiltración. Busca mejorar la calidad y la regeneración de la piel.",
+            "precios": [
+              {
+                "concepto": "1 sesión",
+                "precio": "180€"
+              },
+              {
+                "concepto": "3 sesiones",
+                "precio": "450€"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "titulo": "Manchas",
+        "texto": "Renovación y prevención de la pigmentación.",
+        "items": [
+          {
+            "nombre": "Mascarilla despigmentante",
+            "resumen": "Peeling profundo para renovar y despigmentar.",
+            "texto": "Peeling químico profundo que produce una lesión controlada de la piel para favorecer su renovación y su despigmentación.",
+            "nota": "Incluye retoque, crema regenerante y fórmula despigmentante.",
+            "precios": [
+              {
+                "concepto": "Tratamiento completo",
+                "precio": "399€"
+              }
+            ]
+          },
+          {
+            "nombre": "Prostolane",
+            "resumen": "Mantenimiento y prevención de manchas.",
+            "texto": "Tratamiento inyectable indicado para el mantenimiento y la prevención de manchas. Se puede aplicar con sol.",
+            "precios": [
+              {
+                "concepto": "1 sesión",
+                "precio": "280€"
+              },
+              {
+                "concepto": "Si repites sesión",
+                "precio": "260€"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "titulo": "Cabello",
+        "texto": "Cuidado del entorno del folículo.",
+        "items": [
+          {
+            "nombre": "PRP capilar",
+            "resumen": "Favorece el entorno del folículo.",
+            "texto": "Favorece el entorno del folículo, mejora determinados parámetros del cabello y ayuda a controlar la caída en pacientes seleccionados.",
+            "nota": "Las sesiones pueden realizarse aproximadamente una vez al mes y combinarse con otros tratamientos según valoración.",
+            "precios": [
+              {
+                "concepto": "1 sesión",
+                "precio": "150€"
+              },
+              {
+                "concepto": "3 sesiones",
+                "precio": "399€"
+              }
+            ]
+          },
+          {
+            "nombre": "Dutasterida + tratamiento capilar",
+            "resumen": "Control médico de la alopecia androgenética.",
+            "texto": "Medicamento que inhibe la enzima 5-alfa-reductasa y reduce la conversión de testosterona en dihidrotestosterona (DHT), implicada en la alopecia androgenética. Puede utilizarse en determinados pacientes bajo control médico.",
+            "precios": [
+              {
+                "concepto": "Tratamiento",
+                "precio": "150€"
+              }
+            ],
+            "publicar": false
+          }
+        ]
+      },
+      {
+        "titulo": "Cuerpo",
+        "texto": "Tratamientos médico-estéticos más allá del rostro.",
+        "items": [
+          {
+            "nombre": "Esclerosis de varices",
+            "resumen": "Cierra arañas vasculares, varices y capilares.",
+            "texto": "Procedimiento médico inyectable para cerrar y tratar determinados vasos superficiales, como arañas vasculares, varices o capilares. El número de sesiones se decide tras la valoración médica; de media, 3.",
+            "nota": "Tras el tratamiento es obligatorio llevar medias de compresión, normal o fuerte.",
+            "precios": [
+              {
+                "concepto": "1 sesión",
+                "precio": "180€"
+              },
+              {
+                "concepto": "Pack 3 sesiones",
+                "precio": "450€"
+              }
+            ]
+          },
+          {
+            "nombre": "Lipoterapia (tipo Aqualyx)",
+            "resumen": "Grasa localizada. No es para adelgazar.",
+            "texto": "Técnica inyectable destinada a tratar determinados depósitos de grasa localizada.",
+            "nota": "No es un tratamiento para adelgazar.",
+            "precios": [
+              {
+                "concepto": "1 sesión",
+                "precio": "250€"
+              },
+              {
+                "concepto": "Pack 2 sesiones",
+                "precio": "300€"
+              }
+            ]
+          },
+          {
+            "nombre": "Carboxiterapia",
+            "resumen": "CO2 para mejorar la piel y el tejido subcutáneo.",
+            "texto": "Administración médica de CO2 mediante infiltraciones para mejorar el aspecto de la piel y disminuir el tejido subcutáneo.",
+            "precios": [
+              {
+                "concepto": "1 sesión",
+                "precio": "90€"
+              }
+            ]
+          },
+          {
+            "nombre": "Eliminación de verrugas",
+            "resumen": "Energía de plasma sobre lesiones superficiales.",
+            "texto": "Procedimiento para tratar determinadas lesiones cutáneas superficiales mediante energía de plasma.",
+            "precios": [
+              {
+                "concepto": "Por sesión",
+                "precio": "Desde 90€"
+              }
+            ]
+          },
+          {
+            "nombre": "Epitomee (control de peso)",
+            "resumen": "Cápsula para el control de peso, sin inyecciones.",
+            "texto": "Dispositivo oral para el control de peso: una cápsula de celulosa con una matriz que se activa en el estómago, aumenta su volumen y genera sensación de plenitud y saciedad. Sin inyecciones, sin hormonas y sin farmacología. Se toman dos cápsulas al día, que se desechan a las 6 horas.",
+            "precios": [
+              {
+                "concepto": "Tratamiento mensual",
+                "precio": "499€"
+              }
+            ]
+          },
+          {
+            "nombre": "Wegovy (semaglutida)",
+            "resumen": "Aumenta la saciedad y reduce el apetito.",
+            "texto": "Medicamento cuyo principio activo es la semaglutida, un análogo del GLP-1 que actúa sobre los mecanismos que regulan el apetito: aumenta la saciedad y disminuye el hambre y la ingesta.",
+            "nota": "Tratamiento completo de 2 meses: 1 pluma + 3 carboxiterapias o lipolítico + 6 presoterapias + 2 Ultrasonix en 1 zona.",
+            "precios": [
+              {
+                "concepto": "1 pluma (2 meses)",
+                "precio": "450€"
+              },
+              {
+                "concepto": "Tratamiento completo (2 meses)",
+                "precio": "1.199€"
+              }
+            ],
+            "publicar": false
+          }
+        ]
+      },
+      {
+        "titulo": "Expresión y poros",
+        "texto": "Suavizar el tercio superior del rostro y afinar la textura.",
+        "items": [
+          {
+            "nombre": "Toxina botulínica",
+            "resumen": "Suaviza el tercio superior del rostro.",
+            "texto": "Tipo A: reduce la contracción muscular y suaviza los músculos del tercio superior, especialmente frente, entrecejo y contorno. Otras indicaciones bajo prescripción médica, como el bruxismo.",
+            "duracion": "4 meses (Redfills: 6 meses aprox.)",
+            "precios": [
+              {
+                "concepto": "Bocouture / Azzalure",
+                "precio": "320€"
+              },
+              {
+                "concepto": "Reforzado (2 viales)",
+                "precio": "599€"
+              },
+              {
+                "concepto": "Redfills (toxina líquida, más efecto y duración)",
+                "precio": "350€"
+              },
+              {
+                "concepto": "Cóctel Mónaco (efecto flash facial)",
+                "precio": "499€"
+              }
+            ],
+            "publicar": false
+          },
+          {
+            "nombre": "Mesobotox",
+            "resumen": "Microdosis para arrugas finas, poros y sebo.",
+            "texto": "Aplicación de microdosis de toxina botulínica. Reduce las arrugas finas, los poros y la producción de sebo, y mejora la textura y la elasticidad.",
+            "precios": [
+              {
+                "concepto": "En promoción",
+                "precio": "199€"
+              },
+              {
+                "concepto": "3 sesiones (para prolongar el efecto durante 6 meses)",
+                "precio": "499€"
+              }
+            ],
+            "publicar": false
+          }
+        ]
+      }
+    ]
+  },
+  "combinaciones": {
+    "eyebrow": "Mejor en pareja",
+    "titulo": "Protocolos que combinan técnicas",
+    "texto": "Algunos resultados requieren más de una técnica. Así los planteamos en Deleic.",
+    "items": [
+      {
+        "nombre": "Foxy eyes",
+        "texto": "Protocolo para conseguir una apariencia más elevada y alargada de la zona externa de los ojos y las cejas. Primero se trata el tercio superior del rostro y, un mes después, se colocan 4 hilos espiculados (2 por lado).",
+        "nota": "El resultado depende mucho de la anatomía de cada persona y no todas son candidatas. Siempre bajo valoración.",
+        "piezas": [
+          "Tensor tercio superior",
+          "Hilos espiculados"
+        ]
+      },
+      {
+        "nombre": "Papada",
+        "texto": "Actúa sobre el tejido adiposo localizado y sobre la calidad y la firmeza de la piel de la zona submentoniana. Primero un lipolítico y, dos semanas después, 20 minutos de radiofrecuencia.",
+        "piezas": [
+          "Lipolítico",
+          "Radiofrecuencia"
+        ],
+        "precios": [
+          {
+            "concepto": "2 sesiones",
+            "precio": "350€"
+          }
+        ],
+        "enlaces": [
+          {
+            "texto": "Radiofrecuencia",
+            "href": "/facial-corporal/reafirmante-reductor/"
+          }
+        ]
+      },
+      {
+        "nombre": "Rejuvenecimiento de cara, cuello y escote",
+        "texto": "Peeling preparatorio, cóctel de vitaminas, PRP y ácido hialurónico en una misma sesión. Las sesiones pueden realizarse aproximadamente una vez al mes y combinarse con otros tratamientos según valoración.",
+        "piezas": [
+          "Peeling",
+          "Vitaminas",
+          "PRP",
+          "Ácido hialurónico"
+        ],
+        "precios": [
+          {
+            "concepto": "Por sesión",
+            "precio": "240€"
+          }
+        ]
+      }
+    ]
+  },
+  "pasos": {
+    "eyebrow": "Cómo trabajamos",
+    "titulo": "Un proceso claro, de principio a fin",
+    "items": [
+      {
+        "titulo": "Valoración sin compromiso",
+        "texto": "Analizamos la zona y lo que quieres conseguir antes de proponer nada."
+      },
+      {
+        "titulo": "Plan a tu medida",
+        "texto": "Te explicamos qué técnica encaja contigo y si conviene combinarla con otros tratamientos."
+      },
+      {
+        "titulo": "Tratamiento",
+        "texto": "Lo aplicamos en cabina y te damos las indicaciones de cuidado para después."
+      }
+    ]
+  },
+  "faq": {
+    "eyebrow": "Preguntas frecuentes",
+    "titulo": "Resolvemos tus dudas",
+    "items": [
+      {
+        "pregunta": "¿Cuánto dura el ácido hialurónico?",
+        "respuesta": "Entre 6 y 12 meses, pudiendo ser mayor. Depende de la capacidad de cada piel de retener el ácido hialurónico."
+      },
+      {
+        "pregunta": "¿Qué diferencia hay entre los hilos monofilamento y los espiculados?",
+        "respuesta": "Los monofilamento son lisos, sin espículas: no tienen un efecto de tracción inmediato y sirven para estimular y remodelar el tejido. Los espiculados, tipo arpón, se anclan al tejido y producen un efecto de tensado y reposición, con una duración de entre 12 y 18 meses."
+      },
+      {
+        "pregunta": "¿Cuántas sesiones necesito para tratar las ojeras?",
+        "respuesta": "Con un vial de ácido hialurónico en la zona de la ojera, lo habitual es que el efecto deseado se consiga en 1 o 2 sesiones."
+      },
+      {
+        "pregunta": "¿Cuántas sesiones de esclerosis de varices hacen falta?",
+        "respuesta": "Lo decide la valoración médica; de media, 3 sesiones. Después es obligatorio llevar medias de compresión, normal o fuerte, según indique el tratamiento."
+      },
+      {
+        "pregunta": "¿Puedo venir sin saber qué tratamiento necesito?",
+        "respuesta": "Sí. Empieza con una valoración sin compromiso: analizamos la zona, escuchamos lo que buscas y te orientamos."
+      }
+    ]
+  }
+}

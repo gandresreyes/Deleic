@@ -1,0 +1,267 @@
+---
+// src/pages/politica-de-privacidad-y-cookies.astro
+// Misma URL que en la web anterior (WordPress) para no perder enlaces.
+// Información del RGPD (arts. 13 y 14), LOPDGDD y art. 22.2 LSSI (cookies).
+// Describe lo que hace ESTE sitio: si se añade analítica, un formulario, un
+// píxel o cualquier servicio externo, hay que actualizar esta página (y, si
+// instala cookies no exentas, añadir un banner de consentimiento)
+import Layout from "../layouts/Layout.astro";
+import PaginaLegal from "../components/PaginaLegal.astro";
+import RevocarMapa from "../components/RevocarMapa.astro";
+import { DIRECCION, EMAIL, TELEFONO, TITULAR } from "../data/contacto";
+
+const indice = [
+  { id: "responsable", titulo: "Responsable del tratamiento" },
+  { id: "tratamientos", titulo: "Qué datos tratamos y para qué" },
+  { id: "destinatarios", titulo: "Destinatarios y transferencias" },
+  { id: "derechos", titulo: "Tus derechos" },
+  { id: "otros", titulo: "Menores, seguridad y cambios" },
+  { id: "cookies", titulo: "Política de cookies" },
+];
+---
+
+<Layout
+  title="Política de privacidad y cookies | Deleic"
+  description="Cómo trata Deleic tus datos personales y qué cookies usa su sitio web, conforme al RGPD, la LOPDGDD y la LSSI."
+  noindex
+>
+  <PaginaLegal
+    titulo="Política de privacidad y cookies"
+    actualizado="26 de octubre de 2026"
+    indice={indice}
+  >
+    <p>
+      Aquí te explicamos de forma clara qué datos personales tratamos cuando
+      visitas este sitio web o te pones en contacto con nosotros, con qué
+      finalidad y qué derechos tienes, conforme al Reglamento (UE) 2016/679
+      (RGPD) y a la Ley Orgánica 3/2018 (LOPDGDD).
+    </p>
+
+    <h2 id="responsable">1. Responsable del tratamiento</h2>
+    <dl>
+      <dt>Responsable</dt>
+      <dd>{TITULAR.nombre} ({TITULAR.nombreComercial})</dd>
+      <dt>NIF</dt>
+      <dd>{TITULAR.nif}</dd>
+      <dt>Domicilio</dt>
+      <dd>{TITULAR.domicilio}</dd>
+      <dt>Centro</dt>
+      <dd>{DIRECCION.calle}, {DIRECCION.cp} {DIRECCION.ciudad}</dd>
+      <dt>Teléfono</dt>
+      <dd><a href={TELEFONO.href}>{TELEFONO.visible}</a></dd>
+      <dt>Correo electrónico</dt>
+      <dd><a href={`mailto:${EMAIL}`}>{EMAIL}</a></dd>
+    </dl>
+
+    <h2 id="tratamientos">2. Qué datos tratamos y para qué</h2>
+
+    <h3>Navegación por el sitio web</h3>
+    <p>
+      Este sitio web no tiene formularios ni te pide que te registres. Al
+      visitarlo, los servidores que lo alojan registran de forma automática
+      datos técnicos de la conexión (dirección IP, tipo de navegador, fecha y
+      hora, y páginas solicitadas). Además, para mostrar las promociones del
+      mes, tu navegador solicita su contenido al servidor donde Deleic las
+      publica (www.deleic.es), y sus imágenes a la red de distribución de
+      imágenes de WordPress.com (i0.wp.com). Ambos registran esos mismos datos
+      técnicos.
+    </p>
+    <ul>
+      <li>
+        <strong>Finalidad:</strong> mostrarte el sitio web, mantener su
+        seguridad y resolver incidencias técnicas.
+      </li>
+      <li>
+        <strong>Base jurídica:</strong> nuestro interés legítimo en ofrecer un
+        sitio web que funcione y sea seguro (art. 6.1.f RGPD).
+      </li>
+      <li>
+        <strong>Conservación:</strong> durante el tiempo limitado que los
+        proveedores de alojamiento mantienen sus registros técnicos, tras el
+        cual se eliminan.
+      </li>
+    </ul>
+    <p>
+      No usamos herramientas de analítica ni de publicidad, y no elaboramos
+      perfiles ni tomamos decisiones automatizadas sobre ti.
+    </p>
+
+    <h3>Consultas y citas por WhatsApp, teléfono o correo electrónico</h3>
+    <p>
+      Si nos escribes o nos llamas, tratamos los datos que tú nos facilitas:
+      nombre, teléfono o correo electrónico, el contenido de tu consulta y,
+      en su caso, la información que decidas compartir sobre tu piel o tu
+      salud para que podamos orientarte.
+    </p>
+    <ul>
+      <li>
+        <strong>Finalidad:</strong> responder a tu consulta y, si lo deseas,
+        gestionar tu cita.
+      </li>
+      <li>
+        <strong>Base jurídica:</strong> la aplicación, a petición tuya, de
+        medidas previas a la contratación de un servicio (art. 6.1.b RGPD) y,
+        para la información de salud que compartas voluntariamente, tu
+        consentimiento explícito (art. 9.2.a RGPD), que puedes retirar en
+        cualquier momento.
+      </li>
+      <li>
+        <strong>Conservación:</strong> el tiempo necesario para atender tu
+        consulta. Si no llegas a ser cliente, eliminamos la conversación
+        cuando ya no sea necesaria.
+      </li>
+    </ul>
+    <p>
+      Te recomendamos no enviar información de salud detallada por WhatsApp
+      ni por correo electrónico: podemos hablarlo en persona en el centro.
+    </p>
+
+    <h3>Clientes del centro</h3>
+    <p>
+      Si contratas un tratamiento, en el centro te informaremos de forma
+      específica sobre el tratamiento de tus datos como cliente, incluidos,
+      en su caso, los datos de salud necesarios para realizarlo con
+      seguridad.
+    </p>
+
+    <h3>Imágenes de resultados</h3>
+    <p>
+      Las fotografías de personas que publicamos, como las de antes y
+      después, se publican con el consentimiento de quienes aparecen en ellas
+      (art. 6.1.a RGPD). Si apareces en alguna y quieres que la retiremos,
+      escríbenos a <a href={`mailto:${EMAIL}`}>{EMAIL}</a> y lo haremos
+      cuanto antes.
+    </p>
+
+    <h2 id="destinatarios">3. Destinatarios y transferencias internacionales</h2>
+    <p>
+      No vendemos ni cedemos tus datos a terceros para fines comerciales.
+      Solo acceden a ellos:
+    </p>
+    <ul>
+      <li>
+        <strong>Proveedores que nos prestan servicios</strong>, como
+        encargados del tratamiento y con un contrato que les obliga a
+        proteger tus datos: Vercel Inc., que aloja este sitio web; el
+        proveedor de alojamiento de www.deleic.es, y Automattic Inc., que
+        sirve las imágenes de las promociones a través de WordPress.com.
+      </li>
+      <li>
+        <strong>WhatsApp</strong>, si nos contactas por esa vía. WhatsApp es
+        un servicio de WhatsApp Ireland Limited, que trata los datos de la
+        conversación conforme a sus propias condiciones y política de
+        privacidad.
+      </li>
+      <li>
+        <strong>Google</strong>, solo si decides cargar el mapa (ver la{" "}
+        <a href="#cookies">política de cookies</a>).
+      </li>
+      <li>
+        <strong>Administraciones públicas, juzgados y tribunales</strong>,
+        cuando exista una obligación legal.
+      </li>
+    </ul>
+    <p>
+      Vercel Inc. y Automattic Inc. tienen su sede en Estados Unidos. La
+      transferencia internacional de los datos técnicos de navegación se
+      realiza con las garantías previstas en el RGPD: el Marco de Privacidad
+      de Datos UE-EE. UU. y las cláusulas contractuales tipo aprobadas por la
+      Comisión Europea.
+    </p>
+
+    <h2 id="derechos">4. Tus derechos</h2>
+    <p>Puedes ejercer en cualquier momento tus derechos de:</p>
+    <ul>
+      <li><strong>Acceso</strong> a tus datos personales.</li>
+      <li><strong>Rectificación</strong> de los datos inexactos.</li>
+      <li>
+        <strong>Supresión</strong> de tus datos cuando, entre otros motivos,
+        ya no sean necesarios.
+      </li>
+      <li>
+        <strong>Oposición</strong> al tratamiento basado en nuestro interés
+        legítimo.
+      </li>
+      <li><strong>Limitación</strong> del tratamiento en determinados casos.</li>
+      <li><strong>Portabilidad</strong> de los datos que nos hayas facilitado.</li>
+      <li>
+        <strong>Retirar tu consentimiento</strong>, sin que ello afecte a los
+        tratamientos realizados antes de retirarlo.
+      </li>
+    </ul>
+    <p>
+      Para ejercerlos, escríbenos a <a href={`mailto:${EMAIL}`}>{EMAIL}</a>
+      o por carta a {TITULAR.domicilio}, indicando el derecho que quieres
+      ejercer. Si tenemos dudas razonables sobre tu identidad, podremos
+      pedirte información adicional para confirmarla. Te responderemos en el
+      plazo máximo de un mes.
+    </p>
+    <p>
+      Si consideras que no hemos tratado tus datos correctamente, puedes
+      presentar una reclamación ante la Agencia Española de Protección de
+      Datos (<a href="https://www.aepd.es" target="_blank" rel="noopener">www.aepd.es</a>).
+    </p>
+
+    <h2 id="otros">5. Menores, seguridad y cambios</h2>
+    <p>
+      Los menores de 14 años no pueden facilitarnos sus datos sin el
+      consentimiento de sus padres o tutores (art. 7 LOPDGDD).
+    </p>
+    <p>
+      Aplicamos medidas técnicas y organizativas adecuadas para proteger tus
+      datos frente a su pérdida, uso indebido o acceso no autorizado. Este
+      sitio web se sirve siempre mediante conexión cifrada (HTTPS).
+    </p>
+    <p>
+      Podemos actualizar esta política para adaptarla a cambios legales o del
+      sitio web. La versión vigente es siempre la publicada en esta página,
+      con la fecha de su última actualización.
+    </p>
+
+    <h2 id="cookies">6. Política de cookies</h2>
+    <p>
+      Las cookies son pequeños archivos que un sitio web guarda en tu
+      navegador. La ley (art. 22.2 LSSI) exige tu consentimiento para las
+      que no son estrictamente necesarias.
+    </p>
+
+    <h3>Cookies de este sitio web</h3>
+    <p>
+      Este sitio web <strong>no instala cookies propias</strong> ni usa
+      cookies de analítica o de publicidad. Por eso no te mostramos un aviso
+      de cookies al entrar.
+    </p>
+
+    <h3>Mapa de Google</h3>
+    <p>
+      El mapa de ubicación lo ofrece Google Maps, un servicio de Google
+      Ireland Limited que puede instalar cookies propias y recibir tu
+      dirección IP. Por eso <strong>no se carga hasta que pulsas «Cargar
+      mapa»</strong>. Al hacerlo, Google trata esos datos conforme a su{" "}
+      <a
+        href="https://policies.google.com/technologies/cookies?hl=es"
+        target="_blank"
+        rel="noopener">política de cookies</a
+      >.
+    </p>
+    <p>
+      Para no preguntarte en cada página, tu navegador recuerda esa decisión
+      con un dato llamado <code>deleic-mapa</code> (almacenamiento local, sin
+      caducidad). Solo guarda tu elección, no te identifica y no se envía a
+      ningún servidor. Puedes retirarla aquí:
+    </p>
+    <RevocarMapa />
+    <p>
+      Las cookies que Google haya instalado ya se eliminan desde la
+      configuración de tu navegador.
+    </p>
+
+    <h3>Cómo gestionar las cookies en tu navegador</h3>
+    <p>
+      En la configuración de privacidad de tu navegador (Chrome, Safari,
+      Firefox, Edge…) puedes ver, bloquear y eliminar las cookies y los datos
+      que guardan los sitios web.
+    </p>
+  </PaginaLegal>
+</Layout>
+

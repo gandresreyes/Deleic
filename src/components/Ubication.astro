@@ -1,0 +1,327 @@
+---
+import { DIRECCION, HORARIO, TELEFONO, whatsapp } from "../data/contacto";
+
+const icons = {
+  pin: '<path d="M12 21s-7-6.2-7-11a7 7 0 0114 0c0 4.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/>',
+  phone:
+    '<path d="M5 4h4l2 5-2.5 1.5a11 11 0 005 5L15 13l5 2v4a2 2 0 01-2 2A16 16 0 013 6a2 2 0 012-2"/>',
+  whatsapp:
+    '<path d="M3.5 20.5l1.4-4.2A8.5 8.5 0 1 1 8 19.3z"/><path d="M9 8.6c.2-.4.5-.6.9-.6h.5l1 2.2-.8 1a5.6 5.6 0 0 0 2.3 2.3l1-.8 2.2 1v.5c0 .4-.2.7-.6.9a3 3 0 0 1-2.6.2 7.7 7.7 0 0 1-4.1-4.1 3 3 0 0 1 .2-2.6z"/>',
+  clock: '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/>',
+};
+
+const contactos = [
+  {
+    icon: "pin",
+    label: "Dirección",
+    valor: DIRECCION.calle,
+    detalle: `${DIRECCION.cp} ${DIRECCION.ciudad} · Cómo llegar`,
+    href: DIRECCION.maps,
+    externo: true,
+  },
+  {
+    icon: "phone",
+    label: "Teléfono",
+    valor: TELEFONO.visible,
+    detalle: "Llámanos en horario de apertura",
+    href: TELEFONO.href,
+    externo: false,
+  },
+  {
+    icon: "whatsapp",
+    label: "WhatsApp",
+    valor: "Reserva tu cita",
+    detalle: "Te respondemos lo antes posible",
+    href: whatsapp(),
+    externo: true,
+  },
+];
+
+const temporadas = [
+  { titulo: "Horario de invierno", filas: HORARIO.invierno },
+  { titulo: "Horario de verano", nota: "15 jun – 15 sep", filas: HORARIO.verano },
+];
+---
+
+<section
+  id="ubicacion"
+  class="seccion scroll-mt-24 text-secondary-content"
+>
+  <div class="max-w-2xl reveal">
+    <span class="text-sm font-semibold tracking-widest uppercase text-primary">
+      Ubicación
+    </span>
+    <h2 class="mt-3 text-3xl sm:text-4xl font-semibold tracking-tight text-balance">
+      Clínica de estética en León – Deleic
+    </h2>
+    <!-- Frase declarativa GEO -->
+    <p class="mt-4 text-lg text-secondary-content/70 text-pretty">
+      Deleic es una clínica de medicina y estética facial y corporal ubicada en
+      el centro de León, con fácil acceso y parking cercano.
+    </p>
+  </div>
+
+  <div class="reveal-stagger mt-10 grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-5">
+    <div class="lg:col-span-5 flex flex-col gap-4 sm:gap-5">
+      <ul class="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-1 gap-3">
+        {
+          contactos.map((c) => (
+            <li>
+              <a
+                href={c.href}
+                target={c.externo ? "_blank" : undefined}
+                rel={c.externo ? "noopener" : undefined}
+                class="group flex h-full items-start gap-4 rounded-3xl bg-base-100 p-4 sm:p-5 ring-1 ring-black/5 transition-colors hover:ring-primary/30"
+              >
+                <span class="shrink-0 w-11 h-11 rounded-xl bg-primary/8 text-primary flex items-center justify-center ring-1 ring-primary/10 transition-colors group-hover:bg-primary group-hover:text-primary-content">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="w-5 h-5"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    stroke-width="1.7"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                    set:html={icons[c.icon as keyof typeof icons]}
+                  />
+                </span>
+                <span class="min-w-0">
+                  <span class="block text-[11px] font-semibold uppercase tracking-widest text-secondary-content/50">
+                    {c.label}
+                  </span>
+                  <span class="mt-1 block font-semibold leading-snug">
+                    {c.valor}
+                  </span>
+                  <span class="mt-0.5 block text-sm text-secondary-content/60 leading-snug">
+                    {c.detalle}
+                  </span>
+                </span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+
+      <div class="rounded-3xl bg-base-100 p-5 sm:p-6 ring-1 ring-black/5">
+        <div class="flex items-center justify-between gap-3">
+          <p class="flex items-center gap-2 font-semibold">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-5 h-5 text-primary"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="1.7"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+              set:html={icons.clock}
+            />
+            Horario
+          </p>
+          <!-- Se rellena con JS según la hora local; oculto hasta entonces -->
+          <span
+            id="status-badge"
+            hidden
+            class="inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold"
+            role="status"
+          ></span>
+        </div>
+
+        <div class="mt-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 gap-5">
+          {
+            temporadas.map((tmp) => (
+              <div>
+                <p class="text-sm font-semibold">
+                  {tmp.titulo}
+                  {tmp.nota && (
+                    <span class="ml-1 font-normal text-secondary-content/50">
+                      · {tmp.nota}
+                    </span>
+                  )}
+                </p>
+                <dl class="mt-2 space-y-1.5 text-sm">
+                  {tmp.filas.map((f) => (
+                    <div class="flex justify-between gap-4 border-b border-dashed border-base-300 pb-1.5 last:border-0">
+                      <dt class="text-secondary-content/70">{f.dias}</dt>
+                      <dd
+                        class:list={[
+                          "tabular-nums",
+                          f.horas ? "font-medium" : "text-secondary-content/40",
+                        ]}
+                      >
+                        {f.horas ?? "Cerrado"}
+                      </dd>
+                    </div>
+                  ))}
+                </dl>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </div>
+
+    <!-- Mapa de Google: instala cookies de terceros, así que no se carga hasta
+         que la persona lo pide (art. 22.2 LSSI). El permiso se guarda con
+         src/scripts/mapa.ts y se retira en la política de cookies -->
+    <div
+      data-mapa
+      class="relative lg:col-span-7 min-h-72 sm:min-h-96 overflow-hidden rounded-3xl bg-base-300 ring-1 ring-black/5"
+    >
+      <template data-mapa-plantilla>
+        <iframe
+          title={`Mapa: Deleic en ${DIRECCION.calle}, ${DIRECCION.ciudad}`}
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2263.564021969237!2d-5.578883671647799!3d42.599309365224656!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd379bd16ad32fa3%3A0x7784e6ee80d07d20!2sDeleic!5e1!3m2!1ses!2ses!4v1784250648752!5m2!1ses!2ses"
+          class="absolute inset-0 h-full w-full border-0"
+          allowfullscreen=""
+          loading="lazy"
+          referrerpolicy="strict-origin-when-cross-origin"></iframe>
+      </template>
+
+      <div
+        data-mapa-aviso
+        class="absolute inset-0 flex flex-col items-center justify-center gap-4 p-6 text-center bg-[radial-gradient(rgb(0_0_0/0.12)_1px,transparent_1px)] bg-size-[18px_18px]"
+      >
+        <span class="flex h-14 w-14 items-center justify-center rounded-xl bg-base-100 text-primary ring-1 ring-black/5">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="w-7 h-7"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+            set:html={icons.pin}
+          />
+        </span>
+        <p class="max-w-sm text-sm text-secondary-content/70 text-pretty">
+          El mapa lo ofrece Google, que puede instalar cookies al cargarlo.
+          <a
+            href="/politica-de-privacidad-y-cookies/#cookies"
+            class="font-medium text-primary hover:underline"
+          >
+            Más información
+          </a>
+        </p>
+        <div class="flex flex-wrap justify-center gap-3 text-sm font-bold">
+          <button
+            type="button"
+            data-mapa-cargar
+            class="px-4 sm:px-6 py-3 rounded-full bg-primary text-primary-content cursor-pointer"
+          >
+            Cargar mapa
+          </button>
+          <a
+            href={DIRECCION.maps}
+            target="_blank"
+            rel="noopener"
+            class="px-4 sm:px-6 py-3 rounded-full bg-base-100 text-secondary-content border border-base-300"
+          >
+            Abrir en Google Maps
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  import { darPermisoMapa, permisoMapa } from "../scripts/mapa";
+
+  // ---------- Mapa bajo demanda ----------
+
+  function cargarMapa(contenedor: HTMLElement) {
+    const plantilla = contenedor.querySelector<HTMLTemplateElement>(
+      "template[data-mapa-plantilla]",
+    );
+    if (!plantilla) return;
+    contenedor.append(plantilla.content.cloneNode(true));
+    plantilla.remove();
+    contenedor.querySelector("[data-mapa-aviso]")?.remove();
+  }
+
+  function iniciarMapas() {
+    document.querySelectorAll<HTMLElement>("[data-mapa]").forEach((el) => {
+      if (permisoMapa()) return cargarMapa(el);
+      el.querySelector("[data-mapa-cargar]")?.addEventListener("click", () => {
+        darPermisoMapa();
+        cargarMapa(el);
+      });
+    });
+  }
+
+  document.addEventListener("astro:page-load", iniciarMapas);
+
+  // ---------- Estado del horario ----------
+  let timer: ReturnType<typeof setInterval> | undefined;
+
+  function updateScheduleStatus() {
+    const badge = document.getElementById("status-badge");
+    if (!badge) return;
+
+    const now = new Date();
+    const dayOfWeek = now.getDay(); // 0=Sunday ... 6=Saturday
+    const minutesNow = now.getHours() * 60 + now.getMinutes();
+
+    const SUMMER_START = { month: 6, day: 15 }; // June 15
+    const SUMMER_END = { month: 9, day: 15 }; // September 15
+
+    const currentMonth = now.getMonth() + 1; // getMonth() is 0-indexed
+    const currentDay = now.getDate();
+
+    function isSummerSeason() {
+      const currentDate = currentMonth * 100 + currentDay;
+      const summerStartDate = SUMMER_START.month * 100 + SUMMER_START.day;
+      const summerEndDate = SUMMER_END.month * 100 + SUMMER_END.day;
+      return currentDate >= summerStartDate && currentDate <= summerEndDate;
+    }
+
+    const isSummer = isSummerSeason();
+
+    // Time ranges in minutes since midnight
+    const REGULAR_SCHEDULE = {
+      weekdays: { open: 10 * 60, close: 20 * 60 }, // 10:00-20:00
+      saturday: { open: 10 * 60, close: 14 * 60 }, // 10:00-14:00
+    };
+
+    const SUMMER_SCHEDULE = {
+      weekdays: { open: 10 * 60, close: 19 * 60 }, // 10:00-19:00
+      saturday: null, // Closed
+    };
+
+    const activeSchedule = isSummer ? SUMMER_SCHEDULE : REGULAR_SCHEDULE;
+
+    let isOpen = false;
+
+    if (dayOfWeek >= 1 && dayOfWeek <= 5) {
+      // Monday to Friday
+      const range = activeSchedule.weekdays;
+      isOpen = minutesNow >= range.open && minutesNow < range.close;
+    } else if (dayOfWeek === 6 && activeSchedule.saturday) {
+      // Saturday (only if there's a saturday schedule active)
+      const range = activeSchedule.saturday;
+      isOpen = minutesNow >= range.open && minutesNow < range.close;
+    }
+    // Sunday is always closed (dayOfWeek === 0)
+
+    badge.textContent = isOpen ? "● Abierto ahora" : "● Cerrado ahora";
+    badge.classList.toggle("bg-success/15", isOpen);
+    badge.classList.toggle("text-success", isOpen);
+    badge.classList.toggle("bg-base-200", !isOpen);
+    badge.classList.toggle("text-secondary-content/60", !isOpen);
+    badge.hidden = false;
+  }
+
+  // Con <ClientRouter /> el script solo se ejecuta una vez: hay que
+  // recalcular en cada navegación y no acumular intervalos
+  document.addEventListener("astro:page-load", () => {
+    clearInterval(timer);
+    updateScheduleStatus();
+    timer = setInterval(updateScheduleStatus, 60 * 1000);
+  });
+</script>

@@ -1,0 +1,255 @@
+---
+// src/pages/promociones.astro
+// Las promociones se gestionan en WordPress (página "promociones-mes").
+// 1. En el build se pintan en el HTML (SEO y carga inmediata).
+// 2. En el navegador, un script consulta la API y, si WordPress tiene algo más
+//    nuevo, reemplaza los carteles sin necesidad de volver a publicar la web.
+import Layout from "../layouts/Layout.astro";
+import PromoCard from "../components/Promociones/PromoCard.astro";
+import { getPromociones } from "../lib/wordpress";
+import { TELEFONO } from "../data/contacto";
+
+const promos = await getPromociones();
+const imagenes = promos?.imagenes ?? [];
+const textos = promos?.textos ?? [];
+
+const fecha = promos?.actualizado.toLocaleDateString("es-ES", {
+  day: "numeric",
+  month: "long",
+  year: "numeric",
+});
+
+const icons = {
+  phone:
+    '<path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/>',
+  info: '<circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/>',
+};
+---
+
+<Layout
+  title="Promociones del mes en León | Deleic"
+  description="Promociones vigentes en depilación láser y tratamientos de estética en Deleic, León. Consulta condiciones y reserva tu cita."
+  image={imagenes[0]?.src}
+  imageAlt={imagenes[0]?.alt || undefined}
+>
+  <div
+    data-promos
+    data-modificado={promos?.modificado ?? ""}
+    class="seccion text-secondary-content"
+  >
+    <!-- Cabecera -->
+    <header class="flex flex-wrap items-end justify-between gap-6">
+      <div class="max-w-2xl">
+        <span
+          class="text-sm font-semibold tracking-widest uppercase text-primary"
+        >
+          Promociones
+        </span>
+        <h1
+          class="mt-3 text-3xl sm:text-5xl font-semibold tracking-tight text-balance"
+        >
+          Promociones del mes
+        </h1>
+        <p class="mt-4 text-lg text-secondary-content/70 text-pretty">
+          Las ofertas de este mes en depilación láser y estética en León. La
+          misma tecnología y el mismo trato personalizado de siempre, a mejor
+          precio.
+        </p>
+      </div>
+      <p
+        data-actualizado
+        hidden={!fecha}
+        class="inline-flex items-center gap-2.5 rounded-full bg-base-100 py-2 pl-3 pr-4 text-sm ring-1 ring-black/5"
+      >
+        <span class="relative flex h-2.5 w-2.5" aria-hidden="true">
+          <span
+            class="absolute inline-flex h-full w-full rounded-full bg-success opacity-60 motion-safe:animate-ping"
+          ></span>
+          <span
+            class="relative inline-flex h-2.5 w-2.5 rounded-full bg-success"
+          ></span>
+        </span>
+        <span>
+          <span class="font-semibold">Vigentes</span>{" "}
+          <span class="text-secondary-content/60">
+            · actualizado el <time datetime={promos?.actualizado.toISOString()}
+              >{fecha}</time
+            >
+          </span>
+        </span>
+      </p>
+    </header>
+
+    <!-- Carteles -->
+    <ul
+      data-lista
+      hidden={imagenes.length === 0}
+      class="reveal-stagger mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6"
+    >
+      {imagenes.map((img, i) => <PromoCard img={img} i={i} />)}
+    </ul>
+
+    <!-- Plantilla vacía que usa el script para pintar carteles nuevos -->
+    <template data-plantilla>
+      <PromoCard />
+    </template>
+
+    <!-- Condiciones -->
+    <aside
+      data-condiciones
+      hidden={imagenes.length === 0 || textos.length === 0}
+      aria-label="Condiciones"
+      class="mt-8 flex gap-4 rounded-3xl border-l-4 border-primary bg-base-100 p-5 sm:p-6 ring-1 ring-black/5"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="mt-0.5 w-5 h-5 shrink-0 text-primary"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+        stroke-width="1.8"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        aria-hidden="true"
+        set:html={icons.info}
+      />
+      <div class="space-y-2 text-sm leading-relaxed text-secondary-content/70">
+        <p class="font-semibold text-secondary-content">
+          Condiciones de las promociones
+        </p>
+        <div data-textos class="space-y-2">
+          {textos.map((t) => <p>{t}</p>)}
+        </div>
+      </div>
+    </aside>
+
+    <!-- Sin promociones (o WordPress no responde) -->
+    <div
+      data-vacio
+      hidden={imagenes.length > 0}
+      class="mt-10 rounded-3xl bg-base-100 p-8 sm:p-12 text-center ring-1 ring-black/5"
+    >
+      <h2 class="text-xl sm:text-2xl font-semibold">
+        Estamos preparando las promociones de este mes
+      </h2>
+      <p class="mx-auto mt-3 max-w-md text-secondary-content/70">
+        Llámanos y te contamos los descuentos vigentes en depilación láser y
+        estética.
+      </p>
+      <a
+        href={TELEFONO.href}
+        class="btn btn-primary mt-6 h-12 rounded-full border-0 px-6"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="w-5 h-5"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          stroke-width="1.8"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+          set:html={icons.phone}
+        />
+        {TELEFONO.visible}
+      </a>
+    </div>
+  </div>
+</Layout>
+
+<script>
+  import {
+    URL_PROMOCIONES,
+    parsePromociones,
+    type ImagenWP,
+    type PaginaWP,
+  } from "../lib/wordpress";
+
+  // Rellena una copia de la plantilla con los datos de un cartel
+  function crearCartel(
+    plantilla: HTMLTemplateElement,
+    img: ImagenWP,
+    i: number,
+  ) {
+    const li = plantilla.content.firstElementChild!.cloneNode(
+      true,
+    ) as HTMLElement;
+    const id = `promo-${i}`;
+    const nombre = img.alt || `Promoción ${i + 1}`;
+
+    li.querySelectorAll<HTMLImageElement>(
+      "[data-miniatura], [data-grande]",
+    ).forEach((el) => {
+      el.alt = img.alt || `Promoción ${i + 1} de Deleic`;
+      if (img.srcset) el.srcset = img.srcset;
+      if (img.width) el.width = img.width;
+      if (img.height) el.height = img.height;
+      el.src = img.src;
+    });
+    const abrir = li.querySelector("[data-abrir]")!;
+    abrir.setAttribute("popovertarget", id);
+    abrir.setAttribute("aria-label", `Ver en grande: ${nombre}`);
+    li.querySelector("[data-cerrar]")!.setAttribute("popovertarget", id);
+    li.querySelector("[data-vista]")!.id = id;
+    li.querySelector("[data-numero]")!.textContent = String(i + 1).padStart(
+      2,
+      "0",
+    );
+    li.querySelector("[data-nombre]")!.textContent = nombre;
+    return li;
+  }
+
+  async function actualizarPromociones() {
+    const raiz = document.querySelector<HTMLElement>("[data-promos]");
+    if (!raiz) return;
+
+    try {
+      const res = await fetch(URL_PROMOCIONES, { cache: "no-store" });
+      if (!res.ok) return;
+      const promos = parsePromociones((await res.json()) as PaginaWP[]);
+
+      // Nada nuevo desde el build: no tocamos el HTML
+      if (promos.modificado === raiz.dataset.modificado) return;
+      raiz.dataset.modificado = promos.modificado;
+
+      const lista = raiz.querySelector<HTMLElement>("[data-lista]")!;
+      const plantilla =
+        raiz.querySelector<HTMLTemplateElement>("[data-plantilla]")!;
+      lista.replaceChildren(
+        ...promos.imagenes.map((img, i) => crearCartel(plantilla, img, i)),
+      );
+
+      const hay = promos.imagenes.length > 0;
+      lista.hidden = !hay;
+      raiz.querySelector<HTMLElement>("[data-vacio]")!.hidden = hay;
+
+      const textos = raiz.querySelector<HTMLElement>("[data-textos]")!;
+      textos.replaceChildren(
+        ...promos.textos.map((t) => {
+          const p = document.createElement("p");
+          p.textContent = t; // texto plano: nunca HTML de WordPress
+          return p;
+        }),
+      );
+      raiz.querySelector<HTMLElement>("[data-condiciones]")!.hidden =
+        !hay || promos.textos.length === 0;
+
+      const actualizado =
+        raiz.querySelector<HTMLElement>("[data-actualizado]")!;
+      const time = actualizado.querySelector("time")!;
+      time.dateTime = promos.actualizado.toISOString();
+      time.textContent = promos.actualizado.toLocaleDateString("es-ES", {
+        day: "numeric",
+        month: "long",
+        year: "numeric",
+      });
+      actualizado.hidden = false;
+    } catch {
+      // Sin conexión con WordPress: se queda lo que se generó en el build
+    }
+  }
+
+  // Con <ClientRouter /> hay que ejecutarlo en cada navegación, no solo la primera
+  document.addEventListener("astro:page-load", actualizarPromociones);
+</script>

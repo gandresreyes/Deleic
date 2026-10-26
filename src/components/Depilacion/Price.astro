@@ -1,0 +1,228 @@
+---
+
+---
+
+<section class="seccion">
+  <div class="reveal">
+    <span class="text-sm font-semibold tracking-widest uppercase text-primary">
+      Precios
+    </span>
+    <h2
+      id="novedades-heading"
+      class="mt-3 text-3xl sm:text-4xl font-semibold text-secondary-content"
+    >
+      Un precio claro<br />
+      para cada zona
+    </h2>
+  </div>
+
+  <div class="reveal relative mt-12">
+    <!-- Botones nav (solo desktop) -->
+    <button
+      id="scrollPrev"
+      class="absolute bg-black/10 backdrop-blur-[2px] left-0 top-1/2 -translate-y-1/2 -translate-x-4 z-10 hidden lg:flex items-center justify-center w-11 h-11 rounded-full border border-base-300 shadow-lg hover:bg-base-200 transition-all"
+      aria-label="Anterior"
+    >
+      <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+        ><path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M15 19l-7-7 7-7"></path></svg
+      >
+    </button>
+    <button
+      id="scrollNext"
+      class="absolute right-0 bg-black/10 top-1/2 -translate-y-1/2 backdrop-blur-[2px] translate-x-4 z-10 hidden lg:flex items-center justify-center w-11 h-11 rounded-full border border-base-300 shadow-lg hover:bg-base-200 transition-all"
+      aria-label="Siguiente"
+    >
+      <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+        ><path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M9 5l7 7-7 7"></path></svg
+      >
+    </button>
+
+    <!-- Carrusel -->
+    <div id="zonesCarousel" class="flex gap-6 overflow-x-auto pb-4">
+      <!-- XS -->
+      <div
+        class="group relative overflow-hidden rounded-3xl border border-base-300 bg-base-100 p-8 shrink-0 w-[80%] sm:w-85 snap-start transition-all duration-300 hover:-translate-y-1 hover:border-primary/60 hover:shadow-2xl"
+      >
+        <div
+          class="absolute inset-0 opacity-[0.15] pointer-events-none"
+          style="background-image: radial-gradient(rgba(0, 0, 0, 0.627) 1px, transparent 1px); background-size: 18px 18px;"
+        >
+        </div>
+        <div
+          class="absolute right-6 top-6 rounded-full bg-primary px-4 py-2 text-lg font-bold text-white"
+        >
+          15€
+        </div>
+        <span
+          class="text-xs font-semibold uppercase tracking-[0.25em] text-primary"
+          >Zona XS</span
+        >
+        <h3 class="mt-4 text-2xl font-bold text-secondary-content">
+          Zonas pequeñas
+        </h3>
+        <ul class="mt-6 space-y-3 text-base-content/70">
+          <li>• Entrecejo</li>
+          <li>• Orejas</li>
+        </ul>
+      </div>
+
+      <!-- S -->
+      <div
+        class="group relative overflow-hidden rounded-3xl border border-base-300 bg-base-100 p-8 shrink-0 w-[80%] sm:w-85 snap-start transition-all duration-300 hover:-translate-y-1 hover:border-primary/60 hover:shadow-2xl"
+      >
+        <div
+          class="absolute right-6 top-6 rounded-full bg-primary px-4 py-2 text-lg font-bold text-white"
+        >
+          25€
+        </div>
+        <span
+          class="text-xs font-semibold uppercase tracking-[0.25em] text-primary"
+          >Zona S</span
+        >
+        <h3 class="mt-4 text-2xl font-bold text-secondary-content">
+          Zonas pequeñas
+        </h3>
+        <div class="mt-6 flex flex-wrap gap-2 text-secondary-content">
+          <span class="rounded-full bg-base-200 px-3 py-1 text-sm">Labio</span>
+          <span class="rounded-full bg-base-200 px-3 py-1 text-sm">Mentón</span>
+          <span class="rounded-full bg-base-200 px-3 py-1 text-sm"
+            >Patillas</span
+          >
+          <span class="rounded-full bg-base-200 px-3 py-1 text-sm"
+            >Perfilado barba</span
+          >
+          <span class="rounded-full bg-base-200 px-3 py-1 text-sm">Cuello</span>
+          <span class="rounded-full bg-base-200 px-3 py-1 text-sm">Cejas</span>
+          <span class="rounded-full bg-base-200 px-3 py-1 text-sm">Nuca</span>
+          <span class="rounded-full bg-base-200 px-3 py-1 text-sm">Pies</span>
+          <span class="rounded-full bg-base-200 px-3 py-1 text-sm">Manos</span>
+          <span class="rounded-full bg-base-200 px-3 py-1 text-sm"
+            >Perianal</span
+          >
+          <span class="rounded-full bg-base-200 px-3 py-1 text-sm"
+            >Línea alba</span
+          >
+          <span class="rounded-full bg-base-200 px-3 py-1 text-sm">Areolas</span
+          >
+          <span class="rounded-full bg-base-200 px-3 py-1 text-sm">Axilas</span>
+        </div>
+      </div>
+
+      <!-- M -->
+      <div
+        class="group relative overflow-hidden rounded-3xl border border-base-300 bg-base-100 p-8 shrink-0 w-[80%] sm:w-85 snap-start transition-all duration-300 hover:-translate-y-1 hover:border-primary/60 hover:shadow-2xl"
+      >
+        <div
+          class="absolute right-6 top-6 rounded-full bg-primary px-4 py-2 text-lg font-bold text-white"
+        >
+          40€
+        </div>
+        <span
+          class="text-xs font-semibold uppercase tracking-[0.25em] text-primary"
+          >Zona M</span
+        >
+        <h3 class="mt-4 text-2xl font-bold text-secondary-content">
+          Zonas medianas
+        </h3>
+        <div class="mt-6 flex flex-wrap gap-2 text-secondary-content">
+          <span class="rounded-full bg-base-200 px-3 py-1 text-sm"
+            >Ingle completa</span
+          >
+          <span class="rounded-full bg-base-200 px-3 py-1 text-sm"
+            >Medios brazos</span
+          >
+          <span class="rounded-full bg-base-200 px-3 py-1 text-sm">Glúteos</span
+          >
+          <span class="rounded-full bg-base-200 px-3 py-1 text-sm"
+            >Perianal</span
+          >
+          <span class="rounded-full bg-base-200 px-3 py-1 text-sm">Dorsal</span>
+          <span class="rounded-full bg-base-200 px-3 py-1 text-sm">Lumbar</span>
+          <span class="rounded-full bg-base-200 px-3 py-1 text-sm">Tórax</span>
+          <span class="rounded-full bg-base-200 px-3 py-1 text-sm">Abdomen</span
+          >
+          <span class="rounded-full bg-base-200 px-3 py-1 text-sm">Hombros</span
+          >
+          <span class="rounded-full bg-base-200 px-3 py-1 text-sm"
+            >Facial + cuello</span
+          >
+        </div>
+      </div>
+
+      <!-- L -->
+      <div
+        class="group relative overflow-hidden rounded-3xl border border-base-300 bg-base-100 p-8 shrink-0 w-[80%] sm:w-85 snap-start transition-all duration-300 hover:-translate-y-1 hover:border-primary/60 hover:shadow-2xl"
+      >
+        <div
+          class="absolute right-6 top-6 rounded-full bg-primary px-4 py-2 text-lg font-bold text-white"
+        >
+          65€
+        </div>
+        <span
+          class="text-xs font-semibold uppercase tracking-[0.25em] text-primary"
+          >Zona L</span
+        >
+        <h3 class="mt-4 text-2xl font-bold text-secondary-content">
+          Zonas grandes
+        </h3>
+        <ul class="mt-6 space-y-3 text-base-content/70">
+          <li>• Media pierna inferior</li>
+          <li>• Media pierna superior</li>
+          <li>• Rodillas</li>
+        </ul>
+      </div>
+
+      <!-- XL -->
+      <div
+        class="group relative overflow-hidden rounded-3xl border border-primary bg-linear-to-br from-primary-oscuro to-primary p-8 text-primary-content shadow-2xl shrink-0 w-[80%] sm:w-85 snap-start transition-all duration-300 hover:-translate-y-1"
+      >
+        <div
+          class="absolute inset-0 opacity-[0.15] pointer-events-none"
+          style="background-image: radial-gradient(rgba(255,255,255,0.4) 1px, transparent 1px); background-size: 18px 18px;"
+        >
+        </div>
+        <div
+          class="absolute right-6 top-6 rounded-full bg-white px-4 py-2 text-lg font-bold text-primary"
+        >
+          100€
+        </div>
+        <span
+          class="text-xs font-semibold uppercase tracking-[0.25em] text-primary-content/70"
+          >Zona XL</span
+        >
+        <h3 class="mt-4 text-2xl font-bold">Zonas completas</h3>
+        <ul class="mt-6 space-y-3 text-primary-content/85">
+          <li>• Piernas completas + pies</li>
+          <li>• Brazos completos (Incluye hombros y manos)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  const carousel = document.getElementById("zonesCarousel") as HTMLElement;
+  const prevBtn = document.getElementById("scrollPrev") as HTMLButtonElement;
+  const nextBtn = document.getElementById("scrollNext") as HTMLButtonElement;
+
+  const scrollAmount = () => {
+    const card = carousel.querySelector(":scope > div") as HTMLElement;
+    return (card?.offsetWidth ?? 0) + 24;
+  };
+
+  prevBtn?.addEventListener("click", () => {
+    carousel.scrollBy({ left: -scrollAmount(), behavior: "smooth" });
+  });
+
+  nextBtn?.addEventListener("click", () => {
+    carousel.scrollBy({ left: scrollAmount(), behavior: "smooth" });
+  });
+</script>

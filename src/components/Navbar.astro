@@ -1,0 +1,435 @@
+---
+import "../styles/global.css";
+import { whatsapp } from "../data/contacto";
+
+const tratamientos = [
+  {
+    href: "/depilacion-laser/",
+    nombre: "Depilación láser",
+    texto: "Precios claros para cada zona",
+  },
+  {
+    href: "/facial-corporal/",
+    nombre: "Facial y corporal",
+    texto: "Cosmética profesional y protocolos a medida",
+  },
+  {
+    href: "/medicina-estetica/",
+    nombre: "Medicina estética",
+    texto: "Rellenos, hilos tensores y mesoterapia",
+  },
+  {
+    href: "/micropigmentacion/",
+    nombre: "Microblading y micropigmentación",
+    texto: "Maquillaje semipermanente",
+  },
+];
+
+const enlaces = [
+  { href: "/promociones/", nombre: "Promociones" },
+  { href: "/metodo-deleic/", nombre: "Método Deleic" },
+  { href: "/nosotros/", nombre: "Nosotros" },
+];
+
+// Marca la sección actual; un enlace que repite la URL de un tratamiento
+// (p. ej. Promociones) no se marca, para no resaltar dos sitios a la vez
+const path = Astro.url.pathname.replace(/\/?$/, "/");
+const coincide = (href: string) =>
+  href === "/" ? path === "/" : path.startsWith(href);
+const enTratamientos = tratamientos.some((t) => coincide(t.href));
+const esActual = (href: string) =>
+  coincide(href) && !tratamientos.some((t) => t.href === href);
+
+const icons = {
+  chevron: '<path d="M6 9l6 6 6-6"/>',
+  arrow: '<path d="M5 12h14m-5-5l5 5-5 5"/>',
+  phone:
+    '<path d="M5 4h4l2 5-2.5 1.5a11 11 0 005 5L15 13l5 2v4a2 2 0 01-2 2A16 16 0 013 6a2 2 0 012-2"/>',
+  whatsapp:
+    '<path d="M3.5 20.5l1.4-4.2A8.5 8.5 0 1 1 8 19.3z"/><path d="M9 8.6c.2-.4.5-.6.9-.6h.5l1 2.2-.8 1a5.6 5.6 0 0 0 2.3 2.3l1-.8 2.2 1v.5c0 .4-.2.7-.6.9a3 3 0 0 1-2.6.2 7.7 7.7 0 0 1-4.1-4.1 3 3 0 0 1 .2-2.6z"/>',
+  menu: '<path d="M4 7h16M4 12h16M4 17h16"/>',
+  close: '<path d="M6 6l12 12M18 6L6 18"/>',
+};
+---
+
+<header
+  class="sticky top-0 z-50 border-b border-black/5 bg-base-100/80 backdrop-blur-md text-secondary-content"
+>
+  <div
+    class="container mx-auto flex h-16 lg:h-20 items-center justify-between gap-4 px-4 sm:px-6 lg:px-8"
+  >
+    <a href="/" class="shrink-0" aria-label="Deleic, ir al inicio">
+      <img src="/img/deleicLogo.webp" class="h-12 lg:h-14 w-auto" alt="Deleic" />
+    </a>
+
+    <!-- Escritorio -->
+    <nav aria-label="Principal" class="hidden lg:block">
+      <ul class="flex items-center gap-1 text-[15px] font-medium">
+        <li class="group relative">
+          <button
+            type="button"
+            aria-haspopup="true"
+            class:list={[
+              "flex items-center gap-1.5 rounded-full px-4 py-2 transition-colors hover:bg-base-200 group-focus-within:bg-base-200",
+              enTratamientos && "text-primary",
+            ]}
+          >
+            Tratamientos
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4 transition-transform duration-200 group-hover:rotate-180 group-focus-within:rotate-180"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              set:html={icons.chevron}
+            />
+          </button>
+
+          <!-- pt-3 mantiene el hover al bajar el ratón al panel -->
+          <div
+            class="invisible absolute left-1/2 top-full -translate-x-1/2 translate-y-1 pt-3 opacity-0 transition-all duration-200 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100"
+          >
+            <ul
+              class="w-88 rounded-3xl bg-base-100 p-2 shadow-2xl shadow-black/10 ring-1 ring-black/5"
+            >
+              {
+                tratamientos.map((t) => (
+                  <li>
+                    <a
+                      href={t.href}
+                      class="group/item flex items-start gap-3 rounded-2xl p-3 transition-colors hover:bg-base-200 focus-visible:bg-base-200 focus-visible:outline-none"
+                    >
+                      <span
+                        class="mt-1.5 h-2 w-2 shrink-0 rounded-full bg-primary/30 transition-colors group-hover/item:bg-primary"
+                        aria-hidden="true"
+                      />
+                      <span class="min-w-0">
+                        <span class="block font-semibold leading-snug text-secondary-content group-hover/item:text-primary">
+                          {t.nombre}
+                        </span>
+                        <span class="mt-0.5 block text-sm font-normal leading-snug text-secondary-content/60">
+                          {t.texto}
+                        </span>
+                      </span>
+                    </a>
+                  </li>
+                ))
+              }
+            </ul>
+          </div>
+        </li>
+
+        {
+          enlaces.map((e) => (
+            <li>
+              <a
+                href={e.href}
+                aria-current={esActual(e.href) ? "page" : undefined}
+                class="block rounded-full px-4 py-2 transition-colors hover:bg-base-200 aria-[current=page]:text-primary"
+              >
+                {e.nombre}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <div class="hidden lg:flex items-center gap-2">
+      <a
+        href="tel:+34987027906"
+        class="hidden xl:flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium transition-colors hover:bg-base-200"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="w-4 h-4 text-primary"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          stroke-width="1.8"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          set:html={icons.phone}
+        />
+        987 027 906
+      </a>
+      <!-- Se recoge al hacer scroll, cuando aparece el botón flotante -->
+      <div class="cta-cabecera overflow-hidden">
+        <a
+          href={whatsapp()}
+          target="_blank"
+          rel="noopener"
+          class="btn btn-primary h-11 rounded-full px-6 border-0 whitespace-nowrap"
+        >
+          Reservar cita
+        </a>
+      </div>
+    </div>
+
+    <!-- Móvil -->
+    <details class="group/menu lg:hidden">
+      <summary
+        class="flex h-11 w-11 cursor-pointer list-none items-center justify-center rounded-full bg-base-200 transition-colors group-open/menu:bg-secondary-content group-open/menu:text-base-100 [&::-webkit-details-marker]:hidden"
+        aria-label="Abrir menú"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="w-5 h-5 group-open/menu:hidden"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          set:html={icons.menu}
+        />
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="hidden w-5 h-5 group-open/menu:block"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          set:html={icons.close}
+        />
+      </summary>
+
+      <nav
+        aria-label="Principal"
+        class="absolute inset-x-0 top-full h-[calc(100dvh-4rem)] overflow-y-auto overscroll-contain border-t border-black/5 bg-base-100 px-4 sm:px-6 pt-4 pb-[max(1.5rem,env(safe-area-inset-bottom))]"
+      >
+        <div class="flex min-h-full flex-col">
+          <ul class="space-y-1 text-lg font-medium">
+            <li>
+              <details class="group/acc" open={enTratamientos}>
+                <summary
+                  class="flex cursor-pointer list-none items-center justify-between gap-4 rounded-2xl px-4 py-3.5 transition-colors hover:bg-base-200 group-open/acc:bg-base-200 [&::-webkit-details-marker]:hidden"
+                >
+                  <span class:list={[enTratamientos && "text-primary"]}>
+                    Tratamientos
+                  </span>
+                  <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-base-100 ring-1 ring-black/5">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="w-4 h-4 transition-transform duration-200 group-open/acc:rotate-180"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      set:html={icons.chevron}
+                    />
+                  </span>
+                </summary>
+
+                <ul class="mt-1 ml-4 space-y-1 border-l-2 border-primary/15 pl-3">
+                  {
+                    tratamientos.map((t) => (
+                      <li>
+                        <a
+                          href={t.href}
+                          class="block rounded-2xl px-4 py-3 transition-colors hover:bg-base-200 active:bg-base-200"
+                        >
+                          <span class="block text-base font-semibold leading-snug text-secondary-content text-pretty">
+                            {t.nombre}
+                          </span>
+                          <span class="mt-0.5 block text-sm font-normal leading-snug text-secondary-content/60 text-pretty">
+                            {t.texto}
+                          </span>
+                        </a>
+                      </li>
+                    ))
+                  }
+                </ul>
+              </details>
+            </li>
+
+            {
+              enlaces.map((e) => (
+                <li>
+                  <a
+                    href={e.href}
+                    aria-current={esActual(e.href) ? "page" : undefined}
+                    class="flex items-center justify-between gap-4 rounded-2xl px-4 py-3.5 transition-colors hover:bg-base-200 active:bg-base-200 aria-[current=page]:text-primary"
+                  >
+                    {e.nombre}
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="w-4 h-4 text-secondary-content/30"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      set:html={icons.arrow}
+                    />
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+
+          <div class="mt-auto space-y-3 pt-8">
+            <a
+              href={whatsapp()}
+              target="_blank"
+              rel="noopener"
+              class="btn btn-primary h-12 w-full rounded-full border-0 text-base"
+            >
+              Reservar cita
+            </a>
+            <a
+              href="tel:+34987027906"
+              class="btn h-12 w-full rounded-full border-base-300 bg-base-100 text-base text-secondary-content shadow-none"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="w-4 h-4 text-primary"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                set:html={icons.phone}
+              />
+              987 027 906
+            </a>
+            <p class="pt-2 text-center text-xs text-secondary-content/50">
+              Calle Roa de la Vega 18, bajo · León
+            </p>
+          </div>
+        </div>
+      </nav>
+    </details>
+  </div>
+</header>
+
+<!--
+  Botón flotante "glass". Va fuera del <header>: su backdrop-filter
+  convertiría al header en el contenedor del position: fixed.
+  El wrapper se oculta al final de la página (footer) y el enlace sube al hacer scroll.
+-->
+<div
+  class="cta-flotante-salida pointer-events-none fixed inset-x-0 bottom-0 z-40 flex justify-center lg:justify-end px-4 sm:px-6 lg:px-8 pb-[max(1rem,env(safe-area-inset-bottom))]"
+>
+  <a
+    href={whatsapp()}
+    target="_blank"
+    rel="noopener"
+    class="cta-flotante pointer-events-auto relative isolate inline-flex items-center gap-3 rounded-full py-1.5 pl-1.5 pr-6 text-[15px] font-semibold text-secondary-content bg-base-100/55 backdrop-blur-xl backdrop-saturate-[1.8] ring-1 ring-white/70 shadow-[0_12px_40px_-10px_rgb(0_0_0/0.35),inset_0_1px_0_rgb(255_255_255/0.85),inset_0_-1px_0_rgb(0_0_0/0.06)] transition-[scale] duration-200 hover:scale-[1.03] active:scale-[0.97] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+  >
+    <!-- Brillo superior, como el cristal de iOS -->
+    <span
+      aria-hidden="true"
+      class="pointer-events-none absolute inset-0 -z-10 rounded-full bg-linear-to-b from-white/70 via-white/10 to-transparent"
+    ></span>
+    <span
+      class="w-10 h-10 rounded-full bg-primary text-primary-content flex items-center justify-center shadow-md shadow-primary/30"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="w-4.5 h-4.5"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+        stroke-width="1.8"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        set:html={icons.whatsapp}
+      />
+    </span>
+    Reservar cita
+  </a>
+</div>
+
+<style>
+  /*
+    Animaciones ligadas al scroll (sin JS). El progreso depende de cuánto
+    se ha bajado, así que la entrada es tan suave como el propio scroll.
+    Sin soporte (p. ej. Firefox), se queda el botón de la cabecera y no
+    aparece el flotante.
+  */
+  .cta-flotante {
+    display: none;
+  }
+
+  @supports (animation-timeline: scroll()) {
+    .cta-flotante {
+      display: inline-flex;
+      animation: cta-sube ease-out both;
+      animation-timeline: scroll(root);
+      animation-range: 60px 220px;
+    }
+
+    .cta-flotante-salida {
+      animation: cta-baja ease-in both;
+      animation-timeline: scroll(root);
+      animation-range: calc(100% - 140px) 100%;
+    }
+
+    .cta-cabecera {
+      animation: cta-recoge ease-out both;
+      animation-timeline: scroll(root);
+      animation-range: 60px 220px;
+    }
+  }
+
+  @keyframes cta-sube {
+    from {
+      opacity: 0;
+      translate: 0 160%;
+      visibility: hidden;
+    }
+    to {
+      opacity: 1;
+      translate: 0 0;
+      visibility: visible;
+    }
+  }
+
+  @keyframes cta-baja {
+    to {
+      opacity: 0;
+      translate: 0 40%;
+      visibility: hidden;
+    }
+  }
+
+  @keyframes cta-recoge {
+    from {
+      max-width: 12rem;
+    }
+    to {
+      max-width: 0;
+      opacity: 0;
+      visibility: hidden;
+    }
+  }
+
+  /* Movimiento reducido: solo fundido, sin desplazamiento */
+  @media (prefers-reduced-motion: reduce) {
+    @keyframes cta-sube {
+      from {
+        opacity: 0;
+        visibility: hidden;
+      }
+      to {
+        opacity: 1;
+        visibility: visible;
+      }
+    }
+
+    @keyframes cta-baja {
+      to {
+        opacity: 0;
+        visibility: hidden;
+      }
+    }
+  }
+</style>

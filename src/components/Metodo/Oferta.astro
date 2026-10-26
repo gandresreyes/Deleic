@@ -1,0 +1,166 @@
+---
+// src/components/Metodo/Oferta.astro
+import { whatsapp, TELEFONO } from "../../data/contacto";
+
+interface Props {
+  precio: number;
+  href?: string;
+}
+const {
+  precio,
+  href = whatsapp("Hola, me gustaría reservar el diagnóstico facial 3D del Método Deleic."),
+} = Astro.props;
+
+// Cómo funciona, de la reserva al plan
+const pasos = [
+  { titulo: "Reserva", texto: "Por WhatsApp o por teléfono." },
+  { titulo: "Diagnóstico 3D", texto: "En nuestro centro de León." },
+  { titulo: "Plan Deleic", texto: "Tratamientos elegidos para tu piel." },
+];
+---
+
+<section
+  aria-labelledby="oferta-titulo"
+  class="relative isolate overflow-hidden card seccion-card bg-primary text-primary-content"
+>
+  <!-- Fondo: brillos difuminados y trama de puntos -->
+  <div aria-hidden="true" class="pointer-events-none absolute inset-0 -z-10">
+    <div class="absolute -top-32 -right-24 w-96 h-96 rounded-full bg-white/15 blur-3xl"></div>
+    <div class="absolute -bottom-40 -left-24 w-md h-112 rounded-full bg-black/30 blur-3xl"></div>
+    <div
+      class="absolute inset-0 opacity-[0.07] bg-[radial-gradient(white_1px,transparent_1px)] bg-size-[22px_22px]"
+    >
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-12 gap-12 items-center">
+    <!-- Texto -->
+    <div class="reveal md:col-span-7">
+      <span
+        class="inline-flex items-center gap-2 rounded-full bg-white/10 ring-1 ring-white/20 px-3 py-1 text-xs font-semibold tracking-widest uppercase"
+      >
+        <span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span>
+        Tu primer paso
+      </span>
+
+      <h2
+        id="oferta-titulo"
+        class="mt-5 text-4xl sm:text-5xl font-semibold tracking-tight leading-[1.05]"
+      >
+        Diagnóstico facial 3D
+      </h2>
+      <p class="mt-5 text-lg text-white/75 max-w-xl">
+        Antes de cualquier tratamiento, conoce lo que tu piel necesita de verdad.
+      </p>
+
+      <!-- Pasos -->
+      <ol class="mt-10 grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-4">
+        {
+          pasos.map((paso, i) => (
+            <li class="relative flex sm:block gap-4">
+              {i < pasos.length - 1 && (
+                <span
+                  aria-hidden="true"
+                  class="hidden sm:block absolute top-5 left-12 right-2 h-px bg-linear-to-r from-white/40 to-white/0"
+                />
+              )}
+              <span class="relative flex items-center justify-center shrink-0 w-10 h-10 rounded-full bg-white text-primary font-semibold">
+                {i + 1}
+              </span>
+              <div class="sm:mt-4">
+                <p class="font-semibold">{paso.titulo}</p>
+                <p class="mt-1 text-sm text-white/65 leading-snug">{paso.texto}</p>
+              </div>
+            </li>
+          ))
+        }
+      </ol>
+
+      <!-- Acciones -->
+      <div class="mt-10 flex flex-wrap items-center gap-3">
+        <a
+          href={href}
+          target="_blank"
+          rel="noopener"
+          class="group inline-flex items-center gap-2 px-6 py-4 bg-white text-primary rounded-full font-bold shadow-lg shadow-black/20 hover:bg-white/90 transition-colors"
+        >
+          Reservar diagnóstico
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="w-5 h-5 transition-transform group-hover:translate-x-1"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <path d="M5 12h14M13 6l6 6-6 6"></path>
+          </svg>
+        </a>
+        <a
+          href={TELEFONO.href}
+          class="inline-flex items-center gap-2 px-6 py-4 rounded-full font-bold ring-1 ring-white/30 hover:bg-white/10 transition-colors"
+        >
+          Llamar al {TELEFONO.visible}
+        </a>
+      </div>
+
+      <p class="mt-10 text-sm font-semibold uppercase tracking-wider text-white/60">
+        Tu inversión en tu piel, tu mejor decisión.
+      </p>
+      <p class="mt-1 text-xl italic">
+        Resultados que se ven, confianza que se siente.
+      </p>
+    </div>
+
+    <!-- Ticket de precio -->
+    <div class="reveal-scale md:col-span-5">
+      <div
+        class="relative mx-auto max-w-sm rounded-3xl bg-base-100 text-secondary-content shadow-2xl shadow-black/30"
+      >
+        <div class="p-8 text-center">
+          <p class="text-xs font-semibold uppercase tracking-widest text-base-content/60">
+            Precio
+          </p>
+          <p class="mt-4 flex items-start justify-center leading-none text-primary">
+            <span class="text-7xl sm:text-8xl font-semibold tracking-tighter">{precio}</span>
+            <span class="mt-2 text-3xl font-semibold">€</span>
+          </p>
+        </div>
+
+        <!-- Línea troquelada del ticket -->
+        <div aria-hidden="true" class="relative h-6">
+          <span class="absolute -left-3 top-0 w-6 h-6 rounded-full bg-primary"></span>
+          <span class="absolute -right-3 top-0 w-6 h-6 rounded-full bg-primary"></span>
+          <span class="absolute left-6 right-6 top-1/2 border-t-2 border-dashed border-base-300"></span>
+        </div>
+
+        <div class="p-8 pt-4">
+          <p
+            class="flex items-center gap-3 rounded-2xl bg-primary/5 px-4 py-3 text-sm font-semibold text-primary"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-6 h-6 shrink-0"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <rect x="3" y="8" width="18" height="4" rx="1"></rect>
+              <path
+                d="M12 8v13M5 12v8a1 1 0 001 1h12a1 1 0 001-1v-8M8 8a2.5 2.5 0 110-5c2 0 4 2.5 4 5 0-2.5 2-5 4-5a2.5 2.5 0 110 5"
+              ></path>
+            </svg>
+            Si comienzas un Plan Deleic, se descuenta íntegramente
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

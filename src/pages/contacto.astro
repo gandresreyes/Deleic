@@ -1,0 +1,21 @@
+---
+// src/pages/contacto.astro
+import Layout from "../layouts/Layout.astro";
+import EnConstruccion from "../components/EnConstruccion.astro";
+import Ubication from "../components/Ubication.astro";
+---
+
+<Layout
+  title="Contacto | Deleic"
+  description="Contacta con Deleic, centro de estética en León: teléfono, WhatsApp, dirección y horario."
+  noindex
+>
+  <EnConstruccion
+    eyebrow="Contacto"
+    titulo="Hablemos"
+    texto="Estamos preparando esta página. Mientras tanto, puedes escribirnos por WhatsApp o visitarnos en el centro."
+  />
+
+  <!-- Mientras tanto, los datos de contacto ya están disponibles -->
+  <Ubication />
+</Layout>

@@ -1,0 +1,140 @@
+@import "tailwindcss";
+@plugin "daisyui";
+
+@plugin "daisyui/theme" {
+    name: "light";
+    /* .card = rounded-4xl, el radio estándar de las secciones (ver "Espaciado estándar") */
+    --radius-box: 2rem;
+
+}
+
+
+
+/* Tonos de la marca para brillos y degradados sobre fondos burdeos.
+   Generan utilidades (to-primary-oscuro…) y variables (var(--color-primary-claro)) */
+@theme {
+    --color-primary-claro: #8f1a1a;
+    --color-primary-oscuro: #2a0101;
+}
+
+[data-theme="light"] {
+    --color-primary: #620303;
+    --color-primary-content: #ffffff;
+    --color-secondary: #F5F5F7;
+    --color-secondary-content: #1D1D1F;
+    --color-neutral: #86868B;
+    --color-base-100: #ffffff;
+    --color-base-200: #F5F5F7;
+    --color-base-300: #E8E8E8;
+}
+
+/* ---------- Espaciado estándar ----------
+   Un solo sistema para todas las páginas:
+   - Margen lateral: lo pone <main> en Layout (el mismo que navbar y footer).
+   - .pila          separa sus bloques hijos directos (24px móvil, 32px desde sm).
+                    <main> ya es .pila; si una página envuelve todo en un div,
+                    ese div también lleva .pila.
+   - .seccion       sección sin fondo, sobre el gris de la página.
+   - .seccion-card  padding interior de las secciones en tarjeta (con .card o
+                    un fondo propio).
+   No añadas mt/my a los bloques de primer nivel: la separación la da .pila.
+   Al estar en la capa components, una utilidad (p. ej. -mt-12) la sobrescribe.
+
+   Radios, de fuera hacia dentro:
+   - rounded-4xl (o .card)  secciones en tarjeta
+   - rounded-3xl            tarjetas e imágenes dentro de una sección
+   - rounded-2xl            bloques pequeños dentro de una tarjeta (avisos,
+                            listas, filas de FAQ, opciones de menú)
+   - rounded-xl             cuadros de icono
+   - rounded-full           botones, etiquetas y chips */
+@layer components {
+  .pila > * + * {
+    @apply mt-6 sm:mt-8;
+  }
+
+  .seccion {
+    @apply py-10 sm:py-12;
+  }
+
+  .seccion-card {
+    @apply px-6 py-12 sm:px-10 sm:py-16 xl:px-16;
+  }
+}
+
+/* ---------- Aparición al hacer scroll (estilo Apple) ----------
+   .reveal          sube, se enfoca y aparece (textos y bloques)
+   .reveal-scale    aparece creciendo un poco (imágenes y bloques grandes)
+   .reveal-stagger  sus hijos directos aparecen uno detrás de otro
+   Se anima una sola vez: un IntersectionObserver (scripts/reveal.ts) añade
+   .is-visible al entrar en pantalla y deja de observar. La animación es CSS.
+   Solo animan opacity, transform y filter (van por GPU). No las pongas en un
+   elemento que ya tenga opacity, transform o filter propios: la animación los
+   pisaría; envuélvelo.
+   Sin JavaScript o con "reducir movimiento" todo se ve normal sin animar.
+   Para ajustar la intensidad, cambia las variables de :root */
+:root {
+  --reveal-y: 90px; /* cuánto sube */
+  --reveal-blur: 10px; /* desenfoque inicial de .reveal (solo desde 768px) */
+  --reveal-duration: 1s; /* lo que tarda en aparecer */
+  --reveal-stagger: 120ms; /* retraso entre hijos de .reveal-stagger */
+}
+
+@media (scripting: enabled) and (prefers-reduced-motion: no-preference) {
+  /* Ocultos hasta que el observer los marque */
+  .reveal:not(.is-visible),
+  .reveal-scale:not(.is-visible),
+  .reveal-stagger:not(.is-visible) > * {
+    opacity: 0;
+  }
+
+  /* fill backwards: mantiene el estado inicial durante el retraso y, al
+     terminar, la animación deja de aplicarse y no interfiere con los hover */
+  .reveal.is-visible,
+  .reveal-scale.is-visible,
+  .reveal-stagger.is-visible > * {
+    animation: reveal-up var(--reveal-duration) cubic-bezier(0.2, 0.6, 0.2, 1)
+      calc(var(--reveal-i, 0) * var(--reveal-stagger)) backwards;
+  }
+
+  /* El desenfoque es lo único caro (el coste crece con el área del bloque):
+     solo en pantallas grandes; en móvil .reveal sube y aparece sin blur */
+  @media (min-width: 768px) {
+    .reveal.is-visible {
+      animation-name: reveal-text;
+    }
+  }
+
+  .reveal-scale.is-visible {
+    animation-name: reveal-scale;
+  }
+
+  /* Escalonado solo con varias columnas; en móvil cada hijo ya entra por separado */
+  @media (min-width: 640px) {
+    .reveal-stagger > :nth-child(2) { --reveal-i: 1; }
+    .reveal-stagger > :nth-child(3) { --reveal-i: 2; }
+    .reveal-stagger > :nth-child(4) { --reveal-i: 3; }
+    .reveal-stagger > :nth-child(n + 5) { --reveal-i: 4; }
+  }
+}
+
+@keyframes reveal-up {
+  from {
+    opacity: 0;
+    transform: translateY(var(--reveal-y));
+  }
+}
+
+@keyframes reveal-text {
+  from {
+    opacity: 0;
+    transform: translateY(var(--reveal-y));
+    filter: blur(var(--reveal-blur));
+  }
+}
+
+@keyframes reveal-scale {
+  from {
+    opacity: 0;
+    transform: scale(0.94);
+  }
+}

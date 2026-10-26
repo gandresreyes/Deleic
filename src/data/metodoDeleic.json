@@ -1,0 +1,77 @@
+{
+  "seo": {
+    "title": "Método Deleic: diagnóstico facial 3D en León | Deleic",
+    "description": "Diagnóstico facial 3D que analiza hidratación, manchas, arrugas, poros, textura y sensibilidad para crear tu plan de tratamiento personalizado. 29 €."
+  },
+  "precio": { "valor": "29", "moneda": "EUR", "visible": "29€" },
+  "hero": {
+    "eyebrow": "El momento perfecto para cuidar tu piel",
+    "titulo": "Método Deleic",
+    "subtitulo": "Ciencia, tecnología y personalización para la piel que quieres.",
+    "ctaPrincipal": { "texto": "Reservar diagnóstico 3D", "href": "https://wa.me/34647716971?text=Hola%2C%20me%20gustar%C3%ADa%20reservar%20el%20diagn%C3%B3stico%20facial%203D%20del%20M%C3%A9todo%20Deleic." },
+    "ctaSecundario": { "texto": "Qué analizamos", "href": "#que-analizamos" },
+    "imagen": "/images/metodo-deleic/diagnostico-3d.jpg",
+    "imagenAlt": "Equipo de diagnóstico facial 3D del Método Deleic"
+  },
+  "queEs": {
+    "eyebrow": "¿Qué es el Método Deleic?",
+    "antes": "Un diagnóstico facial 3D avanzado que analiza tu piel en profundidad para detectar lo que no se ve a simple vista y crear un ",
+    "destacado": "plan de tratamiento 100% personalizado",
+    "despues": " para ti."
+  },
+  "analiza": {
+    "eyebrow": "Qué diagnosticamos",
+    "titulo": "Seis aspectos de tu piel, medidos al detalle",
+    "items": [
+      { "icono": "droplet", "titulo": "Hidratación", "texto": "Medimos el nivel de hidratación de tu piel." },
+      { "icono": "spots", "titulo": "Manchas", "texto": "Detectamos manchas solares, pigmentarias y marcas postinflamatorias." },
+      { "icono": "waves", "titulo": "Arrugas", "texto": "Evaluamos líneas de expresión y arrugas en profundidad." },
+      { "icono": "pore", "titulo": "Poros y sebo", "texto": "Analizamos el tamaño de poro y la producción de sebo." },
+      { "icono": "layers", "titulo": "Textura y tono", "texto": "Estudiamos la textura, el tono y la uniformidad de tu piel." },
+      { "icono": "shield", "titulo": "Sensibilidad", "texto": "Valoramos el nivel de sensibilidad y reactividad." }
+    ]
+  },
+  "banda": {
+    "texto": "Con esta información, creamos tu plan de tratamiento personalizado."
+  },
+  "oferta": {
+    "eyebrow": "Tu primer paso",
+    "etiqueta": "Diagnóstico facial 3D",
+    "descuento": "Si comienzas un Plan Deleic, los 29€ del diagnóstico se descuentan íntegramente.",
+    "lema": "Tu inversión en tu piel, tu mejor decisión.",
+    "firma": "Resultados que se ven, confianza que se siente.",
+    "cta": { "texto": "Reservar diagnóstico 3D", "href": "https://wa.me/34647716971?text=Hola%2C%20me%20gustar%C3%ADa%20reservar%20el%20diagn%C3%B3stico%20facial%203D%20del%20M%C3%A9todo%20Deleic." }
+  },
+  "porQue": {
+    "eyebrow": "¿Por qué elegir el Método Deleic?",
+    "items": [
+      { "icono": "target", "titulo": "Diagnóstico preciso y objetivo", "texto": "Tecnología 3D para conocer tu piel al detalle." },
+      { "icono": "clipboard", "titulo": "Plan personalizado para tu piel", "texto": "Tratamientos adaptados a tus necesidades reales." },
+      { "icono": "trend", "titulo": "Resultados visibles y progresivos", "texto": "Planes pensados para mejorar tu piel de forma progresiva." }
+    ]
+  },
+  "faq": {
+    "eyebrow": "Preguntas frecuentes",
+    "titulo": "Resolvemos tus dudas",
+    "items": [
+      {
+        "pregunta": "¿Qué es el diagnóstico facial 3D?",
+        "respuesta": "Es un análisis avanzado que estudia tu piel en profundidad y detecta lo que no se ve a simple vista, para crear un plan de tratamiento 100% personalizado."
+      },
+      {
+        "pregunta": "¿Qué analiza el diagnóstico?",
+        "respuesta": "Hidratación, manchas (solares, pigmentarias y marcas postinflamatorias), líneas de expresión y arrugas, tamaño de poro y producción de sebo, textura y tono, y nivel de sensibilidad y reactividad."
+      },
+      {
+        "pregunta": "¿Cuánto cuesta?",
+        "respuesta": "El diagnóstico facial 3D cuesta 29 €. Si después comienzas un Plan Deleic, esos 29 € se descuentan íntegramente."
+      }
+    ]
+  },
+  "cta": {
+    "titulo": "Conoce tu piel de verdad",
+    "texto": "Reserva tu diagnóstico facial 3D y te preparamos un plan hecho a tu medida.",
+    "ctaPrincipal": { "texto": "Reservar diagnóstico 3D", "href": "https://wa.me/34647716971?text=Hola%2C%20me%20gustar%C3%ADa%20reservar%20el%20diagn%C3%B3stico%20facial%203D%20del%20M%C3%A9todo%20Deleic." },
+    "telefono": { "texto": "987 027 906", "href": "tel:+34987027906" }
+  }
+}

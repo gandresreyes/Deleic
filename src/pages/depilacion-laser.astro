@@ -1,0 +1,143 @@
+---
+import Price from "../components/Depilacion/Price.astro";
+import Tecnology from "../components/Depilacion/Tecnology.astro";
+import Recomendation from "../components/Depilacion/Recomendation.astro";
+import Layout from "../layouts/Layout.astro";
+const etapas = [
+  {
+    titulo: "Emisión del láser",
+    texto: "La luz llega hasta la raíz del folículo.",
+  },
+  {
+    titulo: "Absorción de melanina",
+    texto: "El vello capta la energía sin afectar la piel.",
+  },
+  {
+    titulo: "Calor focalizado",
+    texto: "Debilita progresivamente el folículo.",
+  },
+  { titulo: "Vello se desprende", texto: "De forma natural, sesión a sesión." },
+];
+---
+
+<Layout>
+  <section class="seccion">
+    <div
+      class="grid grid-cols-1 md:grid-cols-12 gap-5 text-secondary-content"
+    >
+      <div class="group relative md:col-span-7 py-7 flex items-end">
+        <div>
+          <span
+            class="text-sm font-semibold tracking-widest uppercase text-primary"
+          >
+            DEPILACIÓN LÁSER
+          </span>
+          <h2
+            id="novedades-heading"
+            class="mt-3 text-3xl sm:text-4xl font-semibold"
+          >
+            Piel suave. <br />
+            Confianza real.
+          </h2>
+          <p class="mt-4 text-base-content/70 text-lg">
+            Tecnología láser de última generación que reduce el vello de forma
+            progresiva, segura y eficaz, adaptándose a tu tipo de piel.
+          </p>
+          <div
+            class="flex justify-start gap-2 md:gap-6 mt-12 text-[12px] md:text-md"
+          >
+            <div class="flex gap-2 items-center">
+              <img
+                class="h-8"
+                src="/img/icons/cpu.svg"
+                alt="teconologia"
+              />
+              <p class="text-base-content/70 leading-none uppercase">
+                Tecnologia <br /> avanzada
+              </p>
+            </div>
+
+            <div class="flex gap-2 items-center">
+              <img class="h-8" src="/img/icons/friends.svg" alt="teconologia" />
+              <p class="text-base-content/70 leading-none uppercase">
+                Para mujer <br /> y hombre
+              </p>
+            </div>
+            <div class="flex gap-2 items-center">
+              <img class="h-8" src="/img/icons/free.svg" alt="teconologia" />
+              <p class="text-base-content/70 leading-none uppercase">
+                Valoración <br /> gratuita
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="group relative md:col-span-5 hidden md:block">
+        <img
+          src="/img/depilacion/hero.webp"
+          class="w-full h-100 object-cover rounded-3xl"
+          alt="hero"
+          transition:name="depilacion-laser"
+        />
+      </div>
+    </div>
+  </section>
+  <section class="card bg-base-100 seccion-card">
+    <div class="reveal">
+      <span
+        class="text-sm font-semibold tracking-widest uppercase text-primary"
+      >
+        Cómo funciona el láser
+      </span>
+      <h2
+        class="mt-3 text-3xl sm:text-4xl font-semibold text-secondary-content"
+      >
+        Precisión que respeta tu piel
+      </h2>
+      <p class="mt-4 text-base-content/70 text-lg">
+        El láser diodo emite una energía que es absorbida por la melanina del
+        folículo piloso, generando el calor necesario para debilitarlo. Con cada
+        sesión, el vello va reduciéndose de forma progresiva, respetando la piel
+        que lo rodea.
+      </p>
+    </div>
+
+    <div class="mt-8">
+      <div class="relative">
+        <!-- línea base -->
+        <div
+          class="absolute top-1.75 left-0 right-0 h-px bg-black/10 hidden md:block"
+        >
+        </div>
+
+        <div class="reveal-stagger relative grid grid-cols-2 sm:grid-cols-4 gap-8">
+          {
+            etapas.map((etapa, i) => (
+              <div>
+                <div
+                  class:list={[
+                    "w-3.5 h-3.5 rounded-full mb-4",
+                    i === etapas.length - 1
+                      ? "border-2 border-primary bg-base-200"
+                      : "bg-primary",
+                  ]}
+                />
+                <p class="text-sm font-semibold text-secondary-content mb-1">
+                  {etapa.titulo}
+                </p>
+                <p class="text-sm text-secondary-content/60 leading-relaxed">
+                  {etapa.texto}
+                </p>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </div>
+  </section>
+  <Tecnology />
+  <!-- precios -->
+  <Price />
+  <Recomendation />
+</Layout>

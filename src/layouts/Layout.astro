@@ -1,0 +1,86 @@
+---
+import "../styles/global.css";
+import Navbar from "../components/Navbar.astro";
+import Footer from "../components/Footer.astro";
+
+import { ClientRouter } from "astro:transitions";
+
+interface Props {
+  title?: string;
+  description?: string;
+  /** Imagen al compartir el enlace (ruta en /public). Por defecto, la del hero del home */
+  image?: string;
+  imageAlt?: string;
+  /** Páginas en construcción o sin contenido propio: que Google no las indexe */
+  noindex?: boolean;
+}
+
+const OG_DEFECTO = "/img/og/home.jpg"; // 1200×630
+
+const {
+  title = "Deleic | Medicina estética en León",
+  description = "Centro de medicina estética, depilación láser y tratamientos faciales y corporales en León.",
+  image = OG_DEFECTO,
+  imageAlt = "Tratamiento facial en Deleic, León",
+  noindex = false,
+} = Astro.props;
+
+// Canonical solo si hay `site` configurado en astro.config
+const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : undefined;
+// Las redes exigen URL absoluta para la imagen
+const ogImage = new URL(image, Astro.site ?? Astro.url).href;
+---
+
+<html lang="es" data-theme="light">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="/favicon.ico" />
+    <!-- viewport-fit=cover habilita env(safe-area-inset-*) en iPhone -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="theme-color" content="#620303" />
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    {noindex && <meta name="robots" content="noindex, follow" />}
+    {canonical && <link rel="canonical" href={canonical} />}
+
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="es_ES" />
+    <meta property="og:site_name" content="Deleic" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    {canonical && <meta property="og:url" content={canonical} />}
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:alt" content={imageAlt} />
+    {
+      image === OG_DEFECTO && (
+        <>
+          <meta property="og:image:width" content="1200" />
+          <meta property="og:image:height" content="630" />
+        </>
+      )
+    }
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <!-- Extras por página (p. ej. fuentes que solo usa esa página) -->
+    <slot name="head" />
+
+    <ClientRouter />
+  </head>
+  <body class="bg-base-200">
+    <Navbar />
+    <main class="pila container mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 text-white">
+      <slot />
+    </main>
+    <Footer />
+
+    <!-- Aparición al hacer scroll (clases .reveal en global.css) -->
+    <script>
+      import "../scripts/reveal.ts";
+    </script>
+  </body>
+</html>

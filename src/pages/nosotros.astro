@@ -1,0 +1,494 @@
+---
+// src/pages/nosotros.astro
+// Basada en https://www.deleic.es/conocenos/ (carta de Leila Carreira)
+import Layout from "../layouts/Layout.astro";
+import ServicesGrid from "../components/ServicesGrid.astro";
+import Ubication from "../components/Ubication.astro";
+import { DIRECCION, TELEFONO, whatsapp } from "../data/contacto";
+
+const APERTURA = 2019;
+const LEMA = "La calidad es el único camino para el crecimiento";
+
+const hitos = [
+  {
+    anio: String(APERTURA),
+    titulo: "Abrimos en León",
+    texto: "Después de mucho esfuerzo, el sueño de Deleic toma forma.",
+  },
+  {
+    anio: "Siempre",
+    titulo: "Formación constante",
+    texto:
+      "Cosmética profesional, técnicas actualizadas y diagnóstico de la piel.",
+  },
+  {
+    anio: "Hoy",
+    titulo: "Un equipo comprometido",
+    texto: "Bien formado, que une calidad técnica y trato humano.",
+  },
+];
+
+const valores = [
+  {
+    icono: "heart",
+    titulo: "Cercanía",
+    texto:
+      "Tratar a cada persona como nos gustaría que nos tratasen, en un espacio que se sienta tan tuyo como nuestro.",
+  },
+  {
+    icono: "shield",
+    titulo: "Honestidad",
+    texto:
+      "Sin ventas por presión ni promesas vacías. Solo recomendamos lo que tu piel necesita de verdad.",
+  },
+  {
+    icono: "flask",
+    titulo: "Cuidado con evidencia",
+    texto:
+      "Tratamientos seleccionados con criterio, lejos de la publicidad engañosa y los «fakes» en cosmética.",
+  },
+  {
+    icono: "route",
+    titulo: "Acompañamiento",
+    texto:
+      "Rutinas realistas y seguimiento constante, con resultados que respetan tu ritmo y tu piel.",
+  },
+];
+
+// Iconos (trazo, 24x24). Heredan el color con currentColor
+const icons: Record<string, string> = {
+  heart:
+    '<path d="M12 20s-7-4.4-7-10a4 4 0 017-2.6A4 4 0 0119 10c0 5.6-7 10-7 10z"/>',
+  shield:
+    '<path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3z"/><path d="M9 12l2 2 4-4"/>',
+  flask:
+    '<path d="M9 3h6M10 3v6l-5 9a2 2 0 001.8 3h10.4a2 2 0 001.8-3l-5-9V3"/><path d="M7.5 15h9"/>',
+  route:
+    '<circle cx="6" cy="19" r="2"/><circle cx="18" cy="5" r="2"/><path d="M8 19h8a3 3 0 000-6H8a3 3 0 010-6h8"/>',
+  calendar:
+    '<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/>',
+  pin: '<path d="M12 21s-7-6.2-7-11a7 7 0 0114 0c0 4.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/>',
+  sparkles:
+    '<path d="M12 3l1.8 4.7L18.5 9.5l-4.7 1.8L12 16l-1.8-4.7L5.5 9.5l4.7-1.8L12 3z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8L19 15z"/>',
+};
+
+const descripcion = `Deleic es un centro médico-estético en León fundado en ${APERTURA} por Leila Carreira. Cercanía, rigor y resultados reales en depilación láser, medicina estética y tratamientos faciales y corporales.`;
+
+// Schema: página "Sobre nosotros" con el negocio y su fundadora
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "AboutPage",
+  name: "Nosotros · Deleic",
+  description: descripcion,
+  mainEntity: {
+    "@type": "HealthAndBeautyBusiness",
+    name: "Deleic",
+    slogan: LEMA,
+    foundingDate: String(APERTURA),
+    telephone: "+34987027906",
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: DIRECCION.calle,
+      postalCode: DIRECCION.cp,
+      addressLocality: DIRECCION.ciudad,
+      addressCountry: "ES",
+    },
+    founder: {
+      "@type": "Person",
+      name: "Leila Carreira López",
+      jobTitle: "Fundadora y responsable de Deleic",
+      image: "/img/nosotros/leila-carreira.webp",
+    },
+  },
+};
+---
+
+<Layout
+  title="Nosotros: centro médico-estético en León desde 2019 | Deleic"
+  description={descripcion}
+  image="/img/nosotros/leila-carreira.webp"
+  imageAlt="Leila Carreira, fundadora de Deleic"
+>
+  <!-- Fuente de la firma alojada en la propia web (licencia SIL OFL): pedirla a
+       Google Fonts enviaría la IP del visitante a Google sin su consentimiento -->
+  <Fragment slot="head">
+    <link
+      rel="preload"
+      href="/fonts/mrs-saint-delafield-latin.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <style is:inline>
+      @font-face {
+        font-family: "Mrs Saint Delafield";
+        font-style: normal;
+        font-weight: 400;
+        font-display: swap;
+        src: url("/fonts/mrs-saint-delafield-latin.woff2") format("woff2");
+      }
+    </style>
+  </Fragment>
+
+  <div class="pila text-secondary-content">
+    <!-- Hero -->
+    <section class="seccion">
+      <div
+        class="grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-5 items-center"
+      >
+        <div class="md:col-span-7">
+          <span
+            class="text-sm font-semibold tracking-widest uppercase text-primary"
+          >
+            Nosotros
+          </span>
+          <h1
+            class="mt-3 text-4xl sm:text-5xl font-semibold tracking-tight text-balance"
+          >
+            Deleic siempre ha sido <span class="text-primary">mi sueño</span>
+          </h1>
+          <p
+            class="mt-4 max-w-xl text-lg text-secondary-content/70 text-pretty"
+          >
+            Un centro médico-estético en León donde la calidad técnica y el
+            trato humano van de la mano. Cercanía, rigor y resultados reales
+            desde {APERTURA}.
+          </p>
+
+          <div class="mt-8 flex flex-wrap gap-3">
+            <a
+              href="#historia"
+              class="btn btn-primary h-12 rounded-full border-0 px-6"
+            >
+              Conoce nuestra historia
+            </a>
+            <a
+              href={whatsapp()}
+              target="_blank"
+              rel="noopener"
+              class="btn h-12 rounded-full border-base-300 bg-base-100 px-6 text-secondary-content shadow-none hover:bg-base-200"
+            >
+              Reservar cita
+            </a>
+          </div>
+
+          <ul
+            class="mt-12 flex flex-wrap gap-x-8 gap-y-4 text-[12px] md:text-sm"
+          >
+            {
+              [
+                { icono: "calendar", texto: `Desde ${APERTURA}` },
+                { icono: "pin", texto: "En el centro de León" },
+                { icono: "sparkles", texto: "Sin ventas por presión" },
+              ].map((d) => (
+                <li class="flex items-center gap-2">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="w-6 h-6 shrink-0 text-primary"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                    set:html={icons[d.icono]}
+                  />
+                  <span class="uppercase tracking-wide text-secondary-content/70">
+                    {d.texto}
+                  </span>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+
+        <figure
+          class="relative md:col-span-5 mx-auto w-full max-w-sm md:max-w-none"
+        >
+          <img
+            src="/img/nosotros/leila-carreira.webp"
+            width="768"
+            height="960"
+            alt="Leila Carreira, fundadora de Deleic"
+            class="aspect-4/5 w-full rounded-3xl object-cover object-top shadow-2xl shadow-black/10"
+          />
+          <figcaption
+            class="absolute -bottom-5 left-4 right-4 sm:-left-6 sm:right-auto flex items-center gap-3 rounded-2xl bg-base-100/90 px-5 py-4 shadow-xl ring-1 ring-black/5 backdrop-blur-md"
+          >
+            <span
+              class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary text-sm font-semibold text-primary-content"
+              aria-hidden="true">LC</span
+            >
+            <span>
+              <span class="block font-semibold leading-tight"
+                >Leila Carreira</span
+              >
+              <span class="block text-sm text-secondary-content/60"
+                >Fundadora de Deleic</span
+              >
+            </span>
+          </figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- Historia: la carta de Leila -->
+    <section
+      id="historia"
+      class="reveal scroll-mt-24 rounded-4xl bg-base-100 seccion-card"
+    >
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
+        <div class="lg:col-span-4">
+          <div class="lg:sticky lg:top-28">
+            <span
+              class="text-sm font-semibold tracking-widest uppercase text-primary"
+            >
+              Nuestra historia
+            </span>
+            <h2
+              class="mt-3 text-3xl sm:text-4xl font-semibold tracking-tight text-balance"
+            >
+              Cercanía, rigor y resultados reales
+            </h2>
+            <p class="mt-4 text-secondary-content/70">
+              Una carta de Leila Carreira, fundadora de Deleic.
+            </p>
+
+            <!-- Línea de tiempo -->
+            <ol class="relative mt-10 space-y-8 border-l border-black/10 pl-6">
+              {
+                hitos.map((h, i) => (
+                  <li class="relative">
+                    <span
+                      class:list={[
+                        "absolute -left-[31px] top-1 h-3.5 w-3.5 rounded-full",
+                        i === hitos.length - 1
+                          ? "border-2 border-primary bg-base-100"
+                          : "bg-primary",
+                      ]}
+                      aria-hidden="true"
+                    />
+                    <span class="text-xs font-semibold uppercase tracking-widest text-primary">
+                      {h.anio}
+                    </span>
+                    <p class="mt-1 font-semibold">{h.titulo}</p>
+                    <p class="mt-1 text-sm leading-relaxed text-secondary-content/60">
+                      {h.texto}
+                    </p>
+                  </li>
+                ))
+              }
+            </ol>
+          </div>
+        </div>
+
+        <article
+          class="lg:col-span-8 space-y-6 text-lg leading-relaxed text-secondary-content/80 text-pretty"
+        >
+          <p
+            class="first-letter:float-left first-letter:mr-3 first-letter:font-serif first-letter:text-7xl first-letter:leading-[0.8] first-letter:text-primary"
+          >
+            Un sueño que, después de mucho esfuerzo, conseguimos darle forma en{
+              " "
+            }
+            {APERTURA}. Siempre quise crear algo especial: un centro de estética
+            en León donde ofrecer estética avanzada con tratamientos faciales y
+            corporales de calidad, seleccionados con criterio y pensados para
+            cubrir de verdad las necesidades de cada piel. Mi propósito era
+            claro desde el primer día: <strong
+              class="font-semibold text-secondary-content"
+              >tratar a cada persona como me gustaría que me tratasen a mí</strong
+            >, crear un espacio cercano que se sienta tan vuestro como mío, y
+            trabajar con honestidad, escucha y profesionalidad.
+          </p>
+          <p>
+            Aunque ya contaba con estudios de estética superior y experiencia,
+            sabía que quería hacerlo lo mejor posible. Por eso he dedicado años
+            a formarme en cosmética profesional, técnicas actualizadas y
+            diagnóstico de la piel, estudiando en profundidad para entender lo
+            que realmente necesitáis y poder recomendar solo lo adecuado.
+          </p>
+
+          <blockquote
+            class="my-10 border-l-4 border-primary bg-base-200 rounded-r-2xl px-6 py-5 text-xl font-medium text-secondary-content"
+          >
+            Aquí no hay ventas por presión ni promesas vacías; hay cuidado de la
+            piel con evidencia, resultados y un acompañamiento cercano.
+          </blockquote>
+
+          <p>
+            Estoy cansada de la publicidad engañosa y de los «fakes» en
+            cosmética. Mi misión fue —y sigue siendo— construir un concepto
+            diferente en León: un lugar donde amar la estética desde la
+            coherencia, la sensibilidad y el respeto por cada proceso. Así nació
+            Deleic, con mi ciudad adoptiva como punto de partida, y hoy podemos
+            decir que mantenemos intacto el propósito con el que abrimos
+            nuestras puertas: <strong
+              class="font-semibold text-secondary-content"
+              >ayudarte a sentirte mejor por dentro y por fuera</strong
+            > con tratamientos faciales y corporales personalizados, rutinas realistas
+            y seguimiento constante.
+          </p>
+          <p>
+            Una de las responsables de que Deleic exista ya no forma parte del
+            equipo, y estaré siempre agradecida; sin ella, Deleic seguiría
+            siendo un sueño. Hoy cuento con un equipo maravilloso, bien formado
+            y comprometido, que me ayuda cada día a mejorar y a sostener este
+            proyecto tal y como lo imaginé: un centro de estética en León donde
+            la calidad técnica y el trato humano van de la mano.
+          </p>
+          <p>
+            A toda la familia que se ha ido sumando y a quienes vendrán: me
+            encanta lo que hago y lo hago con cariño, rigor y amor por la
+            profesión. Seguiré formándome, corrigiéndome y dando el 100% en cada
+            sesión para que Deleic continúe creciendo como referencia en
+            estética avanzada en León, siempre con transparencia, cercanía y
+            resultados que respetan tu ritmo y tu piel.
+          </p>
+
+          <footer class="pt-6">
+            <p class="text-secondary-content">Gracias.</p>
+            <p
+              class="mt-2 text-6xl leading-none text-primary"
+              style="font-family: 'Mrs Saint Delafield', cursive;"
+            >
+              Leila Carreira
+            </p>
+            <p
+              class="mt-2 text-sm uppercase tracking-widest text-secondary-content/50"
+            >
+              Fundadora de Deleic
+            </p>
+          </footer>
+        </article>
+      </div>
+    </section>
+
+    <!-- Lema -->
+    <section
+      class="reveal-scale grid grid-cols-1 md:grid-cols-12 overflow-hidden rounded-4xl bg-linear-to-b md:bg-linear-to-r from-primary from-40% to-primary-oscuro text-primary-content"
+    >
+      <div class="relative md:col-span-5 min-h-72">
+        <img
+          src="/img/nosotros/lema.webp"
+          width="1066"
+          height="1600"
+          alt="Leila Carreira realizando un tratamiento en Deleic"
+          loading="lazy"
+          class="absolute inset-0 h-full w-full object-cover object-[50%_40%]"
+        />
+        <!-- Funde la foto con el fondo burdeos -->
+        <div
+          class="absolute inset-0 bg-linear-to-b md:bg-linear-to-r from-transparent from-55% to-primary"
+          aria-hidden="true"
+        >
+        </div>
+      </div>
+
+      <div class="relative md:col-span-7 px-6 py-12 sm:px-12 sm:py-16 lg:px-16">
+        <span
+          class="pointer-events-none absolute right-6 top-0 font-serif text-[12rem] leading-none text-primary-content/10 select-none"
+          aria-hidden="true">”</span
+        >
+
+        <span
+          class="text-sm font-semibold tracking-widest uppercase text-primary-content/60"
+        >
+          Nuestra filosofía
+        </span>
+
+        <blockquote class="relative mt-6">
+          <p
+            class="text-3xl sm:text-4xl lg:text-5xl font-semibold leading-[1.1] tracking-tight text-balance"
+          >
+            La <em class="font-serif font-normal italic">calidad</em> es el único
+            camino para el crecimiento
+          </p>
+          <footer class="mt-8 flex items-center gap-4">
+            <span class="h-px w-10 bg-primary-content/40" aria-hidden="true"
+            ></span>
+            <cite class="not-italic">
+              <span
+                class="block text-4xl leading-none"
+                style="font-family: 'Mrs Saint Delafield', cursive;"
+                >Leila Carreira</span
+              >
+              <span
+                class="mt-1 block text-xs uppercase tracking-widest text-primary-content/60"
+                >Fundadora de Deleic</span
+              >
+            </cite>
+          </footer>
+        </blockquote>
+
+        <ul
+          class="relative mt-10 grid grid-cols-3 gap-4 border-t border-primary-content/15 pt-8"
+        >
+          {
+            ["Calidad técnica", "Trato humano", "Resultados reales"].map(
+              (pilar) => (
+                <li class="text-xs sm:text-sm font-semibold uppercase tracking-wider text-primary-content/80">
+                  {pilar}
+                </li>
+              ),
+            )
+          }
+        </ul>
+      </div>
+    </section>
+
+    <!-- Valores -->
+    <section class="seccion">
+      <div class="reveal max-w-2xl">
+        <span
+          class="text-sm font-semibold tracking-widest uppercase text-primary"
+        >
+          Lo que nos mueve
+        </span>
+        <h2
+          class="mt-3 text-3xl sm:text-4xl font-semibold tracking-tight text-balance"
+        >
+          Estética desde la coherencia y el respeto
+        </h2>
+      </div>
+
+      <div
+        class="reveal-stagger mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5"
+      >
+        {
+          valores.map((v) => (
+            <div class="group rounded-3xl bg-base-100 p-6 ring-1 ring-black/5 transition duration-300 motion-safe:hover:-translate-y-1 hover:shadow-xl hover:shadow-black/5">
+              <span class="flex h-12 w-12 items-center justify-center rounded-2xl bg-primary/8 text-primary transition-colors group-hover:bg-primary group-hover:text-primary-content">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="w-6 h-6"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                  set:html={icons[v.icono]}
+                />
+              </span>
+              <h3 class="mt-5 text-lg font-semibold">{v.titulo}</h3>
+              <p class="mt-2 text-sm leading-relaxed text-secondary-content/70">
+                {v.texto}
+              </p>
+            </div>
+          ))
+        }
+      </div>
+    </section>
+
+    <!-- Servicios -->
+    <ServicesGrid />
+
+    <!-- Ubicación -->
+    <Ubication />
+  </div>
+
+  <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+</Layout>

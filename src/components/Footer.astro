@@ -1,0 +1,156 @@
+---
+import { DIRECCION, HORARIO, TELEFONO, whatsapp } from "../data/contacto";
+
+// El footer enlaza todas las páginas del sitio: algunas (Ultrasonix,
+// Hollywood Peel, Contacto) no están en el menú principal
+const columnas = [
+  {
+    titulo: "Tratamientos",
+    enlaces: [
+      { href: "/depilacion-laser/", nombre: "Depilación láser" },
+      { href: "/facial-corporal/", nombre: "Facial y corporal" },
+      { href: "/medicina-estetica/", nombre: "Medicina estética" },
+      { href: "/micropigmentacion/", nombre: "Micropigmentación" },
+      { href: "/ultrasonix/", nombre: "Ultrasonix" },
+      { href: "/hollywood-peel/", nombre: "Hollywood Peel" },
+    ],
+  },
+  {
+    titulo: "Deleic",
+    enlaces: [
+      { href: "/metodo-deleic/", nombre: "Método Deleic" },
+      { href: "/promociones/", nombre: "Promociones" },
+      { href: "/nosotros/", nombre: "Nosotros" },
+      { href: "/contacto/", nombre: "Contacto" },
+    ],
+  },
+];
+
+const legales = [
+  { href: "/aviso-legal/", nombre: "Aviso legal" },
+  { href: "/politica-de-privacidad-y-cookies/", nombre: "Privacidad y cookies" },
+];
+
+const year = new Date().getFullYear();
+---
+
+<footer class="relative isolate overflow-hidden bg-secondary-content text-base-100">
+  <div
+    aria-hidden="true"
+    class="absolute -top-40 -right-32 -z-10 w-96 h-96 rounded-full bg-primary/40 blur-3xl"
+  >
+  </div>
+
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8 pt-14 sm:pt-16 pb-8">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-10">
+      <div class="lg:col-span-3">
+        <a href="/" class="inline-block" aria-label="Deleic, ir al inicio">
+          <img
+            src="/img/deleicLogo.webp"
+            alt="Deleic"
+            loading="lazy"
+            class="h-14 w-auto brightness-0 invert"
+          />
+        </a>
+        <p class="mt-4 max-w-xs text-sm leading-relaxed text-base-100/60">
+          Centro de medicina estética y depilación láser en León. Precisión
+          médica para tu mejor versión.
+        </p>
+        <a
+          href={whatsapp()}
+          target="_blank"
+          rel="noopener"
+          class="btn btn-primary mt-6 h-11 rounded-full px-6 border-0"
+        >
+          Reservar por WhatsApp
+        </a>
+      </div>
+
+      <div class="grid grid-cols-2 gap-10 lg:col-span-4">
+        {
+          columnas.map((col) => (
+            <nav aria-label={col.titulo}>
+              <p class="text-[11px] font-semibold uppercase tracking-[0.2em] text-base-100/40">
+                {col.titulo}
+              </p>
+              <ul class="mt-4 space-y-2.5 text-sm">
+                {col.enlaces.map((l) => (
+                  <li>
+                    <a
+                      href={l.href}
+                      class="text-base-100/75 transition-colors hover:text-base-100"
+                    >
+                      {l.nombre}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          ))
+        }
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-10 sm:col-span-2 lg:col-span-5">
+        <div>
+          <p class="text-[11px] font-semibold uppercase tracking-[0.2em] text-base-100/40">
+            Contacto
+          </p>
+          <address class="mt-4 space-y-2.5 text-sm not-italic text-base-100/75">
+            <a
+              href={DIRECCION.maps}
+              target="_blank"
+              rel="noopener"
+              class="block transition-colors hover:text-base-100"
+            >
+              {DIRECCION.calle}<br />{DIRECCION.cp} {DIRECCION.ciudad}
+            </a>
+            <a href={TELEFONO.href} class="block transition-colors hover:text-base-100">
+              {TELEFONO.visible}
+            </a>
+          </address>
+        </div>
+
+        <div>
+          <p class="text-[11px] font-semibold uppercase tracking-[0.2em] text-base-100/40">
+            Horario
+          </p>
+          <dl class="mt-4 space-y-1.5 text-sm text-base-100/75">
+            {
+              HORARIO.invierno
+                .filter((f) => f.horas)
+                .map((f) => (
+                  <div class="flex justify-between gap-4">
+                    <dt>{f.dias}</dt>
+                    <dd class="tabular-nums">{f.horas}</dd>
+                  </div>
+                ))
+            }
+          </dl>
+          <p class="mt-2 text-xs text-base-100/40">
+            Verano (15 jun – 15 sep): L–V 10:00 – 19:00
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="mt-12 flex flex-col-reverse gap-3 border-t border-base-100/10 pt-6 text-xs text-base-100/40 sm:flex-row sm:items-center sm:justify-between"
+    >
+      <p>© {year} Deleic. Todos los derechos reservados.</p>
+      <nav aria-label="Información legal">
+        <ul class="flex flex-wrap gap-x-5 gap-y-2">
+          {
+            legales.map((l) => (
+              <li>
+                <a href={l.href} class="transition-colors hover:text-base-100">
+                  {l.nombre}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+      <p>Diseño y desarrollo: Gabriel Reyes</p>
+    </div>
+  </div>
+</footer>

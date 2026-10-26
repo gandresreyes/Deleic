@@ -1,0 +1,135 @@
+---
+// src/components/AntesDespues.astro
+// Comparador antes/después. Mismo efecto que el diff de daisyUI (que usa
+// `resize: horizontal` y no se puede arrastrar con el dedo en móvil).
+// El arrastre lo escucha el propio contenedor con pointer events; el
+// <input type="range"> queda oculto solo para teclado y lectores de pantalla.
+// No escuches el arrastre en el input: iOS Safari se queda con los toques
+// de los range y no llegan los pointermove
+interface Imagen {
+  imagen: string;
+  alt: string;
+}
+interface Props {
+  antes: Imagen;
+  despues: Imagen;
+  class?: string;
+}
+
+const { antes, despues, class: className } = Astro.props;
+---
+
+<div
+  class:list={[
+    "comparador relative aspect-2/1 overflow-hidden rounded-3xl bg-base-200 select-none cursor-ew-resize touch-pan-y",
+    className,
+  ]}
+  style="--pos: 50%;"
+>
+  <!-- Después de fondo; antes encima, recortado hasta la posición del tirador -->
+  <img
+    src={despues.imagen}
+    alt={despues.alt}
+    loading="lazy"
+    draggable="false"
+    class="absolute inset-0 w-full h-full object-cover pointer-events-none"
+  />
+  <img
+    src={antes.imagen}
+    alt={antes.alt}
+    loading="lazy"
+    draggable="false"
+    class="absolute inset-0 w-full h-full object-cover pointer-events-none"
+    style="clip-path: inset(0 calc(100% - var(--pos)) 0 0);"
+  />
+
+  <span
+    class="absolute top-4 left-4 rounded-full bg-base-100/90 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-secondary-content pointer-events-none"
+  >
+    Antes
+  </span>
+  <span
+    class="absolute top-4 right-4 rounded-full bg-base-100/90 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-secondary-content pointer-events-none"
+  >
+    Después
+  </span>
+
+  <!-- Línea y tirador (solo visual) -->
+  <div
+    class="absolute inset-y-0 left-(--pos) w-0.5 -translate-x-1/2 bg-white shadow-[0_0_8px_rgba(0,0,0,0.4)] pointer-events-none"
+  >
+    <span
+      class="comparador-tirador absolute top-1/2 left-1/2 -translate-1/2 w-11 h-11 rounded-full bg-white text-primary shadow-lg flex items-center justify-center transition-[outline] outline-offset-2"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="w-5 h-5"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        aria-hidden="true"
+      >
+        <path d="M9 6l-6 6 6 6M15 6l6 6-6 6"></path>
+      </svg>
+    </span>
+  </div>
+
+  <!-- Control para teclado y lectores de pantalla. El arrastre lo gestiona el
+       contenedor: touch-pan-y deja hacer scroll vertical en móvil y reserva el
+       gesto horizontal para el comparador -->
+  <input
+    type="range"
+    min="0"
+    max="100"
+    value="50"
+    step="1"
+    aria-label="Desliza para comparar antes y después"
+    class="sr-only"
+  />
+</div>
+
+<style>
+  /* Anillo de foco en el tirador al usar el teclado */
+  .comparador:has(input:focus-visible) .comparador-tirador {
+    outline: 2px solid var(--color-primary);
+  }
+</style>
+
+<script>
+  function iniciarComparadores() {
+    document.querySelectorAll<HTMLElement>(".comparador").forEach((el) => {
+      const input = el.querySelector<HTMLInputElement>("input[type=range]");
+      if (!input || el.dataset.listo) return;
+      el.dataset.listo = "1";
+
+      const pintar = (valor: number) => {
+        input.value = String(valor);
+        el.style.setProperty("--pos", `${valor}%`);
+      };
+
+      // Teclado y lectores de pantalla
+      input.addEventListener("input", () => pintar(Number(input.value)));
+
+      // Dedo y ratón en cualquier punto de la imagen
+      const desdePuntero = (e: PointerEvent) => {
+        const r = el.getBoundingClientRect();
+        const pct = ((e.clientX - r.left) / r.width) * 100;
+        pintar(Math.round(Math.min(100, Math.max(0, pct))));
+      };
+      el.addEventListener("pointerdown", (e) => {
+        if (e.pointerType === "mouse" && e.button !== 0) return;
+        el.setPointerCapture(e.pointerId);
+        desdePuntero(e);
+      });
+      el.addEventListener("pointermove", (e) => {
+        if (el.hasPointerCapture(e.pointerId)) desdePuntero(e);
+      });
+    });
+  }
+
+  // Con ClientRouter hay que volver a enlazarlo en cada navegación
+  document.addEventListener("astro:page-load", iniciarComparadores);
+</script>

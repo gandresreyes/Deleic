@@ -1,0 +1,167 @@
+---
+// src/pages/aviso-legal.astro
+// Aviso legal (art. 10 de la Ley 34/2002, LSSI-CE). Los datos del titular
+// salen de TITULAR en contacto.ts. Texto propio: no copiar el de la web
+// anterior, que pertenece a la consultora que lo redactó
+import Layout from "../layouts/Layout.astro";
+import PaginaLegal from "../components/PaginaLegal.astro";
+import { DIRECCION, EMAIL, TELEFONO, TITULAR } from "../data/contacto";
+
+const indice = [
+  { id: "titular", titulo: "Titular del sitio web" },
+  { id: "objeto", titulo: "Objeto y condiciones de uso" },
+  { id: "informacion", titulo: "Información sobre tratamientos y precios" },
+  { id: "propiedad", titulo: "Propiedad intelectual e industrial" },
+  { id: "enlaces", titulo: "Enlaces y servicios de terceros" },
+  { id: "responsabilidad", titulo: "Responsabilidad" },
+  { id: "datos", titulo: "Protección de datos y cookies" },
+  { id: "ley", titulo: "Legislación aplicable y jurisdicción" },
+];
+---
+
+<Layout
+  title="Aviso legal | Deleic"
+  description="Aviso legal del sitio web de Deleic, centro de estética en León: datos del titular y condiciones de uso."
+  noindex
+>
+  <PaginaLegal titulo="Aviso legal" actualizado="26 de octubre de 2026" indice={indice}>
+    <h2 id="titular">1. Titular del sitio web</h2>
+    <p>
+      En cumplimiento del artículo 10 de la Ley 34/2002, de 11 de julio, de
+      Servicios de la Sociedad de la Información y de Comercio Electrónico
+      (LSSI-CE), te informamos de los datos del titular de este sitio web:
+    </p>
+    <dl>
+      <dt>Titular</dt>
+      <dd>{TITULAR.nombre}</dd>
+      <dt>Nombre comercial</dt>
+      <dd>{TITULAR.nombreComercial}</dd>
+      <dt>NIF</dt>
+      <dd>{TITULAR.nif}</dd>
+      <dt>Domicilio</dt>
+      <dd>{TITULAR.domicilio}</dd>
+      <dt>Centro</dt>
+      <dd>{DIRECCION.calle}, {DIRECCION.cp} {DIRECCION.ciudad}</dd>
+      <dt>Teléfono</dt>
+      <dd><a href={TELEFONO.href}>{TELEFONO.visible}</a></dd>
+      <dt>Correo electrónico</dt>
+      <dd><a href={`mailto:${EMAIL}`}>{EMAIL}</a></dd>
+      {
+        TITULAR.registroSanitario && (
+          <>
+            <dt>Registro sanitario</dt>
+            <dd>{TITULAR.registroSanitario}</dd>
+          </>
+        )
+      }
+      <dt>Sitio web</dt>
+      <dd>www.deleic.es</dd>
+    </dl>
+    <p>
+      En este aviso, «Deleic» o «nosotros» se refiere al titular indicado, y
+      «usuario» a cualquier persona que visite el sitio web.
+    </p>
+
+    <h2 id="objeto">2. Objeto y condiciones de uso</h2>
+    <p>
+      Este aviso regula el acceso y el uso del sitio web www.deleic.es, cuya
+      finalidad es informar sobre los servicios del centro y facilitar el
+      contacto. El acceso es libre y gratuito, salvo el coste de la conexión
+      a internet de cada usuario.
+    </p>
+    <p>Al usar el sitio web, te comprometes a:</p>
+    <ul>
+      <li>Utilizarlo de forma lícita, de buena fe y conforme a este aviso.</li>
+      <li>
+        No realizar acciones que puedan dañar, inutilizar o sobrecargar el
+        sitio web o impedir su normal funcionamiento.
+      </li>
+      <li>
+        No introducir ni difundir virus u otros programas que puedan causar
+        daños en los sistemas de Deleic o de terceros.
+      </li>
+    </ul>
+
+    <h2 id="informacion">3. Información sobre tratamientos y precios</h2>
+    <p>
+      Los contenidos sobre tratamientos tienen carácter informativo y general.
+      No sustituyen la valoración personalizada de un profesional: cada
+      tratamiento se indica, o no, tras valorar tu caso en el centro, y los
+      resultados pueden variar de una persona a otra.
+    </p>
+    <p>
+      Los precios y las promociones publicados son orientativos y pueden
+      cambiar. Las promociones están sujetas a las condiciones indicadas en
+      cada una. Te confirmaremos el precio final antes de cualquier
+      tratamiento.
+    </p>
+
+    <h2 id="propiedad">4. Propiedad intelectual e industrial</h2>
+    <p>
+      Los textos, fotografías, logotipos, diseño y código de este sitio web
+      pertenecen a Deleic o se utilizan con autorización de sus titulares, y
+      están protegidos por la normativa de propiedad intelectual e
+      industrial.
+    </p>
+    <p>
+      No está permitido reproducirlos, distribuirlos, transformarlos ni
+      comunicarlos públicamente, total o parcialmente, sin autorización
+      previa y por escrito de Deleic, salvo para uso personal y privado. Sí
+      puedes enlazar libremente a cualquier página de este sitio web.
+    </p>
+    <p>
+      Las marcas y nombres de productos o equipos de terceros que aparecen en
+      el sitio web pertenecen a sus respectivos titulares y se citan solo con
+      fines informativos.
+    </p>
+
+    <h2 id="enlaces">5. Enlaces y servicios de terceros</h2>
+    <p>
+      El sitio web incluye enlaces a servicios de terceros, como WhatsApp o
+      Google Maps. Deleic no controla esos servicios ni es responsable de sus
+      contenidos, de su disponibilidad ni de sus condiciones, que se rigen por
+      las de cada proveedor.
+    </p>
+    <p>
+      Si detectas en el sitio web algún enlace o contenido que consideres
+      ilícito o inadecuado, escríbenos a{" "}
+      <a href={`mailto:${EMAIL}`}>{EMAIL}</a> y lo revisaremos con la mayor
+      rapidez posible.
+    </p>
+
+    <h2 id="responsabilidad">6. Responsabilidad</h2>
+    <p>
+      Trabajamos para que el sitio web funcione correctamente y para que su
+      información sea exacta y esté actualizada. Aun así, no podemos
+      garantizar que esté disponible en todo momento ni que no contenga
+      errores, y podemos modificar, actualizar o retirar sus contenidos en
+      cualquier momento.
+    </p>
+    <p>
+      Deleic no responde de los daños derivados de interrupciones o fallos
+      técnicos ajenos a su control, ni del uso del sitio web contrario a este
+      aviso.
+    </p>
+
+    <h2 id="datos">7. Protección de datos y cookies</h2>
+    <p>
+      La información sobre cómo tratamos tus datos personales y sobre el uso
+      de cookies está en la{" "}
+      <a href="/politica-de-privacidad-y-cookies/">
+        Política de privacidad y cookies
+      </a>.
+    </p>
+
+    <h2 id="ley">8. Legislación aplicable y jurisdicción</h2>
+    <p>
+      Este aviso se rige por la legislación española. Si eres consumidor,
+      serán competentes los juzgados y tribunales de tu domicilio. En los
+      demás casos, las partes se someten a los juzgados y tribunales de León.
+    </p>
+    <p>
+      Podemos actualizar este aviso para adaptarlo a cambios legales o del
+      sitio web. La versión vigente es siempre la publicada en esta página,
+      con la fecha de su última actualización.
+    </p>
+  </PaginaLegal>
+</Layout>

@@ -1,0 +1,43 @@
+---
+// src/components/RevocarMapa.astro
+// Botón para retirar el permiso del mapa de Google (art. 7.3 RGPD: retirar el
+// consentimiento debe ser tan fácil como darlo). Se usa en la política de cookies
+---
+
+<div data-revocar-mapa class="mt-5 flex flex-wrap items-center gap-4">
+  <button
+    type="button"
+    class="px-4 sm:px-6 py-3 rounded-full bg-base-100 text-secondary-content border border-base-300 text-sm font-bold cursor-pointer disabled:cursor-default disabled:opacity-50"
+  >
+    Dejar de cargar el mapa
+  </button>
+  <span role="status" class="text-sm text-secondary-content/60"></span>
+</div>
+
+<script>
+  import { permisoMapa, retirarPermisoMapa } from "../scripts/mapa";
+
+  function iniciarRevocar() {
+    const el = document.querySelector<HTMLElement>("[data-revocar-mapa]");
+    const boton = el?.querySelector("button");
+    const estado = el?.querySelector<HTMLElement>("[role=status]");
+    if (!boton || !estado) return;
+
+    const pintar = () => {
+      const activo = permisoMapa();
+      boton.disabled = !activo;
+      estado.textContent = activo
+        ? "Ahora el mapa se carga automáticamente."
+        : "El mapa no se carga hasta que lo pides.";
+    };
+
+    boton.addEventListener("click", () => {
+      retirarPermisoMapa();
+      pintar();
+    });
+    pintar();
+  }
+
+  // Con ClientRouter hay que volver a enlazarlo en cada navegación
+  document.addEventListener("astro:page-load", iniciarRevocar);
+</script>

@@ -1,0 +1,463 @@
+[
+  {
+    "id": "diagnostico-facial-corporal",
+    "slug": "diagnostico-facial-corporal",
+    "nombre": "Diagnóstico facial-corporal",
+    "categoria": "Diagnóstico",
+    "eyebrow": "PRIMER PASO",
+    "tituloHero": "Empieza con un diagnóstico gratuito",
+    "subtituloHero": "Antes de cualquier tratamiento, valoramos tu piel para recomendarte lo que realmente necesitas.",
+    "descripcionCorta": "Valoración gratuita para identificar el tratamiento más adecuado para tu piel.",
+    "queEs": "Es el punto de partida de cualquier tratamiento facial o corporal en Deleic. Analizamos tu tipo de piel, tus objetivos y tu historial antes de recomendarte un protocolo, para no aplicarte un tratamiento genérico que no se ajuste a tu caso.",
+    "beneficios": [
+      "Gratuito y sin compromiso",
+      "Recomendación personalizada, no genérica",
+      "Detecta contraindicaciones antes de empezar"
+    ],
+    "paraQuienEs": "Para cualquier persona que no sepa qué tratamiento necesita o que quiera confirmar que el que tiene en mente es el adecuado para su piel.",
+    "imagen": "/img/facialCorporal/diagnostico.webp",
+    "imagenAlt": "Diagnóstico facial-corporal gratuito en Deleic",
+    "destacadoEnNovedades": false,
+    "seoTitle": "Diagnóstico Facial-Corporal Gratuito en León | Deleic",
+    "seoDescription": "Diagnóstico facial-corporal gratuito en Deleic León: analizamos tu piel y tus objetivos para recomendarte el tratamiento más adecuado."
+  },
+  {
+    "id": "despigmentantes",
+    "slug": "despigmentantes",
+    "nombre": "Tratamiento despigmentante",
+    "categoria": "Despigmentante",
+    "eyebrow": "MANCHAS Y TONO",
+    "tituloHero": "Manchas tratadas con criterio, no a ciegas",
+    "subtituloHero": "Diagnóstico con lámpara de Wood y peeling químico adaptado a tu tipo de mancha.",
+    "descripcionCorta": "Reduce las manchas con peeling químico y dermapén, tras diagnosticarlas con lámpara de Wood.",
+    "queEs": "Antes de tratar una mancha hay que saber de qué tipo es y a qué profundidad está. Por eso empezamos siempre con un diagnóstico con lámpara de Wood y, según el resultado, combinamos peeling químico y dermapén con cosmética profesional de mccm y Mesoestetic.",
+    "beneficios": [
+      "Combina limpieza profunda con tratamiento de la mancha",
+      "Renovación epidérmica y mayor luminosidad",
+      "Cierre de poro como efecto añadido"
+    ],
+    "paraQuienEs": "Para personas con manchas solares, hormonales o causadas por medicamentos, siempre que estén bien diagnosticadas.",
+    "contraindicaciones": [
+      "Algunas manchas no se tratan en cabina: requieren valoración dermatológica"
+    ],
+    "tecnologiaOMarca": "mccm, Mesoestetic",
+    "imagen": "/img/facialCorporal/despigmentantes.webp",
+    "imagenAlt": "Tratamiento despigmentante en Deleic",
+    "destacadoEnNovedades": false,
+    "faq": [
+      {
+        "pregunta": "¿Cuándo es mejor hacer este tratamiento?",
+        "respuesta": "En otoño e invierno, porque la exposición solar activa los melanocitos y puede reactivar la mancha."
+      }
+    ],
+    "seoTitle": "Tratamiento Despigmentante en León | Deleic",
+    "seoDescription": "Tratamiento despigmentante en León con diagnóstico por lámpara de Wood y peeling químico adaptado a tu mancha. Diagnóstico gratuito en Deleic.",
+    "proceso": [
+      {
+        "titulo": "Diagnóstico con lámpara de Wood",
+        "texto": "Identificamos el tipo y la profundidad de la mancha antes de decidir el tratamiento."
+      },
+      {
+        "titulo": "Peeling químico",
+        "texto": "Elimina los estratos de piel dañados y renueva la epidermis."
+      },
+      {
+        "titulo": "Dermapén",
+        "texto": "Ayuda a regular la formación de pigmento."
+      }
+    ],
+    "cuidados": [
+      "Usa protección solar durante todo el tratamiento."
+    ]
+  },
+  {
+    "id": "antiacne-marcas",
+    "slug": "antiacne-marcas",
+    "nombre": "Antiacné y marcas",
+    "categoria": "Antiacné y marcas",
+    "eyebrow": "PIEL EQUILIBRADA",
+    "tituloHero": "Piel con acné, tratada sin agravarla",
+    "subtituloHero": "Peeling específico para el acné inflamatorio y dermapén para las marcas que deja.",
+    "descripcionCorta": "Trata el acné activo y las marcas que deja, combinando sesiones en cabina y rutina en casa.",
+    "queEs": "No todo el acné es igual, así que no lo tratamos igual. Distinguimos entre acné inflamatorio (con pústulas) y no inflamatorio (con comedones), y tratamos aparte las marcas que deja. El trabajo en cabina se completa con una rutina en casa que te pautamos.",
+    "beneficios": [
+      "Un tratamiento distinto para cada tipo de acné",
+      "Mejora las marcas activando tu propio colágeno",
+      "Rutina domiciliaria incluida"
+    ],
+    "paraQuienEs": "Para adolescentes y adultos con acné activo, comedones o marcas de acné.",
+    "imagen": "/img/facialCorporal/antiacne-marcas.webp",
+    "imagenAlt": "Tratamiento antiacné y marcas en Deleic",
+    "destacadoEnNovedades": false,
+    "seoTitle": "Tratamiento Antiacné y Marcas en León | Deleic",
+    "seoDescription": "Tratamiento antiacné en León: peeling para el acné inflamatorio, dermapén para las marcas y rutina en casa. Diagnóstico gratuito en Deleic.",
+    "proceso": [
+      {
+        "titulo": "Acné inflamatorio",
+        "texto": "Peeling químico específico que limpia, exfolia y regula el sebo."
+      },
+      {
+        "titulo": "Acné no inflamatorio",
+        "texto": "Limpieza facial y radiofrecuencia para cerrar el poro y oxigenar la piel."
+      },
+      {
+        "titulo": "Marcas",
+        "texto": "Dermapén para activar los fibroblastos y producir colágeno y elastina."
+      }
+    ],
+    "cuidados": [
+      "Sigue la rutina domiciliaria que te indiquemos: de ella depende la mitad del resultado."
+    ]
+  },
+  {
+    "id": "ojeras-bolsas-contorno",
+    "slug": "ojeras-bolsas-contorno",
+    "nombre": "Ojeras, bolsas y contorno",
+    "categoria": "Ojeras y bolsas",
+    "eyebrow": "MIRADA DESCANSADA",
+    "tituloHero": "Contorno de ojos, tratado con precisión",
+    "subtituloHero": "Un tratamiento relajante que se adapta a la causa real de tus ojeras o bolsas.",
+    "descripcionCorta": "Descongestiona y trata el contorno de ojos según la causa: pigmentación, líquidos o flacidez.",
+    "queEs": "Las ojeras se deben a una pigmentación oscura alrededor del ojo; las bolsas, a edemas o retención de líquidos. Por eso no hay una única fórmula: según la causa, combinamos técnicas para descongestionar, reducir la pigmentación y estimular el colágeno y la elastina.",
+    "beneficios": [
+      "Reduce la pigmentación del contorno",
+      "Descongestiona las bolsas por retención de líquidos",
+      "Tensa la piel y mejora la flacidez",
+      "Una sesión relajante, no solo estética"
+    ],
+    "paraQuienEs": "Para personas con ojeras, bolsas por retención de líquidos o flacidez en el contorno de ojos. La combinación exacta depende del diagnóstico previo.",
+    "contraindicaciones": [
+      "Las bolsas por acumulación de grasa no se tratan en cabina: requieren valoración quirúrgica"
+    ],
+    "imagen": "/img/facialCorporal/ojeras-bolsas-contorno.webp",
+    "imagenAlt": "Tratamiento de ojeras, bolsas y contorno de ojos en Deleic",
+    "destacadoEnNovedades": false,
+    "seoTitle": "Tratamiento de Ojeras y Bolsas en León | Deleic",
+    "seoDescription": "Tratamiento de ojeras y bolsas en León adaptado a su causa: pigmentación, líquidos o flacidez. Diagnóstico gratuito en Deleic.",
+    "proceso": [
+      {
+        "titulo": "Valoración de la causa",
+        "texto": "Distinguimos si se debe a pigmentación, retención de líquidos o flacidez."
+      },
+      {
+        "titulo": "Tratamiento combinado",
+        "texto": "Aplicamos las técnicas que necesita tu caso, en la proporción adecuada."
+      },
+      {
+        "titulo": "Masaje relajante",
+        "texto": "Toda la sesión incluye un masaje que relaja la zona."
+      }
+    ]
+  },
+  {
+    "id": "laminado-lifting-pestanas-cejas",
+    "slug": "laminado-lifting-pestanas-cejas",
+    "nombre": "Laminado de cejas y lifting de pestañas",
+    "categoria": "Laminado y lifting",
+    "eyebrow": "CEJAS Y PESTAÑAS",
+    "tituloHero": "Mirada realzada, sin necesidad de rímel",
+    "subtituloHero": "Cejas más pobladas y pestañas más curvas, con un resultado natural que dura semanas.",
+    "descripcionCorta": "Peina y define las cejas, riza y alarga las pestañas de forma natural, sin pigmento ni cirugía.",
+    "queEs": "El laminado de cejas peina el vello para que se vean más pobladas y cubrir los huecos, sin tocar la piel. El lifting de pestañas las riza y alarga con moldes de silicona, con un efecto más natural que la permanente tradicional con bigudí.",
+    "beneficios": [
+      "Laminado: cejas más pobladas sin pigmentar la piel",
+      "Lifting: pestañas más largas y curvas de forma natural",
+      "Indoloros y no invasivos"
+    ],
+    "paraQuienEs": "Para quien quiera resaltar sus cejas o pestañas naturales sin recurrir a la pigmentación ni a las extensiones.",
+    "duracionSesion": "Laminado: unos 50 min · Lifting: unos 40 min",
+    "imagen": "/img/facialCorporal/laminado-lifting.webp",
+    "imagenAlt": "Laminado de cejas y lifting de pestañas en Deleic",
+    "destacadoEnNovedades": false,
+    "faq": [
+      {
+        "pregunta": "¿Cuánto dura el laminado de cejas?",
+        "respuesta": "Entre mes y medio y dos meses, según el crecimiento natural del vello."
+      },
+      {
+        "pregunta": "¿Es lo mismo que el microblading?",
+        "respuesta": "No. El laminado solo peina y moldea el vello que ya tienes; el microblading pigmenta la piel para dibujar la ceja."
+      }
+    ],
+    "seoTitle": "Laminado de Cejas y Lifting de Pestañas en León | Deleic",
+    "seoDescription": "Laminado de cejas y lifting de pestañas en León con resultado natural, sin pigmento ni cirugía. Reserva tu cita en Deleic.",
+    "resultado": "Laminado: entre mes y medio y dos meses · Lifting: entre 4 y 10 semanas",
+    "cuidados": [
+      "Mantén la zona seca durante las primeras 24 horas."
+    ]
+  },
+  {
+    "id": "higiene-facial",
+    "slug": "higiene-facial",
+    "nombre": "Higiene facial",
+    "categoria": "Higiene",
+    "eyebrow": "PIEL LIMPIA",
+    "tituloHero": "Limpieza facial profunda, adaptada a tu piel",
+    "subtituloHero": "Limpieza manual con aparatología o higiene con ND HydraBalance: elegimos la que necesita tu piel.",
+    "descripcionCorta": "Limpieza facial profunda o higiene con ND HydraBalance para eliminar puntos negros, impurezas y sebo.",
+    "queEs": "En mayor o menor medida, cualquier tipo de piel necesita una limpieza facial profunda. En Deleic la hacemos de dos formas: la limpieza facial profunda, que combina cosmética profesional, aparatología y extracción manual, y la higiene con ND HydraBalance, un equipo que limpia la piel y le aporta activos en la misma sesión. En el diagnóstico gratuito te indicamos cuál encaja mejor contigo.",
+    "modalidades": [
+      {
+        "titulo": "Limpieza facial profunda",
+        "texto": "Combina productos de alta cosmética, aparatología y extracción manual de impurezas.",
+        "detalles": [
+          {
+            "titulo": "Duración",
+            "texto": "Entre 75 y 90 minutos."
+          },
+          {
+            "titulo": "Cosmética",
+            "texto": "Medical Cosmetic, Utsukusy, Mesoestetic y Eberlin."
+          },
+          {
+            "titulo": "Aparatología",
+            "texto": "Paleta ultrasónica, masajeador facial, máscara LED y cepillo facial eléctrico Lumispa."
+          }
+        ]
+      },
+      {
+        "titulo": "Higiene con ND HydraBalance",
+        "texto": "Un sistema de vacío con efecto tornado extrae las impurezas y, al mismo tiempo, deposita en la piel principios activos específicos. Puede hacerse como limpieza puntual o en un ciclo de sesiones, según el diagnóstico. Hay tres protocolos:",
+        "detalles": [
+          {
+            "titulo": "Acné",
+            "texto": "Elimina el exceso de grasa y el acné comedogénico, neutraliza las bacterias y devuelve a la piel el brillo y la uniformidad."
+          },
+          {
+            "titulo": "Antioxidante",
+            "texto": "Recupera la vitalidad de la piel tras una exposición prolongada al sol o un cambio de estación, o como tratamiento antienvejecimiento."
+          },
+          {
+            "titulo": "Luxury",
+            "texto": "Para pieles apagadas, secas, con hiperpigmentación o daño solar: busca una piel más uniforme, luminosa e hidratada."
+          }
+        ]
+      }
+    ],
+    "beneficios": [
+      "Elimina puntos negros y puntos blancos",
+      "Retira impurezas, exceso de sebo y células muertas",
+      "Protocolo según tu tipo de piel"
+    ],
+    "paraQuienEs": "Para cualquier tipo de piel, y sobre todo si tienes puntos negros, piel mixta o grasa, o acné con comedones.",
+    "imagen": "/img/facialCorporal/hydrabalance.webp",
+    "imagenAlt": "Higiene facial con ND HydraBalance en Deleic",
+    "destacadoEnNovedades": true,
+    "faq": [
+      {
+        "pregunta": "¿Cada cuánto tengo que hacerme una limpieza facial?",
+        "respuesta": "Depende de tu piel. Si la cuidas bien en casa, basta con una o dos al año; con puntos negros y piel mixta, una cada tres meses; y con acné o muchos comedones, cada mes o cada dos meses."
+      },
+      {
+        "pregunta": "¿Qué diferencia hay con HidraGlow?",
+        "respuesta": "Los dos se hacen con el equipo ND HydraBalance. La higiene se centra en limpiar la piel según lo que necesita; HidraGlow suma infiltración de activos, oxigenación, masaje y el acabado efecto glow."
+      }
+    ],
+    "cuidados": [
+      "La limpieza diaria en casa es fundamental para mantener el resultado.",
+      "Piel grasa: geles o espumas limpiadoras.",
+      "Piel mixta: leches limpiadoras, aceites, bifásicos o agua micelar.",
+      "Piel seca: leches sin tensioactivos, aceites o agua micelar."
+    ],
+    "seoTitle": "Limpieza Facial Profunda en León | Deleic",
+    "seoDescription": "Limpieza facial profunda e higiene con ND HydraBalance en León, con protocolos para piel grasa, mixta o con acné. Diagnóstico gratuito en Deleic."
+  },
+  {
+    "id": "antiedad",
+    "slug": "antiedad",
+    "nombre": "Tratamiento antiedad",
+    "categoria": "Antiedad",
+    "eyebrow": "CUIDADO A LARGO PLAZO",
+    "tituloHero": "Retrasa el reloj de tu piel",
+    "subtituloHero": "Un protocolo personalizado, no un único tratamiento.",
+    "descripcionCorta": "Combina varias técnicas (peeling, dermapén, lifting iónico, radiofrecuencia) según tu diagnóstico.",
+    "queEs": "El envejecimiento no se detiene, pero se puede retrasar. Con el mantenimiento adecuado, la piel gana densidad, se fortalece y se oxigena, y las arrugas, las cicatrices y las manchas de la edad se atenúan poco a poco. Para conseguirlo combinamos varias técnicas según tu diagnóstico: peeling químico, dermapén, lifting iónico, limpiezas profundas y radiofrecuencia.",
+    "beneficios": [
+      "Piel más densa y fortalecida con el tiempo",
+      "Atenúa arrugas, cicatrices y manchas de la edad",
+      "Sin cirugía"
+    ],
+    "paraQuienEs": "Para cualquier persona que quiera cuidar el envejecimiento de su piel de forma progresiva.",
+    "imagen": "/img/facialCorporal/antiedad.webp",
+    "imagenAlt": "Tratamiento antiedad en Deleic",
+    "destacadoEnNovedades": false,
+    "seoTitle": "Tratamiento Antiedad en León | Deleic",
+    "seoDescription": "Tratamiento antiedad en León: protocolo personalizado con peeling, dermapén, lifting iónico y radiofrecuencia. Diagnóstico gratuito en Deleic."
+  },
+  {
+    "id": "oxigenante-efecto-flash",
+    "slug": "oxigenante-efecto-flash",
+    "nombre": "Oxigenante y efecto flash",
+    "categoria": "Oxigenante",
+    "eyebrow": "LUMINOSIDAD INMEDIATA",
+    "tituloHero": "Efecto flash para una piel radiante",
+    "subtituloHero": "Ideal antes de un evento o, simplemente, para recuperar la luminosidad.",
+    "descripcionCorta": "Ilumina el rostro y crea un efecto tensor inmediato, ideal antes de un evento.",
+    "queEs": "Es un tratamiento oxigenante pensado para iluminar el rostro y conseguir un efecto tensor y radiante desde la primera sesión.",
+    "beneficios": [
+      "Efecto tensor inmediato",
+      "Rostro más luminoso y radiante"
+    ],
+    "imagen": "/img/facialCorporal/oxigenante.webp",
+    "imagenAlt": "Tratamiento oxigenante y efecto flash en Deleic",
+    "destacadoEnNovedades": false,
+    "seoTitle": "Tratamiento Oxigenante y Efecto Flash en León | Deleic",
+    "seoDescription": "Tratamiento oxigenante en León que ilumina el rostro con efecto tensor inmediato, ideal antes de un evento. Diagnóstico gratuito en Deleic."
+  },
+  {
+    "id": "hidraglow",
+    "slug": "hidraglow",
+    "nombre": "HidraGlow",
+    "categoria": "HidraGlow",
+    "eyebrow": "EXCLUSIVO DE DELEIC",
+    "tituloHero": "Hidratación profunda con efecto glow",
+    "subtituloHero": "Rejuvenecimiento facial no invasivo para cara y cuello, con la tecnología Hydralifusión de ND HydraBalance.",
+    "descripcionCorta": "Hidratación y rejuvenecimiento no invasivo con tecnología Hydralifusión y un acabado luminoso: el efecto glow.",
+    "queEs": "HidraGlow es un procedimiento exclusivo de Deleic de hidratación y rejuvenecimiento facial no invasivo. Se realiza con el equipo ND HydraBalance y su tecnología Hydralifusión, que permite combinar varias técnicas en una misma sesión, y termina con el paso que le da nombre: el efecto glow.",
+    "paraQuienEs": "Para todo tipo de pieles y todas las edades, durante todo el año. Indicado si buscas una piel limpia, sana, rejuvenecida y luminosa.",
+    "beneficios": [
+      "Limpieza profunda y exfoliación sin dañar la epidermis",
+      "Hidratación intensa de la piel",
+      "Minimiza las líneas de expresión y los poros",
+      "Controla la grasa y el sebo",
+      "Mejora la elasticidad de la dermis",
+      "Piel más uniforme, radiante y luminosa"
+    ],
+    "proceso": [
+      {
+        "titulo": "Exfoliación y limpieza con hidradermoabrasión",
+        "texto": "Con presión de agua conseguimos una limpieza profunda sin dañar la epidermis, a la vez que hidratamos y reparamos."
+      },
+      {
+        "titulo": "Infiltración de principios activos",
+        "texto": "Activos de alta gama según lo que necesite tu piel: antioxidantes, hidratantes, nutritivos y antiedad."
+      },
+      {
+        "titulo": "Extracción de impurezas",
+        "texto": "Eliminamos las impurezas para dejar la piel limpia y preparada."
+      },
+      {
+        "titulo": "Oxigenación",
+        "texto": "Con rosa de Damasco y ácido hialurónico."
+      },
+      {
+        "titulo": "Masaje exprés y shiatsu",
+        "texto": "Un masaje facial que relaja y activa la piel."
+      },
+      {
+        "titulo": "Efecto glow",
+        "texto": "Para terminar, velo facial japonés o criomascarilla de ácido hialurónico, que aportan el acabado luminoso."
+      }
+    ],
+    "duracionSesion": "Unos 80 minutos (cara y cuello)",
+    "sesionesRecomendadas": "Entre 1 y 3, con un mes de intervalo",
+    "tecnologiaOMarca": "ND HydraBalance · Hydralifusión",
+    "resultado": "Piel limpia, hidratada y uniforme, con un acabado radiante y luminoso.",
+    "imagen": "/img/facialCorporal/hidraglow.webp",
+    "imagenAlt": "Tratamiento HidraGlow en Deleic",
+    "destacadoEnNovedades": false,
+    "faq": [
+      {
+        "pregunta": "¿Cuántas sesiones necesito?",
+        "respuesta": "Depende de las necesidades de tu piel: entre 1 y 3 sesiones, con un intervalo de un mes entre cada una."
+      },
+      {
+        "pregunta": "¿Cuánto dura la sesión?",
+        "respuesta": "Tratamos cara y cuello, y el tiempo en cabina ronda los 80 minutos."
+      },
+      {
+        "pregunta": "¿Puedo hacerlo en cualquier época del año?",
+        "respuesta": "Sí. HidraGlow es apto para todo tipo de pieles y todas las edades, durante todo el año."
+      },
+      {
+        "pregunta": "¿Qué diferencia hay con la higiene facial?",
+        "respuesta": "Los dos se hacen con el equipo ND HydraBalance. La higiene se centra en limpiar la piel según lo que necesita; HidraGlow suma infiltración de activos, oxigenación, masaje y el acabado efecto glow."
+      }
+    ],
+    "seoTitle": "HidraGlow en León: Hidratación con Efecto Glow | Deleic",
+    "seoDescription": "HidraGlow en Deleic León: hidratación y rejuvenecimiento facial no invasivo con tecnología Hydralifusión. Reserva tu diagnóstico gratuito."
+  },
+  {
+    "id": "drenante-presoterapia",
+    "slug": "drenante-presoterapia",
+    "nombre": "Tratamiento drenante",
+    "categoria": "Drenante",
+    "eyebrow": "CIRCULACIÓN Y DRENAJE",
+    "tituloHero": "Piernas ligeras, circulación activa",
+    "subtituloHero": "Presoterapia de cuerpo completo con el equipo Pharmapress.",
+    "descripcionCorta": "Presoterapia de cuerpo completo que drena los líquidos retenidos y activa la circulación de retorno.",
+    "queEs": "La presoterapia es la técnica que más recomendamos como tratamiento drenante. Un equipo aplica presión sobre el cuerpo de forma continua, con un programa ajustado a lo que necesitas, para ayudar a eliminar los líquidos retenidos y activar la circulación.",
+    "beneficios": [
+      "Drena los líquidos retenidos",
+      "Activa la circulación de retorno",
+      "Mejora la apariencia de la celulitis",
+      "Alivia la sensación de piernas cansadas",
+      "Relaja la carga muscular"
+    ],
+    "paraQuienEs": "Para personas con retención de líquidos o piernas cansadas, o que quieren mejorar la circulación y la apariencia de la celulitis.",
+    "tecnologiaOMarca": "Pharmapress (presoterapia de cuerpo completo)",
+    "imagen": "/img/facialCorporal/drenante.webp",
+    "imagenAlt": "Tratamiento drenante con presoterapia en Deleic",
+    "destacadoEnNovedades": false,
+    "seoTitle": "Presoterapia y Tratamiento Drenante en León | Deleic",
+    "seoDescription": "Presoterapia de cuerpo completo en León con equipo Pharmapress para drenar líquidos y activar la circulación. Diagnóstico gratuito en Deleic.",
+    "proceso": [
+      {
+        "titulo": "Traje de presoterapia",
+        "texto": "Te colocas un traje de una sola pieza que cubre de los pies al pecho."
+      },
+      {
+        "titulo": "Programa a tu medida",
+        "texto": "El equipo Pharmapress ajusta la presión con distintos programas según tus necesidades."
+      },
+      {
+        "titulo": "Bombeo continuo",
+        "texto": "A diferencia del drenaje manual tradicional, el bombeo no se interrumpe."
+      }
+    ]
+  },
+  {
+    "id": "reafirmante-reductor",
+    "slug": "reafirmante-reductor",
+    "nombre": "Reafirmante y reductor",
+    "categoria": "Reafirmante y reductor",
+    "eyebrow": "FACIAL Y CORPORAL",
+    "tituloHero": "Piel más firme, contorno definido",
+    "subtituloHero": "Radiofrecuencia Symmed para la celulitis, la flacidez y la remodelación corporal.",
+    "descripcionCorta": "Radiofrecuencia Symmed que reafirma, remodela y trata la celulitis en facial y corporal.",
+    "queEs": "Trabajamos con radiofrecuencia Symmed, un equipo de alta potencia con un manípulo propio llamado RET. Se aplica tanto en facial como en corporal para tratar la celulitis, favorecer el drenaje linfático, reafirmar, remodelar y relajar la musculatura.",
+    "beneficios": [
+      "Efecto reafirmante y remodelante",
+      "Ayuda con la celulitis y el drenaje linfático",
+      "Relaja la musculatura",
+      "Sin molestias: solo un calor suave"
+    ],
+    "paraQuienEs": "Para personas con celulitis o flacidez, o que quieren remodelar el contorno facial o corporal.",
+    "tecnologiaOMarca": "Radiofrecuencia Symmed (500 VA capacitiva / 200 W resistiva, manípulo RET)",
+    "imagen": "/img/facialCorporal/reafirmante-reductor.webp",
+    "imagenAlt": "Tratamiento reafirmante y reductor con radiofrecuencia Symmed en Deleic",
+    "destacadoEnNovedades": false,
+    "faq": [
+      {
+        "pregunta": "¿Puede hacerse este tratamiento cualquier persona?",
+        "respuesta": "No siempre. Antes de empezar hacemos un diagnóstico gratuito para valorar tu caso y descartar contraindicaciones."
+      }
+    ],
+    "seoTitle": "Radiofrecuencia Reafirmante y Reductora en León | Deleic",
+    "seoDescription": "Radiofrecuencia Symmed en León para la celulitis, la flacidez y la remodelación facial y corporal. Diagnóstico gratuito en Deleic.",
+    "proceso": [
+      {
+        "titulo": "Diagnóstico previo",
+        "texto": "Descartamos contraindicaciones antes de aplicar nada."
+      },
+      {
+        "titulo": "Radiofrecuencia Symmed",
+        "texto": "Aplicamos el manípulo RET en la zona facial o corporal."
+      },
+      {
+        "titulo": "Calor adaptado",
+        "texto": "La intensidad se ajusta a tu sensibilidad durante toda la sesión."
+      }
+    ]
+  }
+]

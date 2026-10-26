@@ -1,0 +1,111 @@
+---
+// src/components/PaginaLegal.astro
+// Plantilla de los textos legales: cabecera, índice y estilos de lectura.
+// El contenido va en el slot como HTML normal (h2 con id, p, ul, dl)
+interface Props {
+  titulo: string;
+  /** Fecha de la última revisión, en texto: "26 de octubre de 2026" */
+  actualizado: string;
+  indice: { id: string; titulo: string }[];
+}
+const { titulo, actualizado, indice } = Astro.props;
+---
+
+<div class="pila text-secondary-content">
+  <header class="seccion">
+    <span class="text-sm font-semibold tracking-widest uppercase text-primary">
+      Información legal
+    </span>
+    <h1 class="mt-3 text-3xl sm:text-5xl font-semibold tracking-tight text-balance">
+      {titulo}
+    </h1>
+    <p class="mt-4 text-sm text-secondary-content/60">
+      Última actualización: {actualizado}
+    </p>
+  </header>
+
+  <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-start">
+    <nav
+      aria-label="Índice"
+      class="lg:col-span-4 lg:sticky lg:top-24 rounded-4xl bg-base-100 ring-1 ring-black/5 p-6"
+    >
+      <p class="text-[11px] font-semibold uppercase tracking-[0.2em] text-secondary-content/50">
+        En esta página
+      </p>
+      <ol class="mt-3 -mx-2 text-sm">
+        {
+          indice.map((s, i) => (
+            <li>
+              <a
+                href={`#${s.id}`}
+                class="flex gap-3 rounded-2xl px-2 py-2 text-secondary-content/75 hover:bg-base-200 hover:text-primary transition-colors"
+              >
+                <span class="tabular-nums text-primary/70">{i + 1}.</span>
+                {s.titulo}
+              </a>
+            </li>
+          ))
+        }
+      </ol>
+    </nav>
+
+    <article class="legal lg:col-span-8 card bg-base-100 seccion-card">
+      <slot />
+    </article>
+  </div>
+</div>
+
+<style>
+  /* Estilos de lectura para el HTML del slot */
+  .legal :global(h2) {
+    scroll-margin-top: 7rem;
+    font-size: 1.375rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: var(--color-secondary-content);
+  }
+  .legal :global(h2:not(:first-child)) {
+    margin-top: 3rem;
+  }
+  .legal :global(h3) {
+    margin-top: 1.75rem;
+    font-weight: 600;
+    color: var(--color-secondary-content);
+  }
+  .legal :global(p),
+  .legal :global(ul),
+  .legal :global(dl) {
+    margin-top: 1rem;
+    line-height: 1.7;
+    color: color-mix(in oklab, var(--color-secondary-content) 75%, transparent);
+  }
+  .legal :global(ul) {
+    padding-left: 1.25rem;
+    list-style: disc;
+  }
+  .legal :global(li + li) {
+    margin-top: 0.5rem;
+  }
+  .legal :global(strong),
+  .legal :global(dt) {
+    font-weight: 600;
+    color: var(--color-secondary-content);
+  }
+  .legal :global(a) {
+    color: var(--color-primary);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .legal :global(dl) {
+    display: grid;
+    gap: 0.75rem 1.5rem;
+  }
+  @media (min-width: 640px) {
+    .legal :global(dl) {
+      grid-template-columns: max-content 1fr;
+    }
+  }
+  .legal :global(dd) {
+    margin: 0;
+  }
+</style>
