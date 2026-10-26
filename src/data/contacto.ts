@@ -40,7 +40,7 @@ export const HORARIO = {
     { dias: "Sábado", horas: "10:00 – 14:00" },
     { dias: "Domingo", horas: null },
   ],
-  // Del 15 de junio al 15 de septiembre
+  periodoVerano: "15 jun – 15 sep",
   verano: [
     { dias: "Lunes – Viernes", horas: "10:00 – 19:00" },
     { dias: "Sábado", horas: null },
