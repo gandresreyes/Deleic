@@ -348,7 +348,15 @@ const icons = {
   </a>
 </div>
 
-<style>
+{
+  /*
+    is:inline para que el build no minifique este bloque: lightningcss junta
+    animation + animation-timeline en el shorthand `animation: … scroll(root)`,
+    que los navegadores descartan (el timeline no se puede fijar en el shorthand).
+    Con eso, en producción el botón flotante no se ocultaba al llegar al footer.
+  */
+}
+<style is:inline>
   /*
     Animaciones ligadas al scroll (sin JS). El progreso depende de cuánto
     se ha bajado, así que la entrada es tan suave como el propio scroll.

@@ -78,9 +78,11 @@ const ogImage = new URL(image, Astro.site ?? Astro.url).href;
     </main>
     <Footer />
 
-    <!-- Aparición al hacer scroll (clases .reveal en global.css) -->
+    <!-- Aparición al hacer scroll (clases .reveal en global.css) y textura
+         que sigue al cursor (.textura-cursor) -->
     <script>
       import "../scripts/reveal.ts";
+      import "../scripts/textura.ts";
     </script>
   </body>
 </html>

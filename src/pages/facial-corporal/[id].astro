@@ -164,7 +164,7 @@ const schema = { "@context": "https://schema.org", "@graph": graph };
     <section
       class="relative isolate overflow-hidden rounded-4xl bg-primary text-base-100"
     >
-      <!-- Capas de textura: luz, grano y líneas finas -->
+      <!-- Capas de textura: luz, grano y puntos que siguen al cursor -->
       <div
         aria-hidden="true"
         class="absolute inset-0 -z-10 bg-[radial-gradient(110%_80%_at_100%_0%,var(--color-primary-claro)_0%,transparent_60%),radial-gradient(80%_70%_at_0%_100%,var(--color-primary-oscuro)_0%,transparent_65%)]"
@@ -175,11 +175,7 @@ const schema = { "@context": "https://schema.org", "@graph": graph };
         class="tex-grain absolute inset-0 -z-10 opacity-40 mix-blend-soft-light"
       >
       </div>
-      <div
-        aria-hidden="true"
-        class="absolute inset-0 -z-10 opacity-[0.08] bg-[repeating-linear-gradient(135deg,#fff_0_1px,transparent_1px_16px)] mask-[linear-gradient(to_right,transparent_30%,black)]"
-      >
-      </div>
+      <div aria-hidden="true" class="textura-cursor"></div>
       <div
         aria-hidden="true"
         class="absolute -left-24 -bottom-32 -z-10 w-80 h-80 rounded-full border border-base-100/10"

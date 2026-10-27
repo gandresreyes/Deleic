@@ -23,15 +23,13 @@ const pasos = [
   aria-labelledby="oferta-titulo"
   class="relative isolate overflow-hidden card seccion-card bg-primary text-primary-content"
 >
-  <!-- Fondo: brillos difuminados y trama de puntos -->
+  <!-- Fondo: brillos difuminados y puntos que siguen al cursor (la textura va
+       como hijo directo de la sección, que es la que escucha el ratón) -->
   <div aria-hidden="true" class="pointer-events-none absolute inset-0 -z-10">
     <div class="absolute -top-32 -right-24 w-96 h-96 rounded-full bg-white/15 blur-3xl"></div>
     <div class="absolute -bottom-40 -left-24 w-md h-112 rounded-full bg-black/30 blur-3xl"></div>
-    <div
-      class="absolute inset-0 opacity-[0.07] bg-[radial-gradient(white_1px,transparent_1px)] bg-size-[22px_22px]"
-    >
-    </div>
   </div>
+  <div aria-hidden="true" class="textura-cursor"></div>
 
   <div class="grid grid-cols-1 md:grid-cols-12 gap-12 items-center">
     <!-- Texto -->

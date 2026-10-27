@@ -138,3 +138,64 @@
     transform: scale(0.94);
   }
 }
+
+/* ---------- Textura que sigue al cursor (estilo Google) ----------
+   Una rejilla de puntos tenue; alrededor del cursor los puntos se encienden,
+   crecen un poco y dejan un brillo burdeos que lo sigue con retraso.
+   Uso: un div vacío como primer hijo de una sección con relative isolate
+     <div aria-hidden="true" class="textura-cursor"></div>
+   Sobre fondo claro, añade .textura-cursor-clara (puntos oscuros).
+   scripts/textura.ts mueve --x/--y y añade .activa mientras el ratón está
+   dentro de la sección. En táctil o con "reducir movimiento" solo se ve la
+   rejilla quieta. Para ajustarla, cambia las variables de .textura-cursor */
+@layer components {
+  .textura-cursor {
+    --textura-punto: rgb(255 255 255 / 0.55);
+    --textura-brillo: color-mix(in oklab, var(--color-primary-claro) 40%, transparent);
+    --textura-paso: 14px; /* distancia entre puntos */
+    --textura-radio: 260px; /* tamaño de la zona encendida */
+    --textura-reposo: 0.08; /* opacidad de la rejilla fuera del cursor */
+
+    @apply pointer-events-none absolute inset-0 -z-10;
+  }
+
+  .textura-cursor-clara {
+    --textura-punto: rgb(0 0 0 / 0.45);
+    --textura-brillo: color-mix(in oklab, var(--color-primary) 10%, transparent);
+    --textura-reposo: 0.06;
+  }
+
+  .textura-cursor::before,
+  .textura-cursor::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+  }
+
+  .textura-cursor::before {
+    background-image: radial-gradient(var(--textura-punto) 1px, transparent 1.5px);
+    background-size: var(--textura-paso) var(--textura-paso);
+    opacity: var(--textura-reposo);
+  }
+
+  /* Puntos más grandes y brillantes + halo, recortados a un círculo en el cursor */
+  .textura-cursor::after {
+    background-image:
+      radial-gradient(var(--textura-punto) 1.3px, transparent 1.8px),
+      radial-gradient(circle at var(--x, 50%) var(--y, 50%), var(--textura-brillo), transparent 70%);
+    background-size:
+      var(--textura-paso) var(--textura-paso),
+      100% 100%;
+    mask-image: radial-gradient(
+      circle var(--textura-radio) at var(--x, 50%) var(--y, 50%),
+      black,
+      transparent
+    );
+    opacity: 0;
+    transition: opacity 0.5s ease;
+  }
+
+  .textura-cursor.activa::after {
+    opacity: 1;
+  }
+}
