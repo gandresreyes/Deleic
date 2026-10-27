@@ -3,55 +3,16 @@
 import Layout from "../../layouts/Layout.astro";
 import Ubication from "../../components/Ubication.astro";
 import AntesDespues from "../../components/AntesDespues.astro";
+import { gruposPublicados, numero, type Grupo } from "../../lib/precios";
+import { faqPage, migas, negocio } from "../../lib/schema";
+import { whatsapp } from "../../data/contacto";
 import data from "../../data/micropigmentacion.json";
 
-interface Precio {
-  concepto: string;
-  precio: string;
-}
-interface Item {
-  nombre: string;
-  texto: string;
-  resumen?: string;
-  duracion?: string;
-  nota?: string;
-  precios?: Precio[];
-  publicar?: boolean;
-}
-interface Grupo {
-  titulo: string;
-  texto: string;
-  items: Item[];
-}
 
 const { seo, hero, intro, tratamientos, tecnicas, resultados, pasos, faq } =
   data;
 
-// Precio de entrada ("desde 200€") calculado con el número inicial de cada tarifa
-const numero = (s: string) => {
-  const m = s.match(/^(?:Desde\s+)?(\d{1,3}(?:\.\d{3})+|\d+)\s*€/i);
-  return m ? Number(m[1].replace(/\./g, "")) : null;
-};
-const desde = (precios?: Precio[]) => {
-  if (!precios?.length) return null;
-  const nums = precios
-    .map((p) => numero(p.precio))
-    .filter((n): n is number => n !== null);
-  if (!nums.length) return null;
-  const varios = precios.length > 1 || /^desde/i.test(precios[0].precio);
-  return `${varios ? "desde " : ""}${Math.min(...nums)}€`;
-};
-
-// Solo se muestran los tratamientos con publicar !== false
-// y los grupos que se queden con al menos uno
-const grupos = (tratamientos.grupos as Grupo[])
-  .map((g) => ({
-    ...g,
-    items: g.items
-      .filter((i) => i.publicar !== false)
-      .map((i) => ({ ...i, desde: desde(i.precios) })),
-  }))
-  .filter((g) => g.items.length > 0);
+const grupos = gruposPublicados(tratamientos.grupos as Grupo[]);
 
 const slugify = (s: string) =>
   s
@@ -82,8 +43,7 @@ const schema = {
       description: seo.description,
       url: new URL("/micropigmentacion/", site).href,
       areaServed: { "@type": "City", name: "León" },
-      // Mismo negocio que declara el schema del home
-      provider: { "@id": new URL("/#negocio", site).href },
+      provider: negocio(site),
       hasOfferCatalog: {
         "@type": "OfferCatalog",
         name: tratamientos.titulo,
@@ -100,14 +60,8 @@ const schema = {
         ),
       },
     },
-    {
-      "@type": "FAQPage",
-      mainEntity: faq.items.map((f) => ({
-        "@type": "Question",
-        name: f.pregunta,
-        acceptedAnswer: { "@type": "Answer", text: f.respuesta },
-      })),
-    },
+    faqPage(faq.items),
+    migas(site, [[hero.titulo, "/micropigmentacion/"]]),
   ],
 };
 ---
@@ -137,7 +91,7 @@ const schema = {
 
           <div class="mt-8 flex flex-wrap gap-3 font-bold">
             <a
-              href={hero.ctaPrincipal.href}
+              href={whatsapp(hero.ctaPrincipal.mensaje)}
               target="_blank"
               rel="noopener"
               class="px-4 sm:px-6 py-3 sm:py-4 bg-primary text-primary-content rounded-full"

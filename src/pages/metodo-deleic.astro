@@ -2,6 +2,7 @@
 // src/pages/metodo-deleic.astro
 import Layout from "../layouts/Layout.astro";
 import { whatsapp } from "../data/contacto";
+import { faqPage, migas, negocio } from "../lib/schema";
 import Oferta from "../components/Metodo/Oferta.astro";
 import Ubication from "../components/Ubication.astro";
 
@@ -101,7 +102,8 @@ const icons: Record<string, string> = {
 const descripcion =
   "Diagnóstico facial 3D que analiza hidratación, manchas, arrugas, poros, textura y sensibilidad para crear tu plan de tratamiento personalizado.";
 
-// Schema: Service con la oferta + FAQPage
+// Schema: Service con la oferta + FAQPage + migas
+const site = Astro.site ?? Astro.url;
 const schema = {
   "@context": "https://schema.org",
   "@graph": [
@@ -111,28 +113,12 @@ const schema = {
       serviceType: "Diagnóstico facial",
       description: descripcion,
       areaServed: "León",
-      provider: {
-        "@type": "HealthAndBeautyBusiness",
-        name: "Deleic",
-        telephone: "+34987027906",
-        address: {
-          "@type": "PostalAddress",
-          streetAddress: "Calle Roa de la Vega 18, bajo",
-          postalCode: "24001",
-          addressLocality: "León",
-          addressCountry: "ES",
-        },
-      },
+      url: new URL("/metodo-deleic/", site).href,
+      provider: negocio(site),
       offers: { "@type": "Offer", price: String(PRECIO), priceCurrency: "EUR" },
     },
-    {
-      "@type": "FAQPage",
-      mainEntity: faq.map((f) => ({
-        "@type": "Question",
-        name: f.pregunta,
-        acceptedAnswer: { "@type": "Answer", text: f.respuesta },
-      })),
-    },
+    faqPage(faq),
+    migas(site, [["Método Deleic", "/metodo-deleic/"]]),
   ],
 };
 ---

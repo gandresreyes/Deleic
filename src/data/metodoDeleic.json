@@ -8,7 +8,7 @@
     "eyebrow": "El momento perfecto para cuidar tu piel",
     "titulo": "Método Deleic",
     "subtitulo": "Ciencia, tecnología y personalización para la piel que quieres.",
-    "ctaPrincipal": { "texto": "Reservar diagnóstico 3D", "href": "https://wa.me/34647716971?text=Hola%2C%20me%20gustar%C3%ADa%20reservar%20el%20diagn%C3%B3stico%20facial%203D%20del%20M%C3%A9todo%20Deleic." },
+    "ctaPrincipal": { "texto": "Reservar diagnóstico 3D", "mensaje": "Hola, me gustaría reservar el diagnóstico facial 3D del Método Deleic." },
     "ctaSecundario": { "texto": "Qué analizamos", "href": "#que-analizamos" },
     "imagen": "/images/metodo-deleic/diagnostico-3d.jpg",
     "imagenAlt": "Equipo de diagnóstico facial 3D del Método Deleic"
@@ -40,7 +40,7 @@
     "descuento": "Si comienzas un Plan Deleic, los 29€ del diagnóstico se descuentan íntegramente.",
     "lema": "Tu inversión en tu piel, tu mejor decisión.",
     "firma": "Resultados que se ven, confianza que se siente.",
-    "cta": { "texto": "Reservar diagnóstico 3D", "href": "https://wa.me/34647716971?text=Hola%2C%20me%20gustar%C3%ADa%20reservar%20el%20diagn%C3%B3stico%20facial%203D%20del%20M%C3%A9todo%20Deleic." }
+    "cta": { "texto": "Reservar diagnóstico 3D", "mensaje": "Hola, me gustaría reservar el diagnóstico facial 3D del Método Deleic." }
   },
   "porQue": {
     "eyebrow": "¿Por qué elegir el Método Deleic?",
@@ -71,7 +71,6 @@
   "cta": {
     "titulo": "Conoce tu piel de verdad",
     "texto": "Reserva tu diagnóstico facial 3D y te preparamos un plan hecho a tu medida.",
-    "ctaPrincipal": { "texto": "Reservar diagnóstico 3D", "href": "https://wa.me/34647716971?text=Hola%2C%20me%20gustar%C3%ADa%20reservar%20el%20diagn%C3%B3stico%20facial%203D%20del%20M%C3%A9todo%20Deleic." },
-    "telefono": { "texto": "987 027 906", "href": "tel:+34987027906" }
+    "ctaPrincipal": { "texto": "Reservar diagnóstico 3D", "mensaje": "Hola, me gustaría reservar el diagnóstico facial 3D del Método Deleic." }
   }
 }

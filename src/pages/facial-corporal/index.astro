@@ -2,6 +2,7 @@
 // src/pages/facial-corporal/index.astro
 import { getCollection } from "astro:content";
 import Layout from "../../layouts/Layout.astro";
+import { idNegocio, migas } from "../../lib/schema";
 
 const todos = await getCollection("facialCorporal");
 
@@ -14,10 +15,34 @@ const destacado = tratamientos.find((t) => t.data.destacadoEnNovedades);
 const resto = tratamientos.filter((t) => t !== destacado);
 
 const marcas = ["Eberlin", "Mesoestetic", "Kelaya", "Hitome"];
+
+// Schema para buscadores e IAs: la lista de tratamientos, cada uno con su página
+const site = Astro.site ?? Astro.url;
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "ItemList",
+      name: "Tratamientos faciales y corporales en León",
+      itemListElement: todos.map((t, i) => ({
+        "@type": "ListItem",
+        position: i + 1,
+        item: {
+          "@type": "Service",
+          name: t.data.nombre,
+          description: t.data.descripcionCorta,
+          url: new URL(`/facial-corporal/${t.id}/`, site).href,
+          provider: { "@id": idNegocio(site) },
+        },
+      })),
+    },
+    migas(site, [["Facial & Corporal", "/facial-corporal/"]]),
+  ],
+};
 ---
 
 <Layout
-  title="Facial & Corporal | Deleic"
+  title="Tratamientos faciales y corporales en León | Deleic"
   description="Tratamientos faciales y corporales en León. Cosmética profesional y protocolos personalizados para cada tipo de piel."
 >
   <!-- 1. HERO -->
@@ -187,4 +212,10 @@ const marcas = ["Eberlin", "Mesoestetic", "Kelaya", "Hitome"];
       </ul>
     </div>
   </section>
+
+  <script
+    is:inline
+    type="application/ld+json"
+    set:html={JSON.stringify(schema)}
+  />
 </Layout>

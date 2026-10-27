@@ -1,0 +1,129 @@
+{
+  "seo": {
+    "title": "Depilación láser de diodo en León: precios por zona | Deleic",
+    "description": "Depilación láser de diodo ENEKA PRO en León, para mujer y hombre. Precios por zona desde {desde} y valoración gratuita. Reserva por WhatsApp."
+  },
+  "hero": {
+    "eyebrow": "Láser de diodo",
+    "titulo": "Depilación láser en León",
+    "subtitulo": "Piel suave y confianza real. Reducimos el vello de forma progresiva, segura y eficaz, adaptando cada sesión a tu tipo de piel.",
+    "ctaPrincipal": {
+      "texto": "Reservar valoración gratuita",
+      "mensaje": "Hola, me gustaría reservar una valoración gratuita de depilación láser en Deleic."
+    },
+    "ctaSecundario": { "texto": "Ver precios", "href": "#precios" },
+    "puntos": [
+      { "icono": "cpu", "texto": ["Tecnología", "avanzada"] },
+      { "icono": "users", "texto": ["Para mujer", "y hombre"] },
+      { "icono": "gift", "texto": ["Valoración", "gratuita"] }
+    ],
+    "imagen": "/img/depilacion/hero.webp",
+    "imagenAlt": "Sesión de depilación láser de diodo en Deleic, León"
+  },
+  "funcionamiento": {
+    "eyebrow": "Cómo funciona el láser",
+    "titulo": "Actúa en el folículo, respeta la piel",
+    "texto": "El láser diodo emite una energía que es absorbida por la melanina del folículo piloso, generando el calor necesario para debilitarlo. Con cada sesión, el vello va reduciéndose de forma progresiva, respetando la piel que lo rodea.",
+    "etapas": [
+      { "titulo": "Emisión del láser", "texto": "La luz llega hasta la raíz del folículo." },
+      { "titulo": "Absorción de melanina", "texto": "El vello capta la energía sin afectar la piel." },
+      { "titulo": "Calor focalizado", "texto": "Debilita progresivamente el folículo." },
+      { "titulo": "Vello se desprende", "texto": "De forma natural, sesión a sesión." }
+    ]
+  },
+  "tecnologia": {
+    "eyebrow": "Tecnología",
+    "titulo": "Láser de diodo ENEKA PRO",
+    "imagen": "/img/depilacion/enekapro.webp",
+    "imagenAlt": "Equipo de depilación láser de diodo ENEKA PRO",
+    "datos": [
+      { "valor": "2000W", "texto": "Potencia real" },
+      { "valor": "-5°C", "texto": "Enfriamiento continuo" }
+    ],
+    "beneficios": ["Menos sesiones", "Prácticamente indoloro", "Todo tipo de piel", "Apto todo el año"]
+  },
+  "precios": {
+    "eyebrow": "Precios",
+    "titulo": "Un precio claro para cada zona",
+    "texto": "Precio por sesión en cada zona. En la valoración gratuita revisamos tu tipo de piel y vello y te preparamos un presupuesto sin compromiso.",
+    "grupos": [
+      {
+        "talla": "XS",
+        "nombre": "Zonas mínimas",
+        "precio": 15,
+        "zonas": ["Entrecejo", "Orejas"]
+      },
+      {
+        "talla": "S",
+        "nombre": "Zonas pequeñas",
+        "precio": 25,
+        "zonas": [
+          "Labio",
+          "Mentón",
+          "Patillas",
+          "Perfilado de barba",
+          "Cuello",
+          "Cejas",
+          "Nuca",
+          "Pies",
+          "Manos",
+          "Perianal",
+          "Línea alba",
+          "Areolas",
+          "Axilas"
+        ]
+      },
+      {
+        "talla": "M",
+        "nombre": "Zonas medianas",
+        "precio": 40,
+        "zonas": [
+          "Ingle completa o brasileña",
+          "Medios brazos",
+          "Glúteos + perianal",
+          "Dorsal",
+          "Lumbar",
+          "Tórax",
+          "Abdomen",
+          "Hombros",
+          "Cara + cuello"
+        ]
+      },
+      {
+        "talla": "L",
+        "nombre": "Zonas grandes",
+        "precio": 65,
+        "zonas": ["Media pierna inferior", "Media pierna superior", "Rodillas"]
+      },
+      {
+        "talla": "XL",
+        "nombre": "Zonas completas",
+        "precio": 100,
+        "destacado": true,
+        "zonas": ["Piernas completas + pies", "Brazos completos (con hombros y manos)"]
+      }
+    ],
+    "presupuesto": {
+      "titulo": "¿Varias zonas?",
+      "texto": "Cuéntanos qué zonas quieres tratar y te preparamos un presupuesto sin compromiso.",
+      "cta": "Pedir presupuesto",
+      "mensaje": "Hola, me gustaría un presupuesto de depilación láser para varias zonas."
+    }
+  },
+  "recomendaciones": {
+    "eyebrow": "Recomendaciones",
+    "titulo": "Cómo preparar tu piel",
+    "antes": [
+      { "dias": "21", "label": "días antes", "texto": "Sin rayos UVA ni autobronceadores", "tipo": "restriccion", "icono": "sun-off" },
+      { "dias": "20", "label": "días antes", "texto": "No depilar con cera ni pinzas", "tipo": "restriccion", "icono": "razor-off" },
+      { "dias": "15", "label": "días antes", "texto": "Evita el sol en la zona", "tipo": "restriccion", "icono": "sun-off" },
+      { "dias": "3", "label": "días antes", "texto": "Sin ácido glicólico ni retinoico", "tipo": "restriccion", "icono": "droplet-off" },
+      { "dias": "0", "label": "día de la sesión", "texto": "Rasura la zona y ven sin maquillaje", "tipo": "accion", "icono": "razor" }
+    ],
+    "despues": [
+      { "dias": "2-3", "label": "días después", "texto": "Espera antes de exponer la zona al sol", "tipo": "restriccion", "icono": "sun-off" },
+      { "dias": "Siempre", "label": "", "texto": "Usa protección solar SPF 50", "tipo": "accion", "icono": "shield-check" }
+    ],
+    "aviso": "Estas recomendaciones son generales. Ante dudas específicas sobre tu piel o medicación, consulta siempre con nuestro equipo antes de tu sesión."
+  }
+}

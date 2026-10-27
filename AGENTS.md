@@ -113,6 +113,12 @@ Usa las clases canónicas de Tailwind v4 (`bg-linear-to-r`, `bg-size-[...]`,
   `Service`/`HealthAndBeautyBusiness` con la oferta y `FAQPage` generado desde el
   mismo array que pinta la FAQ, para que el texto visible y el schema coincidan.
 - Todo el contenido importante debe estar en el HTML del build, no solo en JS.
+- El negocio, las migas y la FAQ del schema salen de `src/lib/schema.ts`
+  (`negocio(site)`, `migas`, `faqPage`), que lee `contacto.ts`. No copies a mano
+  dirección, teléfono ni horario en el JSON-LD.
+- `robots.txt`, `llms.txt` (resumen para IAs) y el sitemap se generan en el build.
+  Un servicio nuevo se añade también a `src/pages/llms.txt.ts`, y una página con
+  `noindex` a `SIN_INDEXAR` en `astro.config.mjs`.
 
 ### Legal, privacidad y cookies (RGPD, LOPDGDD, LSSI)
 

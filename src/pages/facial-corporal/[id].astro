@@ -2,7 +2,8 @@
 // src/pages/facial-corporal/[id].astro
 import { getCollection } from "astro:content";
 import Layout from "../../layouts/Layout.astro";
-import { whatsapp } from "../../data/contacto";
+import { TELEFONO, whatsapp } from "../../data/contacto";
+import { faqPage, migas, negocio } from "../../lib/schema";
 
 export async function getStaticPaths() {
   const todos = await getCollection("facialCorporal");
@@ -104,6 +105,7 @@ const num = (id: string) =>
   String(secciones.findIndex((s) => s.id === id) + 1).padStart(2, "0");
 
 // Schema.org: Service + BreadcrumbList (+ FAQPage si hay preguntas)
+const site = Astro.site ?? Astro.url;
 const graph: Record<string, unknown>[] = [
   {
     "@type": "Service",
@@ -111,42 +113,16 @@ const graph: Record<string, unknown>[] = [
     serviceType: t.categoria,
     description: t.seoDescription,
     areaServed: "León",
-    provider: {
-      "@type": "HealthAndBeautyBusiness",
-      name: "Deleic",
-      telephone: "+34987027906",
-      address: {
-        "@type": "PostalAddress",
-        streetAddress: "Calle Roa de la Vega 18, bajo",
-        postalCode: "24001",
-        addressLocality: "León",
-        addressCountry: "ES",
-      },
-    },
+    url: new URL(`/facial-corporal/${tratamiento.id}/`, site).href,
+    image: new URL(t.imagen, site).href,
+    provider: negocio(site),
   },
-  {
-    "@type": "BreadcrumbList",
-    itemListElement: [
-      {
-        "@type": "ListItem",
-        position: 1,
-        name: "Facial & Corporal",
-        item: new URL("/facial-corporal/", Astro.url).href,
-      },
-      { "@type": "ListItem", position: 2, name: t.nombre },
-    ],
-  },
+  migas(site, [
+    ["Facial & Corporal", "/facial-corporal/"],
+    [t.nombre, `/facial-corporal/${tratamiento.id}/`],
+  ]),
 ];
-if (t.faq && t.faq.length > 0) {
-  graph.push({
-    "@type": "FAQPage",
-    mainEntity: t.faq.map((f: { pregunta: string; respuesta: string }) => ({
-      "@type": "Question",
-      name: f.pregunta,
-      acceptedAnswer: { "@type": "Answer", text: f.respuesta },
-    })),
-  });
-}
+if (t.faq?.length) graph.push(faqPage(t.faq));
 const schema = { "@context": "https://schema.org", "@graph": graph };
 ---
 
@@ -281,7 +257,7 @@ const schema = { "@context": "https://schema.org", "@graph": graph };
                 />
               </a>
               <a
-                href="tel:+34987027906"
+                href={TELEFONO.href}
                 class="btn h-12 px-6 rounded-full bg-transparent text-base-100 border-base-100/30 hover:bg-base-100/10 hover:border-base-100/50 shadow-none"
               >
                 <svg
@@ -295,7 +271,7 @@ const schema = { "@context": "https://schema.org", "@graph": graph };
                   stroke-linejoin="round"
                   set:html={icons.phone}
                 />
-                987 027 906
+                {TELEFONO.visible}
               </a>
             </div>
           </div>

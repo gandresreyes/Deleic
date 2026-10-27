@@ -4,7 +4,8 @@ import ServicesGrid from "../components/ServicesGrid.astro";
 import Ubication from "../components/Ubication.astro";
 import NewFeatures from "../components/NewFeatures.astro";
 import metodo from "../data/metodoDeleic.json";
-import { DIRECCION, whatsapp } from "../data/contacto";
+import { whatsapp } from "../data/contacto";
+import { idNegocio, negocio } from "../lib/schema";
 
 const icons = {
   check: '<path d="M5 12l5 5L20 7"/>',
@@ -30,67 +31,28 @@ const confianza = [
 ];
 
 // Schema.org del negocio: clave para búsquedas locales y respuestas de IA
-const year = new Date().getFullYear();
 const site = Astro.site ?? Astro.url;
 const schema = {
   "@context": "https://schema.org",
-  "@type": "HealthAndBeautyBusiness",
-  "@id": new URL("/#negocio", site).href,
-  name: "Deleic",
-  description:
-    "Centro de medicina estética, depilación láser y tratamientos faciales y corporales en León.",
-  url: new URL("/", site).href,
-  image: new URL("/img/og/home.jpg", site).href,
-  logo: new URL("/img/deleicLogo.webp", site).href,
-  telephone: "+34987027906",
-  address: {
-    "@type": "PostalAddress",
-    streetAddress: DIRECCION.calle,
-    postalCode: DIRECCION.cp,
-    addressLocality: DIRECCION.ciudad,
-    addressRegion: "León",
-    addressCountry: "ES",
-  },
-  hasMap: DIRECCION.maps,
-  areaServed: { "@type": "City", name: "León" },
-  knowsAbout: [
-    "Depilación láser",
-    "Medicina estética",
-    "Tratamientos faciales",
-    "Tratamientos corporales",
-    "Microblading",
-    "Micropigmentación",
-    "Diagnóstico facial 3D",
-  ],
-  openingHoursSpecification: [
+  "@graph": [
     {
-      "@type": "OpeningHoursSpecification",
-      dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-      opens: "10:00",
-      closes: "20:00",
+      ...negocio(site),
+      knowsAbout: [
+        "Depilación láser",
+        "Medicina estética",
+        "Tratamientos faciales",
+        "Tratamientos corporales",
+        "Microblading",
+        "Micropigmentación",
+        "Diagnóstico facial 3D",
+      ],
     },
     {
-      "@type": "OpeningHoursSpecification",
-      dayOfWeek: "Saturday",
-      opens: "10:00",
-      closes: "14:00",
-    },
-    // Horario de verano (se recalcula el año en cada build)
-    {
-      "@type": "OpeningHoursSpecification",
-      dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-      opens: "10:00",
-      closes: "19:00",
-      validFrom: `${year}-06-15`,
-      validThrough: `${year}-09-15`,
-    },
-    {
-      "@type": "OpeningHoursSpecification",
-      dayOfWeek: "Saturday",
-      opens: "00:00",
-      closes: "00:00",
-      validFrom: `${year}-06-15`,
-      validThrough: `${year}-09-15`,
+      "@type": "WebSite",
+      name: "Deleic",
+      url: new URL("/", site).href,
+      inLanguage: "es-ES",
+      publisher: { "@id": idNegocio(site) },
     },
   ],
 };
@@ -309,7 +271,7 @@ const schema = {
 
             <div class="flex flex-col gap-3 sm:flex-row sm:shrink-0">
               <a
-                href={metodo.oferta.cta.href}
+                href={whatsapp(metodo.oferta.cta.mensaje)}
                 target="_blank"
                 rel="noopener"
                 class="btn btn-primary h-12 rounded-full border-0 px-6"

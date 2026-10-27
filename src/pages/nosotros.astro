@@ -4,7 +4,8 @@
 import Layout from "../layouts/Layout.astro";
 import ServicesGrid from "../components/ServicesGrid.astro";
 import Ubication from "../components/Ubication.astro";
-import { DIRECCION, TELEFONO, whatsapp } from "../data/contacto";
+import { TITULAR, whatsapp } from "../data/contacto";
+import { negocio } from "../lib/schema";
 
 const APERTURA = 2019;
 const LEMA = "La calidad es el único camino para el crecimiento";
@@ -81,23 +82,14 @@ const schema = {
   name: "Nosotros · Deleic",
   description: descripcion,
   mainEntity: {
-    "@type": "HealthAndBeautyBusiness",
-    name: "Deleic",
+    ...negocio(Astro.site ?? Astro.url),
     slogan: LEMA,
     foundingDate: String(APERTURA),
-    telephone: "+34987027906",
-    address: {
-      "@type": "PostalAddress",
-      streetAddress: DIRECCION.calle,
-      postalCode: DIRECCION.cp,
-      addressLocality: DIRECCION.ciudad,
-      addressCountry: "ES",
-    },
     founder: {
       "@type": "Person",
-      name: "Leila Carreira López",
+      name: TITULAR.nombre,
       jobTitle: "Fundadora y responsable de Deleic",
-      image: "/img/nosotros/leila-carreira.webp",
+      image: new URL("/img/nosotros/leila-carreira.webp", Astro.site ?? Astro.url).href,
     },
   },
 };

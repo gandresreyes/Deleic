@@ -1,6 +1,6 @@
 ---
 import "../styles/global.css";
-import { whatsapp } from "../data/contacto";
+import { DIRECCION, TELEFONO, whatsapp } from "../data/contacto";
 
 const tratamientos = [
   {
@@ -140,7 +140,7 @@ const icons = {
 
     <div class="hidden lg:flex items-center gap-2">
       <a
-        href="tel:+34987027906"
+        href={TELEFONO.href}
         class="hidden xl:flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium transition-colors hover:bg-base-200"
       >
         <svg
@@ -154,7 +154,7 @@ const icons = {
           stroke-linejoin="round"
           set:html={icons.phone}
         />
-        987 027 906
+        {TELEFONO.visible}
       </a>
       <!-- Se recoge al hacer scroll, cuando aparece el botón flotante -->
       <div class="cta-cabecera overflow-hidden">
@@ -284,7 +284,7 @@ const icons = {
               Reservar cita
             </a>
             <a
-              href="tel:+34987027906"
+              href={TELEFONO.href}
               class="btn h-12 w-full rounded-full border-base-300 bg-base-100 text-base text-secondary-content shadow-none"
             >
               <svg
@@ -298,10 +298,10 @@ const icons = {
                 stroke-linejoin="round"
                 set:html={icons.phone}
               />
-              987 027 906
+              {TELEFONO.visible}
             </a>
             <p class="pt-2 text-center text-xs text-secondary-content/50">
-              Calle Roa de la Vega 18, bajo · León
+              {DIRECCION.calle} · {DIRECCION.ciudad}
             </p>
           </div>
         </div>

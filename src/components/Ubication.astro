@@ -39,7 +39,7 @@ const contactos = [
 
 const temporadas = [
   { titulo: "Horario de invierno", filas: HORARIO.invierno },
-  { titulo: "Horario de verano", nota: HORARIO.periodoVerano, filas: HORARIO.verano },
+  { titulo: "Horario de verano", filas: HORARIO.verano },
 ];
 ---
 
@@ -134,14 +134,7 @@ const temporadas = [
           {
             temporadas.map((tmp) => (
               <div>
-                <p class="text-sm font-semibold">
-                  {tmp.titulo}
-                  {tmp.nota && (
-                    <span class="ml-1 font-normal text-secondary-content/50">
-                      · {tmp.nota}
-                    </span>
-                  )}
-                </p>
+                <p class="text-sm font-semibold">{tmp.titulo}</p>
                 <dl class="mt-2 space-y-1.5 text-sm">
                   {tmp.filas.map((f) => (
                     <div class="flex justify-between gap-4 border-b border-dashed border-base-300 pb-1.5 last:border-0">
@@ -174,7 +167,7 @@ const temporadas = [
       <template data-mapa-plantilla>
         <iframe
           title={`Mapa: Deleic en ${DIRECCION.calle}, ${DIRECCION.ciudad}`}
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2263.564021969237!2d-5.578883671647799!3d42.599309365224656!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd379bd16ad32fa3%3A0x7784e6ee80d07d20!2sDeleic!5e1!3m2!1ses!2ses!4v1784250648752!5m2!1ses!2ses"
+          src={DIRECCION.mapaEmbed}
           class="absolute inset-0 h-full w-full border-0"
           allowfullscreen=""
           loading="lazy"
@@ -231,6 +224,8 @@ const temporadas = [
 </section>
 
 <script>
+  import { HORARIO } from "../data/contacto";
+  import { DIAS, franja, minutos, VERANO } from "../lib/horario";
   import { darPermisoMapa, permisoMapa } from "../scripts/mapa";
 
   // ---------- Mapa bajo demanda ----------
@@ -265,49 +260,20 @@ const temporadas = [
     if (!badge) return;
 
     const now = new Date();
-    const dayOfWeek = now.getDay(); // 0=Sunday ... 6=Saturday
-    const minutesNow = now.getHours() * 60 + now.getMinutes();
+    const minutosAhora = now.getHours() * 60 + now.getMinutes();
 
-    const SUMMER_START = { month: 6, day: 15 }; // June 15
-    const SUMMER_END = { month: 9, day: 15 }; // September 15
+    // Verano según HORARIO.periodoVerano (comparando mes*100 + día)
+    const hoy = (now.getMonth() + 1) * 100 + now.getDate();
+    const { inicio, fin } = VERANO;
+    const esVerano =
+      hoy >= inicio.mes * 100 + inicio.dia && hoy <= fin.mes * 100 + fin.dia;
 
-    const currentMonth = now.getMonth() + 1; // getMonth() is 0-indexed
-    const currentDay = now.getDate();
-
-    function isSummerSeason() {
-      const currentDate = currentMonth * 100 + currentDay;
-      const summerStartDate = SUMMER_START.month * 100 + SUMMER_START.day;
-      const summerEndDate = SUMMER_END.month * 100 + SUMMER_END.day;
-      return currentDate >= summerStartDate && currentDate <= summerEndDate;
-    }
-
-    const isSummer = isSummerSeason();
-
-    // Time ranges in minutes since midnight
-    const REGULAR_SCHEDULE = {
-      weekdays: { open: 10 * 60, close: 20 * 60 }, // 10:00-20:00
-      saturday: { open: 10 * 60, close: 14 * 60 }, // 10:00-14:00
-    };
-
-    const SUMMER_SCHEDULE = {
-      weekdays: { open: 10 * 60, close: 19 * 60 }, // 10:00-19:00
-      saturday: null, // Closed
-    };
-
-    const activeSchedule = isSummer ? SUMMER_SCHEDULE : REGULAR_SCHEDULE;
-
-    let isOpen = false;
-
-    if (dayOfWeek >= 1 && dayOfWeek <= 5) {
-      // Monday to Friday
-      const range = activeSchedule.weekdays;
-      isOpen = minutesNow >= range.open && minutesNow < range.close;
-    } else if (dayOfWeek === 6 && activeSchedule.saturday) {
-      // Saturday (only if there's a saturday schedule active)
-      const range = activeSchedule.saturday;
-      isOpen = minutesNow >= range.open && minutesNow < range.close;
-    }
-    // Sunday is always closed (dayOfWeek === 0)
+    // Fila del horario que incluye hoy; sin horas (o sin fila) = cerrado
+    const fila = (esVerano ? HORARIO.verano : HORARIO.invierno).find((f) =>
+      DIAS[f.dias]?.numeros.includes(now.getDay()),
+    );
+    const [abre, cierra] = fila?.horas ? franja(fila.horas).map(minutos) : [0, 0];
+    const isOpen = minutosAhora >= abre && minutosAhora < cierra;
 
     badge.textContent = isOpen ? "● Abierto ahora" : "● Cerrado ahora";
     badge.classList.toggle("bg-success/15", isOpen);

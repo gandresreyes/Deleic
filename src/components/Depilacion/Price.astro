@@ -1,228 +1,124 @@
 ---
+// Precios por grupo de zonas. Rejilla en vez de carrusel: todas las tarifas
+// quedan a la vista (y en el HTML) sin tener que desplazarse.
+import data from "../../data/depilacionLaser.json";
+import { whatsapp } from "../../data/contacto";
 
+const { precios } = data;
+
+const whatsappIcon =
+  '<path d="M3.5 20.5l1.4-4.2A8.5 8.5 0 1 1 8 19.3z"/><path d="M9 8.6c.2-.4.5-.6.9-.6h.5l1 2.2-.8 1a5.6 5.6 0 0 0 2.3 2.3l1-.8 2.2 1v.5c0 .4-.2.7-.6.9a3 3 0 0 1-2.6.2 7.7 7.7 0 0 1-4.1-4.1 3 3 0 0 1 .2-2.6z"/>';
 ---
 
-<section class="seccion">
+<section
+  id="precios"
+  class="seccion scroll-mt-24"
+  aria-labelledby="precios-heading"
+>
   <div class="reveal">
     <span class="text-sm font-semibold tracking-widest uppercase text-primary">
-      Precios
+      {precios.eyebrow}
     </span>
     <h2
-      id="novedades-heading"
-      class="mt-3 text-3xl sm:text-4xl font-semibold text-secondary-content"
+      id="precios-heading"
+      class="mt-3 text-3xl sm:text-4xl font-semibold text-secondary-content text-balance"
     >
-      Un precio claro<br />
-      para cada zona
+      {precios.titulo}
     </h2>
+    <p class="mt-4 max-w-2xl text-lg text-base-content/70 text-pretty">
+      {precios.texto}
+    </p>
   </div>
 
-  <div class="reveal relative mt-12">
-    <!-- Botones nav (solo desktop) -->
-    <button
-      id="scrollPrev"
-      class="absolute bg-black/10 backdrop-blur-[2px] left-0 top-1/2 -translate-y-1/2 -translate-x-4 z-10 hidden lg:flex items-center justify-center w-11 h-11 rounded-full border border-base-300 shadow-lg hover:bg-base-200 transition-all"
-      aria-label="Anterior"
-    >
-      <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-        ><path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          d="M15 19l-7-7 7-7"></path></svg
-      >
-    </button>
-    <button
-      id="scrollNext"
-      class="absolute right-0 bg-black/10 top-1/2 -translate-y-1/2 backdrop-blur-[2px] translate-x-4 z-10 hidden lg:flex items-center justify-center w-11 h-11 rounded-full border border-base-300 shadow-lg hover:bg-base-200 transition-all"
-      aria-label="Siguiente"
-    >
-      <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-        ><path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          d="M9 5l7 7-7 7"></path></svg
-      >
-    </button>
+  <ul
+    class="reveal-stagger mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5"
+  >
+    {
+      precios.grupos.map((g) => (
+        <li>
+          <article
+            class:list={[
+              "relative h-full overflow-hidden rounded-3xl border p-8 transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl",
+              g.destacado
+                ? "border-primary bg-linear-to-br from-primary-oscuro to-primary text-primary-content"
+                : "border-base-300 bg-base-100 text-secondary-content hover:border-primary/60",
+            ]}
+          >
+            <div
+              aria-hidden="true"
+              class:list={[
+                "pointer-events-none absolute inset-0 opacity-[0.15] bg-size-[18px_18px]",
+                g.destacado
+                  ? "bg-[radial-gradient(rgb(255_255_255/0.4)_1px,transparent_1px)]"
+                  : "bg-[radial-gradient(rgb(0_0_0/0.6)_1px,transparent_1px)]",
+              ]}
+            />
+            <p
+              class:list={[
+                "absolute right-6 top-6 rounded-full px-4 py-2 text-lg font-bold tabular-nums",
+                g.destacado
+                  ? "bg-white text-primary"
+                  : "bg-primary text-primary-content",
+              ]}
+            >
+              {g.precio} €
+            </p>
+            <span
+              class:list={[
+                "relative text-xs font-semibold uppercase tracking-[0.25em]",
+                g.destacado ? "text-primary-content/70" : "text-primary",
+              ]}
+            >
+              Zona {g.talla}
+            </span>
+            <h3 class="relative mt-4 text-2xl font-bold">{g.nombre}</h3>
+            <ul class="relative mt-6 flex flex-wrap gap-2">
+              {g.zonas.map((z) => (
+                <li
+                  class:list={[
+                    "rounded-full px-3 py-1 text-sm",
+                    g.destacado ? "bg-white/10" : "bg-base-200",
+                  ]}
+                >
+                  {z}
+                </li>
+              ))}
+            </ul>
+          </article>
+        </li>
+      ))
+    }
 
-    <!-- Carrusel -->
-    <div id="zonesCarousel" class="flex gap-6 overflow-x-auto pb-4">
-      <!-- XS -->
+    <!-- Cierra la rejilla con la llamada a pedir presupuesto -->
+    <li>
       <div
-        class="group relative overflow-hidden rounded-3xl border border-base-300 bg-base-100 p-8 shrink-0 w-[80%] sm:w-85 snap-start transition-all duration-300 hover:-translate-y-1 hover:border-primary/60 hover:shadow-2xl"
+        class="flex h-full flex-col justify-between gap-6 rounded-3xl bg-secondary-content p-8 text-white"
       >
-        <div
-          class="absolute inset-0 opacity-[0.15] pointer-events-none"
-          style="background-image: radial-gradient(rgba(0, 0, 0, 0.627) 1px, transparent 1px); background-size: 18px 18px;"
-        >
+        <div>
+          <h3 class="text-2xl font-bold">{precios.presupuesto.titulo}</h3>
+          <p class="mt-3 text-white/70">{precios.presupuesto.texto}</p>
         </div>
-        <div
-          class="absolute right-6 top-6 rounded-full bg-primary px-4 py-2 text-lg font-bold text-white"
+        <a
+          href={whatsapp(precios.presupuesto.mensaje)}
+          target="_blank"
+          rel="noopener"
+          class="inline-flex items-center justify-center gap-2 self-start px-4 sm:px-6 py-3 sm:py-4 rounded-full bg-white text-primary font-bold"
         >
-          15€
-        </div>
-        <span
-          class="text-xs font-semibold uppercase tracking-[0.25em] text-primary"
-          >Zona XS</span
-        >
-        <h3 class="mt-4 text-2xl font-bold text-secondary-content">
-          Zonas pequeñas
-        </h3>
-        <ul class="mt-6 space-y-3 text-base-content/70">
-          <li>• Entrecejo</li>
-          <li>• Orejas</li>
-        </ul>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="w-5 h-5"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+            set:html={whatsappIcon}
+          />
+          {precios.presupuesto.cta}
+        </a>
       </div>
-
-      <!-- S -->
-      <div
-        class="group relative overflow-hidden rounded-3xl border border-base-300 bg-base-100 p-8 shrink-0 w-[80%] sm:w-85 snap-start transition-all duration-300 hover:-translate-y-1 hover:border-primary/60 hover:shadow-2xl"
-      >
-        <div
-          class="absolute right-6 top-6 rounded-full bg-primary px-4 py-2 text-lg font-bold text-white"
-        >
-          25€
-        </div>
-        <span
-          class="text-xs font-semibold uppercase tracking-[0.25em] text-primary"
-          >Zona S</span
-        >
-        <h3 class="mt-4 text-2xl font-bold text-secondary-content">
-          Zonas pequeñas
-        </h3>
-        <div class="mt-6 flex flex-wrap gap-2 text-secondary-content">
-          <span class="rounded-full bg-base-200 px-3 py-1 text-sm">Labio</span>
-          <span class="rounded-full bg-base-200 px-3 py-1 text-sm">Mentón</span>
-          <span class="rounded-full bg-base-200 px-3 py-1 text-sm"
-            >Patillas</span
-          >
-          <span class="rounded-full bg-base-200 px-3 py-1 text-sm"
-            >Perfilado barba</span
-          >
-          <span class="rounded-full bg-base-200 px-3 py-1 text-sm">Cuello</span>
-          <span class="rounded-full bg-base-200 px-3 py-1 text-sm">Cejas</span>
-          <span class="rounded-full bg-base-200 px-3 py-1 text-sm">Nuca</span>
-          <span class="rounded-full bg-base-200 px-3 py-1 text-sm">Pies</span>
-          <span class="rounded-full bg-base-200 px-3 py-1 text-sm">Manos</span>
-          <span class="rounded-full bg-base-200 px-3 py-1 text-sm"
-            >Perianal</span
-          >
-          <span class="rounded-full bg-base-200 px-3 py-1 text-sm"
-            >Línea alba</span
-          >
-          <span class="rounded-full bg-base-200 px-3 py-1 text-sm">Areolas</span
-          >
-          <span class="rounded-full bg-base-200 px-3 py-1 text-sm">Axilas</span>
-        </div>
-      </div>
-
-      <!-- M -->
-      <div
-        class="group relative overflow-hidden rounded-3xl border border-base-300 bg-base-100 p-8 shrink-0 w-[80%] sm:w-85 snap-start transition-all duration-300 hover:-translate-y-1 hover:border-primary/60 hover:shadow-2xl"
-      >
-        <div
-          class="absolute right-6 top-6 rounded-full bg-primary px-4 py-2 text-lg font-bold text-white"
-        >
-          40€
-        </div>
-        <span
-          class="text-xs font-semibold uppercase tracking-[0.25em] text-primary"
-          >Zona M</span
-        >
-        <h3 class="mt-4 text-2xl font-bold text-secondary-content">
-          Zonas medianas
-        </h3>
-        <div class="mt-6 flex flex-wrap gap-2 text-secondary-content">
-          <span class="rounded-full bg-base-200 px-3 py-1 text-sm"
-            >Ingle completa</span
-          >
-          <span class="rounded-full bg-base-200 px-3 py-1 text-sm"
-            >Medios brazos</span
-          >
-          <span class="rounded-full bg-base-200 px-3 py-1 text-sm">Glúteos</span
-          >
-          <span class="rounded-full bg-base-200 px-3 py-1 text-sm"
-            >Perianal</span
-          >
-          <span class="rounded-full bg-base-200 px-3 py-1 text-sm">Dorsal</span>
-          <span class="rounded-full bg-base-200 px-3 py-1 text-sm">Lumbar</span>
-          <span class="rounded-full bg-base-200 px-3 py-1 text-sm">Tórax</span>
-          <span class="rounded-full bg-base-200 px-3 py-1 text-sm">Abdomen</span
-          >
-          <span class="rounded-full bg-base-200 px-3 py-1 text-sm">Hombros</span
-          >
-          <span class="rounded-full bg-base-200 px-3 py-1 text-sm"
-            >Facial + cuello</span
-          >
-        </div>
-      </div>
-
-      <!-- L -->
-      <div
-        class="group relative overflow-hidden rounded-3xl border border-base-300 bg-base-100 p-8 shrink-0 w-[80%] sm:w-85 snap-start transition-all duration-300 hover:-translate-y-1 hover:border-primary/60 hover:shadow-2xl"
-      >
-        <div
-          class="absolute right-6 top-6 rounded-full bg-primary px-4 py-2 text-lg font-bold text-white"
-        >
-          65€
-        </div>
-        <span
-          class="text-xs font-semibold uppercase tracking-[0.25em] text-primary"
-          >Zona L</span
-        >
-        <h3 class="mt-4 text-2xl font-bold text-secondary-content">
-          Zonas grandes
-        </h3>
-        <ul class="mt-6 space-y-3 text-base-content/70">
-          <li>• Media pierna inferior</li>
-          <li>• Media pierna superior</li>
-          <li>• Rodillas</li>
-        </ul>
-      </div>
-
-      <!-- XL -->
-      <div
-        class="group relative overflow-hidden rounded-3xl border border-primary bg-linear-to-br from-primary-oscuro to-primary p-8 text-primary-content shadow-2xl shrink-0 w-[80%] sm:w-85 snap-start transition-all duration-300 hover:-translate-y-1"
-      >
-        <div
-          class="absolute inset-0 opacity-[0.15] pointer-events-none"
-          style="background-image: radial-gradient(rgba(255,255,255,0.4) 1px, transparent 1px); background-size: 18px 18px;"
-        >
-        </div>
-        <div
-          class="absolute right-6 top-6 rounded-full bg-white px-4 py-2 text-lg font-bold text-primary"
-        >
-          100€
-        </div>
-        <span
-          class="text-xs font-semibold uppercase tracking-[0.25em] text-primary-content/70"
-          >Zona XL</span
-        >
-        <h3 class="mt-4 text-2xl font-bold">Zonas completas</h3>
-        <ul class="mt-6 space-y-3 text-primary-content/85">
-          <li>• Piernas completas + pies</li>
-          <li>• Brazos completos (Incluye hombros y manos)</li>
-        </ul>
-      </div>
-    </div>
-  </div>
+    </li>
+  </ul>
 </section>
-
-<script>
-  const carousel = document.getElementById("zonesCarousel") as HTMLElement;
-  const prevBtn = document.getElementById("scrollPrev") as HTMLButtonElement;
-  const nextBtn = document.getElementById("scrollNext") as HTMLButtonElement;
-
-  const scrollAmount = () => {
-    const card = carousel.querySelector(":scope > div") as HTMLElement;
-    return (card?.offsetWidth ?? 0) + 24;
-  };
-
-  prevBtn?.addEventListener("click", () => {
-    carousel.scrollBy({ left: -scrollAmount(), behavior: "smooth" });
-  });
-
-  nextBtn?.addEventListener("click", () => {
-    carousel.scrollBy({ left: scrollAmount(), behavior: "smooth" });
-  });
-</script>
