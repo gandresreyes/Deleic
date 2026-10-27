@@ -3,7 +3,11 @@
     "title": "Diagnóstico facial avanzado en León: Método Deleic | Deleic",
     "description": "Diagnóstico facial con 8 tipos de luz y 19 indicadores: hidratación, manchas, poros, arrugas, sensibilidad y acné, para un plan a tu medida. {precio}."
   },
-  "precio": { "valor": 29, "moneda": "EUR", "visible": "29€" },
+  "precio": {
+    "valor": 29,
+    "moneda": "EUR",
+    "visible": "29€"
+  },
   "hero": {
     "eyebrow": "Método Deleic",
     "titulo": "Diagnóstico facial avanzado en León",
@@ -12,43 +16,42 @@
       "texto": "Reservar diagnóstico",
       "mensaje": "Hola, me gustaría reservar el diagnóstico facial avanzado del Método Deleic."
     },
-    "ctaSecundario": { "texto": "Qué analizamos", "href": "#que-analizamos" },
+    "ctaSecundario": {
+      "texto": "Qué analizamos",
+      "href": "#que-analizamos"
+    },
     "puntos": [
-      { "icono": "sun", "texto": ["8 tipos", "de luz"] },
-      { "icono": "chart", "texto": ["19", "indicadores"] },
-      { "icono": "gift", "texto": ["{precio} menos", "en tu plan"] }
+      {
+        "icono": "sun",
+        "texto": [
+          "8 tipos",
+          "de luz"
+        ]
+      },
+      {
+        "icono": "chart",
+        "texto": [
+          "19",
+          "indicadores"
+        ]
+      },
+      {
+        "icono": "gift",
+        "texto": [
+          "{precio} menos",
+          "en tu plan"
+        ]
+      }
     ],
     "imagen": "/img/metodo-deleic/hero.webp",
     "imagenAlt": "Especialista de Deleic realizando un diagnóstico facial avanzado"
   },
   "queEs": {
     "eyebrow": "¿Qué es el Método Deleic?",
-    "titulo": "Conoce tu piel al detalle",
+    "titulo": "Lo que el espejo no te enseña",
     "antes": "Nuestro sistema de diagnóstico facial avanzado analiza tu piel con 8 tipos de luz y 19 indicadores objetivos para detectar lo que no se ve a simple vista y crear un ",
     "destacado": "plan de tratamiento 100% personalizado",
     "despues": " para ti.",
-    "pilares": [
-      {
-        "icono": "sun",
-        "titulo": "Análisis multiespectral",
-        "texto": "8 tipos de iluminación que nos permiten ver más allá de lo que vemos a simple vista."
-      },
-      {
-        "icono": "chart",
-        "titulo": "Análisis cuantitativo",
-        "texto": "19 indicadores objetivos para conocer el estado real de tu piel."
-      },
-      {
-        "icono": "trend",
-        "titulo": "Seguimiento",
-        "texto": "Comparamos tus resultados en cada visita para medir la evolución."
-      },
-      {
-        "icono": "user",
-        "titulo": "Diagnóstico profesional",
-        "texto": "La máquina aporta los datos; nosotras los interpretamos y diseñamos tu protocolo."
-      }
-    ],
     "porQue": {
       "titulo": "¿Por qué hacemos un diagnóstico?",
       "texto": "Una misma preocupación puede tener diferentes causas. El diagnóstico nos ayuda a priorizar y personalizar tu tratamiento."
@@ -63,103 +66,137 @@
         "nombre": "RGB",
         "detalle": "Luz blanca",
         "texto": "Imagen natural del rostro. Base para valorar tono, arrugas, poros, manchas visibles y acné.",
-        "detecta": ["Evaluación general", "Color y uniformidad", "Arrugas visibles, poros y acné"]
+        "detecta": [
+          "Evaluación general",
+          "Color y uniformidad",
+          "Arrugas visibles, poros y acné"
+        ]
       },
       {
         "nombre": "Polarizada paralela",
         "detalle": "",
         "texto": "Reduce la información de capas profundas y potencia la superficie. Muestra textura y detalles finos.",
-        "detecta": ["Líneas finas", "Arrugas superficiales", "Textura e irregularidades"]
+        "detecta": [
+          "Líneas finas",
+          "Arrugas superficiales",
+          "Textura e irregularidades"
+        ]
       },
       {
         "nombre": "Polarizada cruzada",
         "detalle": "",
         "texto": "Reduce reflejos superficiales. Mejora la visualización de tono irregular, microvasculatura y rojeces.",
-        "detecta": ["Tono irregular", "Microvasculatura", "Sensibilidad y enrojecimiento"]
+        "detecta": [
+          "Tono irregular",
+          "Microvasculatura",
+          "Sensibilidad y enrojecimiento"
+        ]
       },
       {
         "nombre": "Luz azul",
         "detalle": "405 nm",
         "texto": "Fluorescencia asociada a sebo, porfirinas y actividad bacteriana. Muy útil en pieles con acné.",
-        "detecta": ["Sebo", "Acné y bacterias (porfirinas)", "Distribución de flora"]
+        "detecta": [
+          "Sebo",
+          "Acné y bacterias (porfirinas)",
+          "Distribución de flora"
+        ]
       },
       {
         "nombre": "UV",
         "detalle": "365 nm",
         "texto": "Resalta manchas relacionadas con radiación UV y pigmentación profunda.",
-        "detecta": ["Manchas solares", "Restos pigmentarios de acné", "Pigmentación profunda (UV)"]
+        "detecta": [
+          "Manchas solares",
+          "Restos pigmentarios de acné",
+          "Pigmentación profunda (UV)"
+        ]
       },
       {
         "nombre": "Luz de Wood",
         "detalle": "",
         "texto": "Detecta alteraciones pigmentarias y vasculares. Muestra fluorescencia en ciertas sustancias.",
-        "detecta": ["Depósitos de melanina profunda", "Alteraciones pigmentarias", "Agentes fluorescentes"]
+        "detecta": [
+          "Depósitos de melanina profunda",
+          "Alteraciones pigmentarias",
+          "Agentes fluorescentes"
+        ]
       },
       {
         "nombre": "Mapa Erythromin",
         "detalle": "",
         "texto": "Imagen procesada que muestra la distribución del componente rojo. Asociado a rojeces e inflamación.",
-        "detecta": ["Sensibilidad", "Rojeces", "Inflamación superficial"]
+        "detecta": [
+          "Sensibilidad",
+          "Rojeces",
+          "Inflamación superficial"
+        ]
       },
       {
         "nombre": "Mapa termodinámico",
         "detalle": "",
         "texto": "Imagen procesada que indica zonas con mayor señal asociada a inflamación profunda.",
-        "detecta": ["Inflamación profunda", "Zonas reactivas", "Sensibilidad interna"]
+        "detecta": [
+          "Inflamación profunda",
+          "Zonas reactivas",
+          "Sensibilidad interna"
+        ]
       }
     ]
   },
   "areas": {
     "eyebrow": "Qué analizamos",
-    "titulo": "5 grandes áreas, 19 indicadores",
+    "titulo": "Las 5 grandes áreas de tu piel",
     "items": [
       {
         "icono": "layers",
         "titulo": "Calidad y textura",
-        "puntos": ["Arrugas y líneas finas", "Textura", "Poros", "Aspecto general"]
+        "puntos": [
+          "Arrugas y líneas finas",
+          "Textura",
+          "Poros",
+          "Aspecto general"
+        ]
       },
       {
         "icono": "droplet",
         "titulo": "Hidratación y sebo",
-        "puntos": ["Hidratación", "Sebo", "Equilibrio de la piel"]
+        "puntos": [
+          "Hidratación",
+          "Sebo",
+          "Equilibrio de la piel"
+        ]
       },
       {
         "icono": "spots",
         "titulo": "Manchas y pigmentación",
-        "puntos": ["Pigmentación visible", "Pigmentación UV", "Pigmentación profunda", "Distribución del pigmento"]
+        "puntos": [
+          "Pigmentación visible",
+          "Pigmentación UV",
+          "Pigmentación profunda",
+          "Distribución del pigmento"
+        ]
       },
       {
         "icono": "shield",
         "titulo": "Sensibilidad y rojeces",
-        "puntos": ["Sensibilidad", "Rojeces", "Vascularización", "Inflamación"]
+        "puntos": [
+          "Sensibilidad",
+          "Rojeces",
+          "Vascularización",
+          "Inflamación"
+        ]
       },
       {
         "icono": "pore",
         "titulo": "Acné y sebo",
-        "puntos": ["Sebo", "Poros", "Acné", "Porfirinas"]
+        "puntos": [
+          "Sebo",
+          "Poros",
+          "Acné",
+          "Porfirinas"
+        ]
       }
-    ],
-    "indicadoresTitulo": "Los 19 indicadores",
-    "indicadores": [
-      "Sebo",
-      "Poros",
-      "Arrugas",
-      "Textura",
-      "Manchas epidérmicas",
-      "Manchas UV",
-      "Pigmentación profunda",
-      "Puntos negros",
-      "Acné",
-      "Acné UV",
-      "Porfirinas",
-      "Sensibilidad",
-      "Eritema / vascularización",
-      "Inflamación profunda",
-      "Agentes fluorescentes",
-      "Hidratación",
-      "Coloración de la piel",
-      "Clasificación del tipo de piel",
-      "Predicción / evolución del envejecimiento"
     ]
   },
   "resultados": {
@@ -169,65 +206,88 @@
       "titulo": "Escala de resultados",
       "nota": "A mayor nivel, mayor alteración, excepto el sebo (depende de la cantidad).",
       "niveles": [
-        { "nivel": "I", "rango": "1 – 20", "significado": "Normal / óptimo" },
-        { "nivel": "II", "rango": "21 – 40", "significado": "Leve" },
-        { "nivel": "III", "rango": "41 – 60", "significado": "Moderado" },
-        { "nivel": "IV", "rango": "61 – 80", "significado": "Elevado" },
-        { "nivel": "V", "rango": "81 – 100", "significado": "Muy elevado" }
+        {
+          "nivel": "I",
+          "rango": "1 – 20",
+          "significado": "Normal / óptimo"
+        },
+        {
+          "nivel": "II",
+          "rango": "21 – 40",
+          "significado": "Leve"
+        },
+        {
+          "nivel": "III",
+          "rango": "41 – 60",
+          "significado": "Moderado"
+        },
+        {
+          "nivel": "IV",
+          "rango": "61 – 80",
+          "significado": "Elevado"
+        },
+        {
+          "nivel": "V",
+          "rango": "81 – 100",
+          "significado": "Muy elevado"
+        }
       ]
     },
     "hidratacion": {
       "titulo": "Hidratación",
       "texto": "Medición independiente con el Moisture Pen.",
-      "normal": { "valor": "≥ 40", "texto": "Hidratación normal" },
-      "deficit": { "valor": "< 40", "texto": "Déficit de agua" }
+      "normal": {
+        "valor": "≥ 40",
+        "texto": "Hidratación normal"
+      },
+      "deficit": {
+        "valor": "< 40",
+        "texto": "Déficit de agua"
+      }
     },
     "baumann": {
       "titulo": "Tipos de piel (Baumann)",
       "ejes": [
-        ["Grasa", "Seca"],
-        ["Resistente", "Sensible"],
-        ["Pigmentada", "No pigmentada"],
-        ["Arrugada", "Firme"]
+        [
+          "Grasa",
+          "Seca"
+        ],
+        [
+          "Resistente",
+          "Sensible"
+        ],
+        [
+          "Pigmentada",
+          "No pigmentada"
+        ],
+        [
+          "Arrugada",
+          "Firme"
+        ]
       ]
     }
   },
-  "casos": {
-    "eyebrow": "Casos prácticos",
-    "titulo": "Qué miramos según lo que te preocupa",
-    "items": [
-      {
-        "titulo": "Acné",
-        "luces": "RGB + luz azul 405 nm + porfirinas",
-        "texto": "Evalúa sebo, actividad bacteriana, poros, inflamación y marcas."
-      },
-      {
-        "titulo": "Manchas y pigmentación",
-        "luces": "RGB + UV 365 nm + luz de Wood",
-        "texto": "Detecta manchas visibles, manchas UV y pigmentación profunda."
-      },
-      {
-        "titulo": "Piel sensible y rojeces",
-        "luces": "Polarizada cruzada + mapa Erythromin + mapa termodinámico",
-        "texto": "Analiza sensibilidad, rojeces, microvasos e inflamación superficial y profunda."
-      },
-      {
-        "titulo": "Envejecimiento",
-        "luces": "RGB + polarizada paralela + indicadores de arrugas y textura",
-        "texto": "Valora arrugas (frente, entrecejo, contorno de ojos, surcos), textura, elasticidad y evolución."
-      }
-    ]
-  },
   "proceso": [
-    { "titulo": "Entrevista", "texto": "Hablamos de tus preocupaciones y objetivos." },
-    { "titulo": "Fotografías", "texto": "Imágenes con 8 espectros y medición de tu hidratación." },
-    { "titulo": "Análisis", "texto": "Valoramos los datos y te explicamos lo que necesita tu piel." },
-    { "titulo": "Plan personalizado", "texto": "Tu protocolo y tu rutina de cuidado en casa." }
+    {
+      "titulo": "Entrevista",
+      "texto": "Hablamos de tus preocupaciones y objetivos."
+    },
+    {
+      "titulo": "Fotografías",
+      "texto": "Imágenes con 8 espectros y medición de tu hidratación."
+    },
+    {
+      "titulo": "Análisis",
+      "texto": "Valoramos los datos y te explicamos lo que necesita tu piel."
+    },
+    {
+      "titulo": "Plan personalizado",
+      "texto": "Tu protocolo y tu rutina de cuidado en casa."
+    }
   ],
   "oferta": {
     "eyebrow": "Tu primer paso",
     "etiqueta": "Diagnóstico facial Deleic",
-    "texto": "Antes de cualquier tratamiento, conoce lo que tu piel necesita de verdad.",
     "descuento": "Si contratas un plan, se descuenta del precio del plan",
     "cta": {
       "texto": "Reservar diagnóstico",
@@ -243,10 +303,6 @@
     "titulo": "Todo sobre el diagnóstico facial",
     "items": [
       {
-        "pregunta": "¿Qué es el diagnóstico facial Deleic?",
-        "respuesta": "Es un análisis facial avanzado con tecnología 3D que estudia tu piel en profundidad para conocer sus necesidades reales y diseñar el tratamiento más adecuado."
-      },
-      {
         "pregunta": "¿Duele?",
         "respuesta": "No, es totalmente indoloro. Solo tendrás que colocar tu rostro frente a la cámara y relajarte unos minutos."
       },
@@ -255,28 +311,12 @@
         "respuesta": "Entre 20 y 30 minutos aproximadamente, incluyendo la toma de imágenes, el análisis y la interpretación de resultados."
       },
       {
-        "pregunta": "¿Para qué sirve?",
-        "respuesta": "Para conocer el estado real de tu piel, priorizar lo que necesita y crear un plan 100% personalizado para ti."
-      },
-      {
-        "pregunta": "¿Qué analiza la máquina?",
-        "respuesta": "Analiza 19 parámetros relacionados con hidratación, sebo, poros, arrugas, textura, manchas, sensibilidad, acné, inflamación y más."
-      },
-      {
-        "pregunta": "¿Qué son las imágenes de colores?",
-        "respuesta": "La máquina utiliza diferentes tipos de luz para ver lo que a simple vista no se aprecia: manchas profundas, poros, vascularización, acné, inflamación, etc."
-      },
-      {
-        "pregunta": "¿Me dirá la máquina qué tratamiento necesito?",
-        "respuesta": "La máquina aporta los datos, pero la interpretación la hacemos nosotras. Diseñamos un protocolo personalizado según lo que tu piel realmente necesita."
-      },
-      {
         "pregunta": "¿Es lo mismo que una limpieza facial con análisis?",
         "respuesta": "No. Una limpieza es un tratamiento. El diagnóstico es una valoración completa para conocer tu piel en profundidad y planificar tu protocolo."
       },
       {
-        "pregunta": "¿Puedo hacerme el diagnóstico si tengo la piel muy sensible o con rosácea?",
-        "respuesta": "Sí, es totalmente seguro. De hecho, nos ayuda a valorar el grado de sensibilidad y a elegir los tratamientos más adecuados para tu piel."
+        "pregunta": "¿Es seguro? ¿Puedo hacérmelo si tengo la piel muy sensible o con rosácea?",
+        "respuesta": "Sí. Utiliza luz no invasiva y es seguro para todo tipo de pieles. De hecho, nos ayuda a valorar el grado de sensibilidad y a elegir los tratamientos más adecuados para tu piel."
       },
       {
         "pregunta": "¿Cada cuánto debería repetirlo?",
@@ -293,14 +333,6 @@
       {
         "pregunta": "¿Sirve si tengo manchas?",
         "respuesta": "Sí, detectamos manchas visibles, pigmentación profunda y la relacionada con el sol para trabajar mejor sobre ellas."
-      },
-      {
-        "pregunta": "¿Es seguro?",
-        "respuesta": "Sí, utiliza luz no invasiva y es totalmente seguro para todo tipo de pieles."
-      },
-      {
-        "pregunta": "¿Cuánto cuesta?",
-        "respuesta": "El diagnóstico facial Deleic tiene un precio de {precio}. Si contratas un plan, los {precio} se descuentan del precio del plan."
       }
     ]
   }
