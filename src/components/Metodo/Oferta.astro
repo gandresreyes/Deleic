@@ -1,22 +1,10 @@
 ---
 // src/components/Metodo/Oferta.astro
+// Precio, proceso de la sesión y lema del Método Deleic (metodoDeleic.json)
 import { whatsapp, TELEFONO } from "../../data/contacto";
+import metodo from "../../data/metodoDeleic.json";
 
-interface Props {
-  precio: number;
-  href?: string;
-}
-const {
-  precio,
-  href = whatsapp("Hola, me gustaría reservar el diagnóstico facial 3D del Método Deleic."),
-} = Astro.props;
-
-// Cómo funciona, de la reserva al plan
-const pasos = [
-  { titulo: "Reserva", texto: "Por WhatsApp o por teléfono." },
-  { titulo: "Diagnóstico 3D", texto: "En nuestro centro de León." },
-  { titulo: "Plan Deleic", texto: "Tratamientos elegidos para tu piel." },
-];
+const { precio, proceso, oferta, lema } = metodo;
 ---
 
 <section
@@ -38,28 +26,26 @@ const pasos = [
         class="inline-flex items-center gap-2 rounded-full bg-white/10 ring-1 ring-white/20 px-3 py-1 text-xs font-semibold tracking-widest uppercase"
       >
         <span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span>
-        Tu primer paso
+        {oferta.eyebrow}
       </span>
 
       <h2
         id="oferta-titulo"
         class="mt-5 text-4xl sm:text-5xl font-semibold tracking-tight leading-[1.05]"
       >
-        Diagnóstico facial 3D
+        {oferta.etiqueta}
       </h2>
-      <p class="mt-5 text-lg text-white/75 max-w-xl">
-        Antes de cualquier tratamiento, conoce lo que tu piel necesita de verdad.
-      </p>
+      <p class="mt-5 text-lg text-white/75 max-w-xl">{oferta.texto}</p>
 
       <!-- Pasos -->
-      <ol class="mt-10 grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-4">
+      <ol class="mt-10 grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6 sm:gap-4">
         {
-          pasos.map((paso, i) => (
+          proceso.map((paso, i) => (
             <li class="relative flex sm:block gap-4">
-              {i < pasos.length - 1 && (
+              {i < proceso.length - 1 && (
                 <span
                   aria-hidden="true"
-                  class="hidden sm:block absolute top-5 left-12 right-2 h-px bg-linear-to-r from-white/40 to-white/0"
+                  class="hidden xl:block absolute top-5 left-12 right-2 h-px bg-linear-to-r from-white/40 to-white/0"
                 />
               )}
               <span class="relative flex items-center justify-center shrink-0 w-10 h-10 rounded-full bg-white text-primary font-semibold">
@@ -77,12 +63,12 @@ const pasos = [
       <!-- Acciones -->
       <div class="mt-10 flex flex-wrap items-center gap-3">
         <a
-          href={href}
+          href={whatsapp(oferta.cta.mensaje)}
           target="_blank"
           rel="noopener"
           class="group inline-flex items-center gap-2 px-6 py-4 bg-white text-primary rounded-full font-bold shadow-lg shadow-black/20 hover:bg-white/90 transition-colors"
         >
-          Reservar diagnóstico
+          {oferta.cta.texto}
           <svg
             xmlns="http://www.w3.org/2000/svg"
             class="w-5 h-5 transition-transform group-hover:translate-x-1"
@@ -105,12 +91,8 @@ const pasos = [
         </a>
       </div>
 
-      <p class="mt-10 text-sm font-semibold uppercase tracking-wider text-white/60">
-        Tu inversión en tu piel, tu mejor decisión.
-      </p>
-      <p class="mt-1 text-xl italic">
-        Resultados que se ven, confianza que se siente.
-      </p>
+      <p class="mt-10 text-xl font-semibold text-balance">{lema.titulo}</p>
+      <p class="mt-2 text-white/70">{lema.texto}</p>
     </div>
 
     <!-- Ticket de precio -->
@@ -123,7 +105,7 @@ const pasos = [
             Precio
           </p>
           <p class="mt-4 flex items-start justify-center leading-none text-primary">
-            <span class="text-7xl sm:text-8xl font-semibold tracking-tighter">{precio}</span>
+            <span class="text-7xl sm:text-8xl font-semibold tracking-tighter">{precio.valor}</span>
             <span class="mt-2 text-3xl font-semibold">€</span>
           </p>
         </div>
@@ -155,7 +137,7 @@ const pasos = [
                 d="M12 8v13M5 12v8a1 1 0 001 1h12a1 1 0 001-1v-8M8 8a2.5 2.5 0 110-5c2 0 4 2.5 4 5 0-2.5 2-5 4-5a2.5 2.5 0 110 5"
               ></path>
             </svg>
-            Si comienzas un Plan Deleic, se descuenta íntegramente
+            {oferta.descuento}
           </p>
         </div>
       </div>

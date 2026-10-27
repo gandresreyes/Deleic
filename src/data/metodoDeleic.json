@@ -1,76 +1,307 @@
 {
   "seo": {
-    "title": "Método Deleic: diagnóstico facial 3D en León | Deleic",
-    "description": "Diagnóstico facial 3D que analiza hidratación, manchas, arrugas, poros, textura y sensibilidad para crear tu plan de tratamiento personalizado. 29 €."
+    "title": "Diagnóstico facial avanzado en León: Método Deleic | Deleic",
+    "description": "Diagnóstico facial con 8 tipos de luz y 19 indicadores: hidratación, manchas, poros, arrugas, sensibilidad y acné, para un plan a tu medida. {precio}."
   },
-  "precio": { "valor": "29", "moneda": "EUR", "visible": "29€" },
+  "precio": { "valor": 29, "moneda": "EUR", "visible": "29€" },
   "hero": {
-    "eyebrow": "El momento perfecto para cuidar tu piel",
-    "titulo": "Método Deleic",
-    "subtitulo": "Ciencia, tecnología y personalización para la piel que quieres.",
-    "ctaPrincipal": { "texto": "Reservar diagnóstico 3D", "mensaje": "Hola, me gustaría reservar el diagnóstico facial 3D del Método Deleic." },
+    "eyebrow": "Método Deleic",
+    "titulo": "Diagnóstico facial avanzado en León",
+    "subtitulo": "Conoce tu piel. Tratamos lo que realmente necesita.",
+    "ctaPrincipal": {
+      "texto": "Reservar diagnóstico",
+      "mensaje": "Hola, me gustaría reservar el diagnóstico facial avanzado del Método Deleic."
+    },
     "ctaSecundario": { "texto": "Qué analizamos", "href": "#que-analizamos" },
-    "imagen": "/images/metodo-deleic/diagnostico-3d.jpg",
-    "imagenAlt": "Equipo de diagnóstico facial 3D del Método Deleic"
+    "puntos": [
+      { "icono": "sun", "texto": ["8 tipos", "de luz"] },
+      { "icono": "chart", "texto": ["19", "indicadores"] },
+      { "icono": "gift", "texto": ["{precio} menos", "en tu plan"] }
+    ],
+    "imagen": "/img/metodo-deleic/hero.webp",
+    "imagenAlt": "Especialista de Deleic realizando un diagnóstico facial avanzado"
   },
   "queEs": {
     "eyebrow": "¿Qué es el Método Deleic?",
-    "antes": "Un diagnóstico facial 3D avanzado que analiza tu piel en profundidad para detectar lo que no se ve a simple vista y crear un ",
+    "titulo": "Conoce tu piel al detalle",
+    "antes": "Nuestro sistema de diagnóstico facial avanzado analiza tu piel con 8 tipos de luz y 19 indicadores objetivos para detectar lo que no se ve a simple vista y crear un ",
     "destacado": "plan de tratamiento 100% personalizado",
-    "despues": " para ti."
-  },
-  "analiza": {
-    "eyebrow": "Qué diagnosticamos",
-    "titulo": "Seis aspectos de tu piel, medidos al detalle",
-    "items": [
-      { "icono": "droplet", "titulo": "Hidratación", "texto": "Medimos el nivel de hidratación de tu piel." },
-      { "icono": "spots", "titulo": "Manchas", "texto": "Detectamos manchas solares, pigmentarias y marcas postinflamatorias." },
-      { "icono": "waves", "titulo": "Arrugas", "texto": "Evaluamos líneas de expresión y arrugas en profundidad." },
-      { "icono": "pore", "titulo": "Poros y sebo", "texto": "Analizamos el tamaño de poro y la producción de sebo." },
-      { "icono": "layers", "titulo": "Textura y tono", "texto": "Estudiamos la textura, el tono y la uniformidad de tu piel." },
-      { "icono": "shield", "titulo": "Sensibilidad", "texto": "Valoramos el nivel de sensibilidad y reactividad." }
-    ]
-  },
-  "banda": {
-    "texto": "Con esta información, creamos tu plan de tratamiento personalizado."
-  },
-  "oferta": {
-    "eyebrow": "Tu primer paso",
-    "etiqueta": "Diagnóstico facial 3D",
-    "descuento": "Si comienzas un Plan Deleic, los 29€ del diagnóstico se descuentan íntegramente.",
-    "lema": "Tu inversión en tu piel, tu mejor decisión.",
-    "firma": "Resultados que se ven, confianza que se siente.",
-    "cta": { "texto": "Reservar diagnóstico 3D", "mensaje": "Hola, me gustaría reservar el diagnóstico facial 3D del Método Deleic." }
-  },
-  "porQue": {
-    "eyebrow": "¿Por qué elegir el Método Deleic?",
-    "items": [
-      { "icono": "target", "titulo": "Diagnóstico preciso y objetivo", "texto": "Tecnología 3D para conocer tu piel al detalle." },
-      { "icono": "clipboard", "titulo": "Plan personalizado para tu piel", "texto": "Tratamientos adaptados a tus necesidades reales." },
-      { "icono": "trend", "titulo": "Resultados visibles y progresivos", "texto": "Planes pensados para mejorar tu piel de forma progresiva." }
-    ]
-  },
-  "faq": {
-    "eyebrow": "Preguntas frecuentes",
-    "titulo": "Resolvemos tus dudas",
-    "items": [
+    "despues": " para ti.",
+    "pilares": [
       {
-        "pregunta": "¿Qué es el diagnóstico facial 3D?",
-        "respuesta": "Es un análisis avanzado que estudia tu piel en profundidad y detecta lo que no se ve a simple vista, para crear un plan de tratamiento 100% personalizado."
+        "icono": "sun",
+        "titulo": "Análisis multiespectral",
+        "texto": "8 tipos de iluminación que nos permiten ver más allá de lo que vemos a simple vista."
       },
       {
-        "pregunta": "¿Qué analiza el diagnóstico?",
-        "respuesta": "Hidratación, manchas (solares, pigmentarias y marcas postinflamatorias), líneas de expresión y arrugas, tamaño de poro y producción de sebo, textura y tono, y nivel de sensibilidad y reactividad."
+        "icono": "chart",
+        "titulo": "Análisis cuantitativo",
+        "texto": "19 indicadores objetivos para conocer el estado real de tu piel."
       },
       {
-        "pregunta": "¿Cuánto cuesta?",
-        "respuesta": "El diagnóstico facial 3D cuesta 29 €. Si después comienzas un Plan Deleic, esos 29 € se descuentan íntegramente."
+        "icono": "trend",
+        "titulo": "Seguimiento",
+        "texto": "Comparamos tus resultados en cada visita para medir la evolución."
+      },
+      {
+        "icono": "user",
+        "titulo": "Diagnóstico profesional",
+        "texto": "La máquina aporta los datos; nosotras los interpretamos y diseñamos tu protocolo."
+      }
+    ],
+    "porQue": {
+      "titulo": "¿Por qué hacemos un diagnóstico?",
+      "texto": "Una misma preocupación puede tener diferentes causas. El diagnóstico nos ayuda a priorizar y personalizar tu tratamiento."
+    }
+  },
+  "espectros": {
+    "eyebrow": "Los 8 espectros",
+    "titulo": "Qué ve cada tipo de luz",
+    "texto": "Cada luz revela una capa distinta de tu piel: desde lo que ves en el espejo hasta lo que está en profundidad.",
+    "items": [
+      {
+        "nombre": "RGB",
+        "detalle": "Luz blanca",
+        "texto": "Imagen natural del rostro. Base para valorar tono, arrugas, poros, manchas visibles y acné.",
+        "detecta": ["Evaluación general", "Color y uniformidad", "Arrugas visibles, poros y acné"]
+      },
+      {
+        "nombre": "Polarizada paralela",
+        "detalle": "",
+        "texto": "Reduce la información de capas profundas y potencia la superficie. Muestra textura y detalles finos.",
+        "detecta": ["Líneas finas", "Arrugas superficiales", "Textura e irregularidades"]
+      },
+      {
+        "nombre": "Polarizada cruzada",
+        "detalle": "",
+        "texto": "Reduce reflejos superficiales. Mejora la visualización de tono irregular, microvasculatura y rojeces.",
+        "detecta": ["Tono irregular", "Microvasculatura", "Sensibilidad y enrojecimiento"]
+      },
+      {
+        "nombre": "Luz azul",
+        "detalle": "405 nm",
+        "texto": "Fluorescencia asociada a sebo, porfirinas y actividad bacteriana. Muy útil en pieles con acné.",
+        "detecta": ["Sebo", "Acné y bacterias (porfirinas)", "Distribución de flora"]
+      },
+      {
+        "nombre": "UV",
+        "detalle": "365 nm",
+        "texto": "Resalta manchas relacionadas con radiación UV y pigmentación profunda.",
+        "detecta": ["Manchas solares", "Restos pigmentarios de acné", "Pigmentación profunda (UV)"]
+      },
+      {
+        "nombre": "Luz de Wood",
+        "detalle": "",
+        "texto": "Detecta alteraciones pigmentarias y vasculares. Muestra fluorescencia en ciertas sustancias.",
+        "detecta": ["Depósitos de melanina profunda", "Alteraciones pigmentarias", "Agentes fluorescentes"]
+      },
+      {
+        "nombre": "Mapa Erythromin",
+        "detalle": "",
+        "texto": "Imagen procesada que muestra la distribución del componente rojo. Asociado a rojeces e inflamación.",
+        "detecta": ["Sensibilidad", "Rojeces", "Inflamación superficial"]
+      },
+      {
+        "nombre": "Mapa termodinámico",
+        "detalle": "",
+        "texto": "Imagen procesada que indica zonas con mayor señal asociada a inflamación profunda.",
+        "detecta": ["Inflamación profunda", "Zonas reactivas", "Sensibilidad interna"]
       }
     ]
   },
-  "cta": {
-    "titulo": "Conoce tu piel de verdad",
-    "texto": "Reserva tu diagnóstico facial 3D y te preparamos un plan hecho a tu medida.",
-    "ctaPrincipal": { "texto": "Reservar diagnóstico 3D", "mensaje": "Hola, me gustaría reservar el diagnóstico facial 3D del Método Deleic." }
+  "areas": {
+    "eyebrow": "Qué analizamos",
+    "titulo": "5 grandes áreas, 19 indicadores",
+    "items": [
+      {
+        "icono": "layers",
+        "titulo": "Calidad y textura",
+        "puntos": ["Arrugas y líneas finas", "Textura", "Poros", "Aspecto general"]
+      },
+      {
+        "icono": "droplet",
+        "titulo": "Hidratación y sebo",
+        "puntos": ["Hidratación", "Sebo", "Equilibrio de la piel"]
+      },
+      {
+        "icono": "spots",
+        "titulo": "Manchas y pigmentación",
+        "puntos": ["Pigmentación visible", "Pigmentación UV", "Pigmentación profunda", "Distribución del pigmento"]
+      },
+      {
+        "icono": "shield",
+        "titulo": "Sensibilidad y rojeces",
+        "puntos": ["Sensibilidad", "Rojeces", "Vascularización", "Inflamación"]
+      },
+      {
+        "icono": "pore",
+        "titulo": "Acné y sebo",
+        "puntos": ["Sebo", "Poros", "Acné", "Porfirinas"]
+      }
+    ],
+    "indicadoresTitulo": "Los 19 indicadores",
+    "indicadores": [
+      "Sebo",
+      "Poros",
+      "Arrugas",
+      "Textura",
+      "Manchas epidérmicas",
+      "Manchas UV",
+      "Pigmentación profunda",
+      "Puntos negros",
+      "Acné",
+      "Acné UV",
+      "Porfirinas",
+      "Sensibilidad",
+      "Eritema / vascularización",
+      "Inflamación profunda",
+      "Agentes fluorescentes",
+      "Hidratación",
+      "Coloración de la piel",
+      "Clasificación del tipo de piel",
+      "Predicción / evolución del envejecimiento"
+    ]
+  },
+  "resultados": {
+    "eyebrow": "Tus resultados",
+    "titulo": "Datos objetivos, explicados",
+    "escala": {
+      "titulo": "Escala de resultados",
+      "nota": "A mayor nivel, mayor alteración, excepto el sebo (depende de la cantidad).",
+      "niveles": [
+        { "nivel": "I", "rango": "1 – 20", "significado": "Normal / óptimo" },
+        { "nivel": "II", "rango": "21 – 40", "significado": "Leve" },
+        { "nivel": "III", "rango": "41 – 60", "significado": "Moderado" },
+        { "nivel": "IV", "rango": "61 – 80", "significado": "Elevado" },
+        { "nivel": "V", "rango": "81 – 100", "significado": "Muy elevado" }
+      ]
+    },
+    "hidratacion": {
+      "titulo": "Hidratación",
+      "texto": "Medición independiente con el Moisture Pen.",
+      "normal": { "valor": "≥ 40", "texto": "Hidratación normal" },
+      "deficit": { "valor": "< 40", "texto": "Déficit de agua" }
+    },
+    "baumann": {
+      "titulo": "Tipos de piel (Baumann)",
+      "ejes": [
+        ["Grasa", "Seca"],
+        ["Resistente", "Sensible"],
+        ["Pigmentada", "No pigmentada"],
+        ["Arrugada", "Firme"]
+      ]
+    }
+  },
+  "casos": {
+    "eyebrow": "Casos prácticos",
+    "titulo": "Qué miramos según lo que te preocupa",
+    "items": [
+      {
+        "titulo": "Acné",
+        "luces": "RGB + luz azul 405 nm + porfirinas",
+        "texto": "Evalúa sebo, actividad bacteriana, poros, inflamación y marcas."
+      },
+      {
+        "titulo": "Manchas y pigmentación",
+        "luces": "RGB + UV 365 nm + luz de Wood",
+        "texto": "Detecta manchas visibles, manchas UV y pigmentación profunda."
+      },
+      {
+        "titulo": "Piel sensible y rojeces",
+        "luces": "Polarizada cruzada + mapa Erythromin + mapa termodinámico",
+        "texto": "Analiza sensibilidad, rojeces, microvasos e inflamación superficial y profunda."
+      },
+      {
+        "titulo": "Envejecimiento",
+        "luces": "RGB + polarizada paralela + indicadores de arrugas y textura",
+        "texto": "Valora arrugas (frente, entrecejo, contorno de ojos, surcos), textura, elasticidad y evolución."
+      }
+    ]
+  },
+  "proceso": [
+    { "titulo": "Entrevista", "texto": "Hablamos de tus preocupaciones y objetivos." },
+    { "titulo": "Fotografías", "texto": "Imágenes con 8 espectros y medición de tu hidratación." },
+    { "titulo": "Análisis", "texto": "Valoramos los datos y te explicamos lo que necesita tu piel." },
+    { "titulo": "Plan personalizado", "texto": "Tu protocolo y tu rutina de cuidado en casa." }
+  ],
+  "oferta": {
+    "eyebrow": "Tu primer paso",
+    "etiqueta": "Diagnóstico facial Deleic",
+    "texto": "Antes de cualquier tratamiento, conoce lo que tu piel necesita de verdad.",
+    "descuento": "Si contratas un plan, se descuenta del precio del plan",
+    "cta": {
+      "texto": "Reservar diagnóstico",
+      "mensaje": "Hola, me gustaría reservar el diagnóstico facial avanzado del Método Deleic."
+    }
+  },
+  "lema": {
+    "titulo": "En Deleic no empezamos por un tratamiento. Empezamos por conocer tu piel.",
+    "texto": "La tecnología nos aporta los datos; nuestra experiencia los convierte en un plan personalizado para ti."
+  },
+  "faq": {
+    "eyebrow": "Preguntas frecuentes",
+    "titulo": "Todo sobre el diagnóstico facial",
+    "items": [
+      {
+        "pregunta": "¿Qué es el diagnóstico facial Deleic?",
+        "respuesta": "Es un análisis facial avanzado con tecnología 3D que estudia tu piel en profundidad para conocer sus necesidades reales y diseñar el tratamiento más adecuado."
+      },
+      {
+        "pregunta": "¿Duele?",
+        "respuesta": "No, es totalmente indoloro. Solo tendrás que colocar tu rostro frente a la cámara y relajarte unos minutos."
+      },
+      {
+        "pregunta": "¿Cuánto tiempo dura?",
+        "respuesta": "Entre 20 y 30 minutos aproximadamente, incluyendo la toma de imágenes, el análisis y la interpretación de resultados."
+      },
+      {
+        "pregunta": "¿Para qué sirve?",
+        "respuesta": "Para conocer el estado real de tu piel, priorizar lo que necesita y crear un plan 100% personalizado para ti."
+      },
+      {
+        "pregunta": "¿Qué analiza la máquina?",
+        "respuesta": "Analiza 19 parámetros relacionados con hidratación, sebo, poros, arrugas, textura, manchas, sensibilidad, acné, inflamación y más."
+      },
+      {
+        "pregunta": "¿Qué son las imágenes de colores?",
+        "respuesta": "La máquina utiliza diferentes tipos de luz para ver lo que a simple vista no se aprecia: manchas profundas, poros, vascularización, acné, inflamación, etc."
+      },
+      {
+        "pregunta": "¿Me dirá la máquina qué tratamiento necesito?",
+        "respuesta": "La máquina aporta los datos, pero la interpretación la hacemos nosotras. Diseñamos un protocolo personalizado según lo que tu piel realmente necesita."
+      },
+      {
+        "pregunta": "¿Es lo mismo que una limpieza facial con análisis?",
+        "respuesta": "No. Una limpieza es un tratamiento. El diagnóstico es una valoración completa para conocer tu piel en profundidad y planificar tu protocolo."
+      },
+      {
+        "pregunta": "¿Puedo hacerme el diagnóstico si tengo la piel muy sensible o con rosácea?",
+        "respuesta": "Sí, es totalmente seguro. De hecho, nos ayuda a valorar el grado de sensibilidad y a elegir los tratamientos más adecuados para tu piel."
+      },
+      {
+        "pregunta": "¿Cada cuánto debería repetirlo?",
+        "respuesta": "Recomendamos repetirlo cada 3 a 6 meses para medir la evolución y adaptar el protocolo si lo necesitas."
+      },
+      {
+        "pregunta": "¿Puedo ver los resultados?",
+        "respuesta": "Sí. Te enseñamos todo el análisis y te explicamos cada aspecto de tu piel con imágenes y datos."
+      },
+      {
+        "pregunta": "¿Sirve si tengo acné?",
+        "respuesta": "Sí, nos ayuda a analizar el tipo de acné, el nivel de inflamación, el sebo y las porfirinas, y a elegir el tratamiento más efectivo."
+      },
+      {
+        "pregunta": "¿Sirve si tengo manchas?",
+        "respuesta": "Sí, detectamos manchas visibles, pigmentación profunda y la relacionada con el sol para trabajar mejor sobre ellas."
+      },
+      {
+        "pregunta": "¿Es seguro?",
+        "respuesta": "Sí, utiliza luz no invasiva y es totalmente seguro para todo tipo de pieles."
+      },
+      {
+        "pregunta": "¿Cuánto cuesta?",
+        "respuesta": "El diagnóstico facial Deleic tiene un precio de {precio}. Si contratas un plan, los {precio} se descuentan del precio del plan."
+      }
+    ]
   }
 }

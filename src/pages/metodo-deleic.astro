@@ -1,106 +1,48 @@
 ---
 // src/pages/metodo-deleic.astro
+// Contenido de las infografías del centro (diagnóstico facial avanzado).
+// Todo sale de src/data/metodoDeleic.json; el precio, de metodo.precio.
 import Layout from "../layouts/Layout.astro";
 import { whatsapp } from "../data/contacto";
+import metodo from "../data/metodoDeleic.json";
 import { faqPage, migas, negocio } from "../lib/schema";
 import Oferta from "../components/Metodo/Oferta.astro";
 import Ubication from "../components/Ubication.astro";
 
-// Un solo sitio para el precio: hero, oferta, FAQ y schema lo leen de aquí
-const PRECIO = 29;
+const { seo, hero, queEs, espectros, areas, resultados, casos, faq } = metodo;
 
-const diagnostico = [
-  {
-    icono: "droplet",
-    titulo: "Hidratación",
-    texto: "Medimos el nivel de hidratación de tu piel.",
-  },
-  {
-    icono: "spots",
-    titulo: "Manchas",
-    texto:
-      "Detectamos manchas solares, pigmentarias y marcas postinflamatorias.",
-  },
-  {
-    icono: "waves",
-    titulo: "Arrugas",
-    texto: "Evaluamos líneas de expresión y arrugas en profundidad.",
-  },
-  {
-    icono: "pore",
-    titulo: "Poros y sebo",
-    texto: "Analizamos el tamaño de poro y la producción de sebo.",
-  },
-  {
-    icono: "layers",
-    titulo: "Textura y tono",
-    texto: "Estudiamos la textura, el tono y la uniformidad de tu piel.",
-  },
-  {
-    icono: "shield",
-    titulo: "Sensibilidad",
-    texto: "Valoramos el nivel de sensibilidad y reactividad.",
-  },
-];
+// "{precio}" en los textos del JSON → "29 €"
+const precio = `${metodo.precio.valor} €`;
+const conPrecio = (s: string) => s.replaceAll("{precio}", precio);
 
-const porQue = [
-  {
-    icono: "target",
-    titulo: "Diagnóstico preciso y objetivo",
-    texto: "Tecnología 3D para conocer tu piel al detalle.",
-  },
-  {
-    icono: "clipboard",
-    titulo: "Plan personalizado para tu piel",
-    texto: "Tratamientos adaptados a tus necesidades reales.",
-  },
-  {
-    icono: "trend",
-    titulo: "Resultados visibles y progresivos",
-    texto: "Planes pensados para mejorar tu piel de forma progresiva.",
-  },
-];
+const description = conPrecio(seo.description);
+const preguntas = faq.items.map((f) => ({ ...f, respuesta: conPrecio(f.respuesta) }));
 
-const faq = [
-  {
-    pregunta: "¿Qué es el diagnóstico facial 3D?",
-    respuesta:
-      "Es un análisis avanzado que estudia tu piel en profundidad y detecta lo que no se ve a simple vista, para crear un plan de tratamiento 100% personalizado.",
-  },
-  {
-    pregunta: "¿Qué analiza el diagnóstico?",
-    respuesta:
-      "Hidratación, manchas (solares, pigmentarias y marcas postinflamatorias), líneas de expresión y arrugas, tamaño de poro y producción de sebo, textura y tono, y nivel de sensibilidad y reactividad.",
-  },
-  {
-    pregunta: "¿Cuánto cuesta?",
-    respuesta: `El diagnóstico facial 3D cuesta ${PRECIO} €. Si después comienzas un Plan Deleic, esos ${PRECIO} € se descuentan íntegramente.`,
-  },
+// Nivel de la escala → fondo cada vez más intenso
+const tonosNivel = [
+  "bg-primary/10 text-primary",
+  "bg-primary/25 text-primary",
+  "bg-primary/45 text-primary-content",
+  "bg-primary/70 text-primary-content",
+  "bg-primary text-primary-content",
 ];
 
 // Iconos (trazo, 24x24). Heredan el color con currentColor
 const icons: Record<string, string> = {
+  sun: '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>',
+  chart: '<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>',
+  gift: '<rect x="3" y="8" width="18" height="4" rx="1"/><path d="M12 8v13M5 12v8a1 1 0 001 1h12a1 1 0 001-1v-8M8 8a2.5 2.5 0 110-5c2 0 4 2.5 4 5 0-2.5 2-5 4-5a2.5 2.5 0 110 5"/>',
+  trend: '<path d="M3 17l6-6 4 4 8-8M15 7h6v6"/>',
+  user: '<circle cx="12" cy="8" r="4"/><path d="M4 21v-1a6 6 0 016-6h4a6 6 0 016 6v1"/>',
+  search: '<circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/>',
   droplet: '<path d="M12 3s6 6.2 6 10.5a6 6 0 01-12 0C6 9.2 12 3 12 3z"/>',
   spots:
     '<circle cx="12" cy="12" r="9"/><circle cx="9" cy="10" r="1"/><circle cx="14" cy="9" r="1"/><circle cx="14" cy="14" r="1"/><circle cx="9" cy="15" r="1"/>',
-  waves:
-    '<path d="M3 8c2.5-2 4.5-2 7 0s4.5 2 7 0 3-1 4-.5M3 14c2.5-2 4.5-2 7 0s4.5 2 7 0 3-1 4-.5"/>',
   pore: '<circle cx="12" cy="15" r="4"/><path d="M12 3v3M8 5l1 2M16 5l-1 2"/>',
   layers: '<path d="M12 3l9 5-9 5-9-5 9-5z"/><path d="M3 13l9 5 9-5"/>',
   shield:
     '<path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3z"/><path d="M9 9l6 6"/>',
-  target:
-    '<circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/>',
-  clipboard:
-    '<rect x="6" y="4" width="12" height="17" rx="2"/><path d="M9 4h6v2H9zM9 13l2 2 4-4"/>',
-  trend: '<path d="M3 17l6-6 4 4 8-8M15 7h6v6"/>',
-  gift: '<rect x="3" y="8" width="18" height="4" rx="1"/><path d="M12 8v13M5 12v8a1 1 0 001 1h12a1 1 0 001-1v-8M8 8a2.5 2.5 0 110-5c2 0 4 2.5 4 5 0-2.5 2-5 4-5a2.5 2.5 0 110 5"/>',
-  sparkles:
-    '<path d="M12 3l1.8 4.7L18.5 9.5l-4.7 1.8L12 16l-1.8-4.7L5.5 9.5l4.7-1.8L12 3z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8L19 15z"/>',
 };
-
-const descripcion =
-  "Diagnóstico facial 3D que analiza hidratación, manchas, arrugas, poros, textura y sensibilidad para crear tu plan de tratamiento personalizado.";
 
 // Schema: Service con la oferta + FAQPage + migas
 const site = Astro.site ?? Astro.url;
@@ -109,23 +51,29 @@ const schema = {
   "@graph": [
     {
       "@type": "Service",
-      name: "Diagnóstico facial 3D · Método Deleic",
+      name: "Diagnóstico facial avanzado · Método Deleic",
       serviceType: "Diagnóstico facial",
-      description: descripcion,
+      description,
       areaServed: "León",
       url: new URL("/metodo-deleic/", site).href,
       provider: negocio(site),
-      offers: { "@type": "Offer", price: String(PRECIO), priceCurrency: "EUR" },
+      offers: {
+        "@type": "Offer",
+        price: metodo.precio.valor,
+        priceCurrency: metodo.precio.moneda,
+      },
     },
-    faqPage(faq),
+    faqPage(preguntas),
     migas(site, [["Método Deleic", "/metodo-deleic/"]]),
   ],
 };
 ---
 
 <Layout
-  title="Método Deleic: diagnóstico facial 3D en León"
-  description={descripcion}
+  title={seo.title}
+  description={description}
+  image={hero.imagen}
+  imageAlt={hero.imagenAlt}
 >
   <!-- Hero -->
   <section class="seccion">
@@ -137,149 +85,119 @@ const schema = {
           <span
             class="text-sm font-semibold tracking-widest uppercase text-primary"
           >
-            El momento perfecto para cuidar tu piel
+            {hero.eyebrow}
           </span>
-          <h3 class="mt-3 text-3xl sm:text-4xl font-semibold">Método Deleic</h3>
-          <p class="mt-4 text-base-content/70 text-lg">
-            Ciencia, tecnología y personalización para la piel que quieres.
-          </p>
+          <h1 class="mt-3 text-4xl sm:text-5xl font-semibold text-balance">
+            {hero.titulo}
+          </h1>
+          <p class="mt-4 text-base-content/70 text-lg">{hero.subtitulo}</p>
 
-          <div
-            class="mt-8 flex gap-3 font-bold flex-wrap justify-center sm:justify-start"
-          >
+          <div class="mt-8 flex flex-wrap gap-3">
             <a
-              href={whatsapp(
-                "Hola, me gustaría reservar el diagnóstico facial 3D del Método Deleic.",
-              )}
+              href={whatsapp(hero.ctaPrincipal.mensaje)}
               target="_blank"
               rel="noopener"
-              class="px-3 sm:px-6 py-3 sm:py-4 bg-primary text-primary-content rounded-full"
+              class="px-4 sm:px-6 py-3 sm:py-4 rounded-full bg-primary text-primary-content font-bold"
             >
-              Reservar diagnóstico
+              {hero.ctaPrincipal.texto}
             </a>
             <a
-              href="#que-diagnosticamos"
-              class="px-3 sm:px-6 py-3 sm:py-4 bg-base-100 text-secondary-content rounded-full border border-base-300"
+              href={hero.ctaSecundario.href}
+              class="px-4 sm:px-6 py-3 sm:py-4 rounded-full bg-base-100 text-secondary-content border border-base-300 font-bold"
             >
-              Qué analizamos
+              {hero.ctaSecundario.texto}
             </a>
           </div>
 
-          <div class="flex justify-start md:gap-6 mt-12 text-[12px] md:text-md">
-            <div class="flex items-center">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                class="w-8 h-8 shrink-0 text-primary"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                stroke-width="1.5"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                set:html={icons.target}
-              />
-              <p class="text-base-content/70 leading-none uppercase">
-                Diagnóstico <br /> facial 3D
-              </p>
-            </div>
-            <div class="flex items-center">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                class="w-8 h-8 shrink-0 text-primary"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                stroke-width="1.5"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                set:html={icons.clipboard}
-              />
-              <p class="text-base-content/70 leading-none uppercase">
-                Plan <br /> personalizado
-              </p>
-            </div>
-            <div class="flex items-center">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                class="w-8 h-8 shrink-0 text-primary"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                stroke-width="1.5"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                set:html={icons.gift}
-              />
-              <p class="text-base-content/70 leading-none uppercase">
-                {PRECIO}€ menos <br class="hidden md:block" /> en tu plan
-              </p>
-            </div>
-          </div>
+          <ul
+            class="flex justify-start gap-2 md:gap-6 mt-12 text-[12px] md:text-sm"
+          >
+            {
+              hero.puntos.map((p) => (
+                <li class="flex gap-2 items-center">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="w-8 h-8 shrink-0 text-primary"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                    set:html={icons[p.icono]}
+                  />
+                  <p class="text-base-content/70 leading-none uppercase">
+                    {conPrecio(p.texto[0])} <br /> {p.texto[1]}
+                  </p>
+                </li>
+              ))
+            }
+          </ul>
         </div>
       </div>
 
       <div class="group relative md:col-span-5 hidden md:block">
         <img
-          src="/img/metodo-deleic/hero.webp"
+          src={hero.imagen}
+          width="1600"
+          height="1066"
           class="w-full h-100 object-cover rounded-3xl"
-          alt="Equipo de diagnóstico facial 3D del Método Deleic"
+          alt={hero.imagenAlt}
+          fetchpriority="high"
           transition:name="metodo-deleic"
         />
       </div>
     </div>
   </section>
 
-  <!-- Qué es + qué diagnosticamos -->
-  <section id="que-diagnosticamos" class="card bg-base-100 seccion-card scroll-mt-24">
+  <!-- Qué es -->
+  <section
+    class="card bg-base-100 seccion-card text-secondary-content"
+    aria-labelledby="que-es-heading"
+  >
     <div class="reveal">
-      <span
-        class="text-sm font-semibold tracking-widest uppercase text-primary"
-      >
-        ¿Qué es el Método Deleic?
+      <span class="text-sm font-semibold tracking-widest uppercase text-primary">
+        {queEs.eyebrow}
       </span>
-      <h2
-        class="mt-3 text-3xl sm:text-4xl font-semibold text-secondary-content"
-      >
-        Conoce tu piel al detalle
+      <h2 id="que-es-heading" class="mt-3 text-3xl sm:text-4xl font-semibold">
+        {queEs.titulo}
       </h2>
-      <p class="mt-4 text-base-content/70 text-lg">
-        Un diagnóstico facial 3D avanzado que analiza tu piel en profundidad
-        para detectar lo que no se ve a simple vista y crear un plan de
-        tratamiento 100% personalizado para ti.
+      <p class="mt-4 max-w-3xl text-lg text-base-content/70 text-pretty">
+        {queEs.antes}<strong class="font-semibold text-secondary-content"
+          >{queEs.destacado}</strong
+        >{queEs.despues}
       </p>
     </div>
 
-    <div class="mt-10">
-      <div class="reveal-stagger grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-        {
-          diagnostico.map((item) => (
-            <div>
-              <div class="flex gap-1 mb-2 items-center">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="w-8 h-8  text-primary"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  stroke-width="1.5"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  set:html={icons[item.icono]}
-                />
-                <h3 class="text-md font-semibold text-secondary-content mb-1">
-                  {item.titulo}
-                </h3>
-              </div>
-              <p class="text-sm text-base-content/70 leading-relaxed">
-                {item.texto}
-              </p>
-            </div>
-          ))
-        }
-      </div>
-    </div>
+    <ul
+      class="reveal-stagger mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8"
+    >
+      {
+        queEs.pilares.map((p) => (
+          <li>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-8 h-8 mb-3 text-primary"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+              set:html={icons[p.icono]}
+            />
+            <h3 class="font-semibold">{p.titulo}</h3>
+            <p class="mt-1 text-sm text-base-content/70 leading-relaxed">
+              {p.texto}
+            </p>
+          </li>
+        ))
+      }
+    </ul>
 
-    <div class="mt-12 flex items-center gap-4 rounded-2xl bg-base-200 p-6">
+    <div class="mt-10 flex items-start gap-4 rounded-2xl bg-base-200 p-6">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         class="w-8 h-8 shrink-0 text-primary"
@@ -289,70 +207,291 @@ const schema = {
         stroke-width="1.5"
         stroke-linecap="round"
         stroke-linejoin="round"
-        set:html={icons.sparkles}
+        aria-hidden="true"
+        set:html={icons.search}
       />
-      <p class="font-semibold text-secondary-content">
-        Con esta información, creamos tu plan de tratamiento personalizado.
+      <div>
+        <h3 class="font-semibold">{queEs.porQue.titulo}</h3>
+        <p class="mt-1 text-base-content/70">{queEs.porQue.texto}</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Los 8 espectros -->
+  <section
+    class="card bg-base-100 seccion-card text-secondary-content"
+    aria-labelledby="espectros-heading"
+  >
+    <div class="reveal">
+      <span class="text-sm font-semibold tracking-widest uppercase text-primary">
+        {espectros.eyebrow}
+      </span>
+      <h2
+        id="espectros-heading"
+        class="mt-3 text-3xl sm:text-4xl font-semibold"
+      >
+        {espectros.titulo}
+      </h2>
+      <p class="mt-4 max-w-3xl text-lg text-base-content/70 text-pretty">
+        {espectros.texto}
       </p>
     </div>
-  </section>
 
-  <!-- Oferta -->
-  <Oferta precio={PRECIO} />
-
-  <!-- Por qué elegirlo -->
-  <section class="card bg-base-100 seccion-card">
-    <span
-      class="reveal block text-sm font-semibold tracking-widest uppercase text-primary"
+    <ol
+      class="reveal-stagger mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5"
     >
-      ¿Por qué elegir el Método Deleic?
-    </span>
-
-    <div class="reveal-stagger mt-8 grid grid-cols-1 sm:grid-cols-3 gap-8">
       {
-        porQue.map((item) => (
-          <div>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="w-8 h-8 mb-4 text-primary"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              stroke-width="1.5"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              set:html={icons[item.icono]}
-            />
-            <p class="text-sm font-semibold text-secondary-content mb-1">
-              {item.titulo}
+        espectros.items.map((e, i) => (
+          <li class="flex flex-col rounded-3xl bg-base-200 p-6">
+            <span class="flex h-9 w-9 items-center justify-center rounded-full bg-primary text-sm font-semibold text-primary-content">
+              {i + 1}
+            </span>
+            <h3 class="mt-4 text-lg font-semibold leading-tight">
+              {e.nombre}
+              {e.detalle && (
+                <span class="block text-sm font-medium text-primary">
+                  {e.detalle}
+                </span>
+              )}
+            </h3>
+            <p class="mt-2 text-sm text-base-content/70 leading-relaxed">
+              {e.texto}
             </p>
-            <p class="text-sm text-base-content/70 leading-relaxed">
-              {item.texto}
-            </p>
-          </div>
+            <ul
+              class="mt-auto pt-4 space-y-1 text-sm"
+              aria-label={`Qué detecta: ${e.nombre}`}
+            >
+              {e.detecta.map((d) => (
+                <li class="flex gap-2">
+                  <span
+                    aria-hidden="true"
+                    class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-primary"
+                  />
+                  {d}
+                </li>
+              ))}
+            </ul>
+          </li>
         ))
       }
+    </ol>
+  </section>
+
+  <!-- Áreas e indicadores -->
+  <section
+    id="que-analizamos"
+    class="seccion scroll-mt-24 text-secondary-content"
+    aria-labelledby="areas-heading"
+  >
+    <div class="reveal">
+      <span class="text-sm font-semibold tracking-widest uppercase text-primary">
+        {areas.eyebrow}
+      </span>
+      <h2 id="areas-heading" class="mt-3 text-3xl sm:text-4xl font-semibold">
+        {areas.titulo}
+      </h2>
+    </div>
+
+    <ul
+      class="reveal-stagger mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 sm:gap-5"
+    >
+      {
+        areas.items.map((a) => (
+          <li class="rounded-3xl border border-base-300 bg-base-100 p-6">
+            <span class="flex h-11 w-11 items-center justify-center rounded-xl bg-primary/10 text-primary">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="w-6 h-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+                set:html={icons[a.icono]}
+              />
+            </span>
+            <h3 class="mt-4 font-semibold">{a.titulo}</h3>
+            <ul class="mt-3 space-y-1 text-sm text-base-content/70">
+              {a.puntos.map((p) => (
+                <li>{p}</li>
+              ))}
+            </ul>
+          </li>
+        ))
+      }
+    </ul>
+
+    <div class="reveal mt-5 rounded-3xl bg-base-100 p-6 sm:p-8">
+      <h3 class="font-semibold">{areas.indicadoresTitulo}</h3>
+      <ol
+        class="mt-4 columns-1 sm:columns-2 lg:columns-4 gap-8 text-sm text-base-content/70"
+      >
+        {
+          areas.indicadores.map((ind, i) => (
+            <li class="flex break-inside-avoid gap-3 py-1">
+              <span class="w-5 shrink-0 text-right font-semibold tabular-nums text-primary">
+                {i + 1}
+              </span>
+              {ind}
+            </li>
+          ))
+        }
+      </ol>
     </div>
   </section>
 
+  <!-- Cómo leemos los resultados -->
+  <section
+    class="card bg-base-100 seccion-card text-secondary-content"
+    aria-labelledby="resultados-heading"
+  >
+    <div class="reveal">
+      <span class="text-sm font-semibold tracking-widest uppercase text-primary">
+        {resultados.eyebrow}
+      </span>
+      <h2
+        id="resultados-heading"
+        class="mt-3 text-3xl sm:text-4xl font-semibold"
+      >
+        {resultados.titulo}
+      </h2>
+    </div>
+
+    <div
+      class="reveal-stagger mt-10 grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-5"
+    >
+      <!-- Escala I–V -->
+      <div class="rounded-3xl bg-base-200 p-6">
+        <h3 class="font-semibold">{resultados.escala.titulo}</h3>
+        <ol class="mt-4 space-y-2">
+          {
+            resultados.escala.niveles.map((n, i) => (
+              <li class="flex items-center gap-3 text-sm">
+                <span
+                  class:list={[
+                    "flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-xs font-bold",
+                    tonosNivel[i],
+                  ]}
+                >
+                  {n.nivel}
+                </span>
+                <span class="w-16 shrink-0 tabular-nums text-base-content/70">
+                  {n.rango}
+                </span>
+                <span class="font-medium">{n.significado}</span>
+              </li>
+            ))
+          }
+        </ol>
+        <p class="mt-4 text-xs text-base-content/60">
+          {resultados.escala.nota}
+        </p>
+      </div>
+
+      <!-- Hidratación -->
+      <div class="rounded-3xl bg-base-200 p-6">
+        <h3 class="font-semibold">{resultados.hidratacion.titulo}</h3>
+        <p class="mt-1 text-sm text-base-content/70">
+          {resultados.hidratacion.texto}
+        </p>
+        <dl class="mt-5 grid grid-cols-2 gap-3 text-center">
+          <div class="rounded-2xl bg-success/10 p-4 text-success">
+            <dt class="text-2xl font-semibold tabular-nums">
+              {resultados.hidratacion.normal.valor}
+            </dt>
+            <dd class="mt-1 text-xs font-medium">
+              {resultados.hidratacion.normal.texto}
+            </dd>
+          </div>
+          <div class="rounded-2xl bg-primary/10 p-4 text-primary">
+            <dt class="text-2xl font-semibold tabular-nums">
+              {resultados.hidratacion.deficit.valor}
+            </dt>
+            <dd class="mt-1 text-xs font-medium">
+              {resultados.hidratacion.deficit.texto}
+            </dd>
+          </div>
+        </dl>
+      </div>
+
+      <!-- Tipos de piel (Baumann) -->
+      <div class="rounded-3xl bg-base-200 p-6">
+        <h3 class="font-semibold">{resultados.baumann.titulo}</h3>
+        <ul class="mt-5 space-y-4 text-sm">
+          {
+            resultados.baumann.ejes.map(([a, b]) => (
+              <li class="grid grid-cols-[6.5rem_1fr_6.5rem] items-center gap-2">
+                <span class="font-medium">{a}</span>
+                <span aria-hidden="true" class="relative h-px bg-base-content/20">
+                  <span class="absolute left-1/2 top-1/2 h-2.5 w-2.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary" />
+                </span>
+                <span class="text-right font-medium">{b}</span>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Casos prácticos -->
+  <section
+    class="seccion text-secondary-content"
+    aria-labelledby="casos-heading"
+  >
+    <div class="reveal">
+      <span class="text-sm font-semibold tracking-widest uppercase text-primary">
+        {casos.eyebrow}
+      </span>
+      <h2 id="casos-heading" class="mt-3 text-3xl sm:text-4xl font-semibold">
+        {casos.titulo}
+      </h2>
+    </div>
+
+    <ul
+      class="reveal-stagger mt-8 grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5"
+    >
+      {
+        casos.items.map((c) => (
+          <li class="rounded-3xl border border-base-300 bg-base-100 p-6">
+            <h3 class="text-lg font-semibold">{c.titulo}</h3>
+            <p class="mt-1 text-sm font-semibold text-primary">{c.luces}</p>
+            <p class="mt-3 text-sm text-base-content/70 leading-relaxed">
+              {c.texto}
+            </p>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+
+  <!-- Oferta, proceso y lema -->
+  <Oferta />
+
   <!-- Preguntas frecuentes -->
-  <section class="card bg-base-100 seccion-card">
+  <section
+    class="card bg-base-100 seccion-card text-secondary-content"
+    aria-labelledby="faq-heading"
+  >
     <span
       class="reveal block text-sm font-semibold tracking-widest uppercase text-primary"
     >
-      Preguntas frecuentes
+      {faq.eyebrow}
     </span>
     <h2
-      class="reveal mt-3 text-3xl sm:text-4xl font-semibold text-secondary-content"
+      id="faq-heading"
+      class="reveal mt-3 text-3xl sm:text-4xl font-semibold"
     >
-      Resolvemos tus dudas
+      {faq.titulo}
     </h2>
 
-    <div class="reveal-stagger mt-8 divide-y divide-base-300 border-y border-base-300">
+    <div class="mt-8 divide-y divide-base-300 border-y border-base-300">
       {
-        faq.map((f) => (
+        preguntas.map((f) => (
           <details class="group py-5">
-            <summary class="flex items-center justify-between gap-4 cursor-pointer list-none font-medium text-secondary-content">
+            <summary class="flex items-center justify-between gap-4 cursor-pointer list-none font-medium [&::-webkit-details-marker]:hidden">
               {f.pregunta}
               <span
                 class="text-primary text-xl leading-none group-open:rotate-45 transition-transform"
@@ -372,5 +511,10 @@ const schema = {
 
   <!-- Ubicación -->
   <Ubication />
-  <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+
+  <script
+    is:inline
+    type="application/ld+json"
+    set:html={JSON.stringify(schema)}
+  />
 </Layout>

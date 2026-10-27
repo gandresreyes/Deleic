@@ -217,7 +217,7 @@
   .eclipse {
     --eclipse-color: var(--color-primary-claro);
     --eclipse-nucleo: color-mix(in oklab, var(--color-primary-claro) 45%, white);
-    --eclipse-filo: color-mix(in oklab, var(--color-primary-claro) 8%, white);
+    --eclipse-filo: color-mix(in oklab, var(--color-primary-claro) 4%, white);
     --eclipse-vuelta: 14s; /* lo que tarda la luz en dar una vuelta */
 
     @apply relative aspect-square;
@@ -254,16 +254,16 @@
   }
 
   .eclipse-luz::after {
-    inset: -2.5%;
+    inset: -1.2%;
     background: conic-gradient(
       from -90deg,
-      transparent 25deg,
-      var(--eclipse-nucleo) 60deg,
-      var(--eclipse-filo) 90deg,
-      var(--eclipse-nucleo) 120deg,
-      transparent 155deg
+      transparent 30deg,
+      var(--eclipse-filo) 75deg,
+      white 90deg,
+      var(--eclipse-filo) 105deg,
+      transparent 150deg
     );
-    filter: blur(6px);
+    filter: blur(3px);
   }
 
   /* El disco: la foto recortada en círculo, con los bordes oscurecidos para
