@@ -199,3 +199,109 @@
     opacity: 1;
   }
 }
+
+/* ---------- Eclipse con grano ----------
+   Un disco con una foto tapa una luz que gira detrás: solo se ve el filo
+   brillante del borde y un halo amplio, como un eclipse (estilo hero de
+   Vercel). Encima del halo, grano de película. Pensado para fondos oscuros.
+   Uso, dentro de un contenedor oscuro con relative isolate overflow-hidden:
+     <div class="eclipse w-72">
+       <div aria-hidden="true" class="eclipse-luz"></div>
+       <div aria-hidden="true" class="grano -inset-[60%]"></div>
+       <div class="eclipse-disco"><img … /></div>
+     </div>
+   La luz gira con transform (no repinta en cada frame). Con "reducir
+   movimiento" se queda quieta, arriba. Para ajustarla, cambia las variables
+   de .eclipse */
+@layer components {
+  .eclipse {
+    --eclipse-color: var(--color-primary-claro);
+    --eclipse-nucleo: color-mix(in oklab, var(--color-primary-claro) 45%, white);
+    --eclipse-filo: color-mix(in oklab, var(--color-primary-claro) 8%, white);
+    --eclipse-vuelta: 14s; /* lo que tarda la luz en dar una vuelta */
+
+    @apply relative aspect-square;
+  }
+
+  /* Gira entera: ::before es el halo amplio y ::after el filo del borde.
+     El punto más brillante empieza arriba (0deg) */
+  .eclipse-luz {
+    position: absolute;
+    inset: 0;
+    z-index: -20;
+    animation: eclipse-giro var(--eclipse-vuelta) linear infinite;
+  }
+
+  .eclipse-luz::before,
+  .eclipse-luz::after {
+    content: "";
+    position: absolute;
+    border-radius: 9999px;
+  }
+
+  .eclipse-luz::before {
+    inset: -28%;
+    background: conic-gradient(
+      from -90deg,
+      transparent,
+      var(--eclipse-color) 50deg,
+      var(--eclipse-nucleo) 90deg,
+      var(--eclipse-color) 130deg,
+      transparent 180deg
+    );
+    filter: blur(38px);
+    opacity: 0.5;
+  }
+
+  .eclipse-luz::after {
+    inset: -2.5%;
+    background: conic-gradient(
+      from -90deg,
+      transparent 25deg,
+      var(--eclipse-nucleo) 60deg,
+      var(--eclipse-filo) 90deg,
+      var(--eclipse-nucleo) 120deg,
+      transparent 155deg
+    );
+    filter: blur(6px);
+  }
+
+  /* El disco: la foto recortada en círculo, con los bordes oscurecidos para
+     que el contraluz destaque */
+  .eclipse-disco {
+    @apply absolute inset-0 overflow-hidden rounded-full;
+    box-shadow: 0 0 0 1px rgb(255 255 255 / 0.12);
+  }
+
+  .eclipse-disco > img {
+    @apply h-full w-full object-cover;
+  }
+
+  .eclipse-disco::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle, transparent 45%, rgb(0 0 0 / 0.6));
+  }
+
+  /* Grano de película: un SVG feTurbulence en línea, sin peticiones externas.
+     overlay: sobre lo oscuro casi no se ve; donde hay luz, se nota */
+  .grano {
+    @apply pointer-events-none absolute inset-0 -z-10;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+    mix-blend-mode: overlay;
+    opacity: 0.9;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .eclipse-luz {
+      animation: none;
+    }
+  }
+}
+
+@keyframes eclipse-giro {
+  to {
+    transform: rotate(1turn);
+  }
+}

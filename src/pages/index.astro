@@ -189,14 +189,25 @@ const schema = {
         >
         </div>
 
-        <div class="relative h-56 sm:h-72 lg:col-span-5 lg:h-auto">
-          <img
-            src="/img/metodo-deleic/hero.webp"
-            alt="Especialista de Deleic realizando un diagnóstico facial 3D"
-            loading="lazy"
-            class="absolute inset-0 h-full w-full object-cover object-[62%_center]"
-            transition:name="metodo-deleic"
-          />
+        <!-- Eclipse: la foto en un disco con una luz burdeos girando detrás -->
+        <div
+          class="relative isolate flex items-center justify-center overflow-hidden bg-secondary-content px-6 py-16 lg:col-span-5"
+        >
+          <div class="eclipse w-[min(78%,20rem)] lg:w-[min(76%,24rem)]">
+            <div aria-hidden="true" class="eclipse-luz"></div>
+            <div aria-hidden="true" class="grano -inset-[60%]"></div>
+            <div class="eclipse-disco">
+              <img
+                src="/img/metodo-deleic/hero.webp"
+                alt="Especialista de Deleic realizando un diagnóstico facial 3D"
+                width="1600"
+                height="1066"
+                loading="lazy"
+                class="object-[55%_center]"
+                transition:name="metodo-deleic"
+              />
+            </div>
+          </div>
           <span
             class="absolute left-4 top-4 rounded-full bg-primary px-3 py-1 text-[11px] font-bold uppercase tracking-widest text-primary-content shadow-lg shadow-black/20"
           >
