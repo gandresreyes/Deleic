@@ -4,8 +4,18 @@
   aria-labelledby="novedades-heading"
 >
   <div>
-    <div class="max-w-2xl mb-14 reveal">
-      <span class="text-sm font-semibold tracking-widest uppercase">
+    <div class="max-w-2xl mb-10 md:mb-14 reveal">
+      <span
+        class="inline-flex items-center gap-2 text-sm font-semibold tracking-widest uppercase"
+      >
+        <!-- Punto latiendo: solo en móvil, para que la sección destaque al hacer scroll -->
+        <span class="relative flex h-2.5 w-2.5 md:hidden" aria-hidden="true">
+          <span
+            class="absolute inline-flex h-full w-full rounded-full bg-primary-claro opacity-75 motion-safe:animate-ping"
+          ></span>
+          <span class="relative inline-flex h-2.5 w-2.5 rounded-full bg-white"
+          ></span>
+        </span>
         Siempre a la vanguardia
       </span>
       <h2
@@ -25,7 +35,8 @@
     <div class="reveal-stagger grid grid-cols-1 md:grid-cols-12 gap-5 mb-5">
       <!-- Hydrabalance -->
       <a
-        href="/facial-corporal/higiene-facial/#modalidades"
+        href="/facial-corporal/limpieza-facial/#modalidades"
+        data-foco
         class="group relative md:col-span-8 h-85 sm:h-100 rounded-3xl overflow-hidden"
       >
         <img
@@ -52,8 +63,9 @@
 
       <!-- Ultrasonix (destacada) -->
       <a
-        href="/ultrasonix/"
-        class="group relative md:col-span-4 h-85 sm:h-100 rounded-3xl overflow-hidden p-7 flex flex-col justify-between border border-white/8 transition-all duration-300 hover:-translate-y-1 hover:border-white/[0.2] hover:shadow-2xl hover:shadow-black/50"
+        href="/facial-corporal/ultrasonix/"
+        data-foco
+        class="group relative md:col-span-4 h-85 sm:h-100 rounded-3xl overflow-hidden p-7 flex flex-col justify-between border border-white/8 transition-all duration-300 hover:-translate-y-1 hover:border-white/20 hover:shadow-2xl hover:shadow-black/50"
         style="background: radial-gradient(140% 100% at 15% 0%, var(--color-primary-claro) 0%, var(--color-primary) 45%, var(--color-primary-oscuro) 100%);"
       >
         <!-- Textura de puntos sutil para llenar el espacio vacío -->
@@ -90,9 +102,8 @@
         <div class="relative">
           <h3 class="text-2xl font-semibold text-white mb-2">Ultrasonix</h3>
           <p class="text-sm text-white/80 leading-relaxed mb-3">
-            Ultrasonido focalizado que reafirma la piel y estimula la formación
-            de nuevo colágeno, logrando un efecto lifting no quirúrgico sin
-            tiempo de recuperación.
+            Ultrasonidos micro y macrofocalizados que reafirman el rostro y
+            remodelan el cuerpo sin cirugía, con 18 protocolos personalizados.
           </p>
           <span
             class="inline-flex items-center gap-1 text-sm font-medium text-white/90 group-hover:text-white"
@@ -120,7 +131,8 @@
     <div class="reveal-stagger grid grid-cols-1 md:grid-cols-12 gap-5">
       <!-- Hollywood Peel -->
       <a
-        href="/hollywood-peel/"
+        href="/facial-corporal/iluminador-revitalizante/#modalidades"
+        data-foco
         class="group relative md:col-span-4 h-75 sm:h-85 rounded-3xl overflow-hidden bg-white/6"
       >
         <img
@@ -136,9 +148,9 @@
         <div class="absolute top-0 left-0 p-6">
           <h3 class="text-xl font-semibold text-white mb-2">Hollywood Peel</h3>
           <p class="text-sm text-white/75 leading-relaxed max-w-sm">
-            Peeling con carbón activo y láser Nd:YAG que limpia los poros en
-            profundidad, mejora la textura y deja un efecto luminoso inmediato,
-            sin tiempo de recuperación.
+            Láser Nd:YAG y carbón activo que purifica la piel, mejora el
+            aspecto de los poros y deja un rostro más uniforme, suave y
+            luminoso.
           </p>
         </div>
       </a>
@@ -147,12 +159,27 @@
 
       <a
         href="/micropigmentacion/"
+        data-foco
         class="group relative
       md:col-span-8 h-75 sm:h-85 rounded-3xl overflow-hidden bg-black/20
       flex"
       >
+        <!-- Móvil: la foto va de fondo (en escritorio va a la derecha, con corte diagonal) -->
+        <div class="sm:hidden absolute inset-0" aria-hidden="true">
+          <img
+            src="/img/novedades/nanoblading.webp"
+            alt=""
+            loading="lazy"
+            class="w-full h-full object-cover opacity-80"
+          />
+          <div
+            class="absolute inset-0 bg-linear-to-t from-black/90 via-black/50 to-black/10"
+          >
+          </div>
+        </div>
+
         <div
-          class="relative z-10 w-full sm:w-1/2 p-8 flex flex-col justify-center"
+          class="relative z-10 w-full sm:w-1/2 p-8 flex flex-col justify-end sm:justify-center"
         >
           <!-- Textura de puntos sutil -->
           <div
@@ -170,7 +197,7 @@
             cejas.
           </p>
           <span
-            class="relative inline-flex items-center gap-1 text-sm font-medium text-primary group-hover:text-white transition-colors"
+            class="relative inline-flex items-center gap-1 text-sm font-medium text-white sm:text-primary group-hover:text-white transition-colors"
           >
             Saber más
             <svg

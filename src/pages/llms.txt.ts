@@ -3,13 +3,14 @@
 // Se genera en el build desde los mismos datos que pintan las páginas, así
 // que precios, horario y contacto nunca se desfasan respecto a la web.
 import type { APIRoute } from "astro";
-import { getCollection } from "astro:content";
+import { getCollection, type CollectionEntry } from "astro:content";
 import { DIRECCION, EMAIL, HORARIO, TELEFONO, WHATSAPP } from "../data/contacto";
 import depilacion from "../data/depilacionLaser.json";
 import medicina from "../data/medicinaEstetica.json";
 import metodo from "../data/metodoDeleic.json";
 import micro from "../data/micropigmentacion.json";
-import { gruposPublicados, type Grupo } from "../lib/precios";
+import { gruposPublicados, preciosFacial, type Grupo } from "../lib/precios";
+import { sinEnlaces } from "../lib/texto";
 
 const horas = (filas: typeof HORARIO.invierno) =>
   filas.map((f) => `${f.dias}: ${f.horas ?? "cerrado"}`).join("; ");
@@ -27,6 +28,43 @@ const tarifas = (grupos: Grupo[]) =>
       return `- ${i.nombre}${precios ? ` — ${precios}` : ""}`;
     }),
   ]);
+
+// Datos prácticos de un tratamiento facial-corporal (duración, sesiones,
+// frecuencia, resultado y primer paso), como sublista de su enlace. Salen de
+// los mismos campos de facialCorporal.json que pintan la ficha
+type Facial = CollectionEntry<"facialCorporal">["data"];
+const datosPracticos = (t: Facial) => {
+  const lineas: string[] = [];
+  if (t.duracionSesion) lineas.push(`Duración: ${t.duracionSesion}`);
+  if (t.sesionesRecomendadas) lineas.push(`Sesiones: ${t.sesionesRecomendadas}`);
+  for (const m of t.modalidades ?? []) {
+    const sesiones = m.detalles?.find((d) => d.titulo === "Sesiones")?.texto;
+    if (sesiones) lineas.push(`Sesiones de ${m.titulo}: ${sesiones}`);
+  }
+  if (t.frecuencia) {
+    const f = t.frecuencia;
+    const partes = [
+      f.texto,
+      ...(f.items ?? []).map((i) => `${i.titulo}: ${i.texto}`),
+      f.nota,
+    ].filter(Boolean);
+    lineas.push(`Sesiones y frecuencia: ${partes.join(" ")}`);
+  }
+  if (t.resultado) lineas.push(`Resultado: ${t.resultado}`);
+  if (t.novedad) {
+    const n = t.novedad;
+    const datos = [
+      ...(n.datos ?? []).map((d) => `${d.titulo}: ${d.texto}`),
+      n.contraindicaciones,
+    ].filter(Boolean);
+    lineas.push(`Novedad, ${n.nombre}: ${datos.join(". ")}`);
+  }
+  // El diagnóstico ya es el primer paso: no se lo repite a sí mismo
+  if (t.categoria !== "Diagnóstico" && t.primerPaso) {
+    lineas.push(`Primer paso: ${t.primerPaso.texto}`);
+  }
+  return lineas.map((l) => `  - ${sinEnlaces(l)}`);
+};
 
 export const GET: APIRoute = async ({ site }) => {
   const url = (ruta: string) => new URL(ruta, site).href;
@@ -73,11 +111,26 @@ export const GET: APIRoute = async ({ site }) => {
     "### Medicina estética",
     ...tarifas(medicina.tratamientos.grupos as Grupo[]),
     "",
+    "### Tratamientos faciales y corporales",
+    ...faciales.flatMap((t) => {
+      const lineas = preciosFacial(t.data);
+      if (lineas.length === 0) return [];
+      return [
+        "",
+        `#### ${t.data.nombre}`,
+        ...lineas.map((l) => {
+          const grupo = l.grupo === t.data.nombre ? "" : `${l.grupo} · `;
+          return `- ${grupo}${l.concepto}: ${l.precio}${l.nota ? ` (${l.nota})` : ""}`;
+        }),
+      ];
+    }),
+    "",
     "## Tratamientos faciales y corporales",
     "",
-    ...faciales.map(
-      (t) => `- [${t.data.nombre}](${url(`/facial-corporal/${t.id}/`)}): ${t.data.descripcionCorta}`,
-    ),
+    ...faciales.flatMap((t) => [
+      `- [${t.data.nombre}](${url(`/facial-corporal/${t.id}/`)}): ${t.data.descripcionCorta}`,
+      ...datosPracticos(t.data),
+    ]),
     "",
     "## Optional",
     "",

@@ -2,8 +2,12 @@
 // src/pages/facial-corporal/[id].astro
 import { getCollection } from "astro:content";
 import Layout from "../../layouts/Layout.astro";
+import Imagen from "../../components/FacialCorporal/Imagen.astro";
+import MetodoDeleic from "../../components/FacialCorporal/MetodoDeleic.astro";
 import { TELEFONO, whatsapp } from "../../data/contacto";
 import { faqPage, migas, negocio } from "../../lib/schema";
+import { numero, preciosFacial } from "../../lib/precios";
+import { conEnlaces } from "../../lib/texto";
 
 export async function getStaticPaths() {
   const todos = await getCollection("facialCorporal");
@@ -31,12 +35,29 @@ export async function getStaticPaths() {
 const { tratamiento, relacionados } = Astro.props;
 const t = tratamiento.data;
 
-// Reserva por WhatsApp con el tratamiento ya indicado en el mensaje
-const reservaHref = whatsapp(
-  t.slug === "diagnostico-facial-corporal"
-    ? "Hola, me gustaría reservar el diagnóstico facial-corporal gratuito."
-    : `Hola, me gustaría reservar un diagnóstico gratuito para ${t.nombre}.`,
-);
+// Reserva por WhatsApp con el tratamiento ya indicado en el mensaje. Por
+// defecto se reserva el diagnóstico gratuito; `reserva` en el JSON lo cambia
+const reserva = t.reserva ?? {
+  texto: "Reservar diagnóstico gratuito",
+  mensaje:
+    t.slug === "diagnostico-facial-corporal"
+      ? "Hola, me gustaría reservar el diagnóstico facial-corporal gratuito."
+      : `Hola, me gustaría reservar un diagnóstico gratuito para ${t.nombre}.`,
+};
+const reservaHref = whatsapp(reserva.mensaje);
+
+// Enlaces dentro del texto: sobre el burdeos del hero van en blanco
+const enlaceHero =
+  "font-medium text-base-100 underline decoration-base-100/40 underline-offset-4 hover:decoration-base-100";
+
+// Eyebrow de las modalidades: "Cuatro formas de hacerlo"…
+const enLetra = ["", "Una", "Dos", "Tres", "Cuatro", "Cinco", "Seis"];
+const nModalidades = t.modalidades?.length ?? 0;
+const modalidadesEyebrow =
+  t.modalidadesEyebrow ??
+  (nModalidades > 1 && enLetra[nModalidades]
+    ? `${enLetra[nModalidades]} formas de hacerlo`
+    : "Modalidades");
 
 // Iconos (trazo, 24x24)
 const icons: Record<string, string> = {
@@ -58,10 +79,17 @@ const icons: Record<string, string> = {
   arrow: '<path d="M5 12h14m-5-5l5 5-5 5"/>',
   chevron: '<path d="M9 6l6 6-6 6"/>',
   plus: '<path d="M12 5v14M5 12h14"/>',
+  whatsapp:
+    '<path d="M3.5 20.5l1.4-4.2A8.5 8.5 0 1 1 8 19.3z"/><path d="M9 8.6c.2-.4.5-.6.9-.6h.5l1 2.2-.8 1a5.6 5.6 0 0 0 2.3 2.3l1-.8 2.2 1v.5c0 .4-.2.7-.6.9a3 3 0 0 1-2.6.2 7.7 7.7 0 0 1-4.1-4.1 3 3 0 0 1 .2-2.6z"/>',
+  tag: '<path d="M3 12V4a1 1 0 011-1h8l9 9-9 9-9-9z"/><circle cx="7.5" cy="7.5" r="1.5"/>',
 };
 
+// Primer paso: el diagnóstico gratuito, salvo que el JSON indique otro
+// (el valor por defecto está en content.config.ts)
+const primerPaso = t.primerPaso;
+
 // Ficha rápida: solo aparecen los datos que existan en el JSON,
-// más el diagnóstico gratuito, que aplica a todos los tratamientos
+// más el primer paso, que aplica a todos los tratamientos
 const ficha = [
   t.duracionSesion && {
     icon: "clock",
@@ -79,12 +107,18 @@ const ficha = [
     value: t.tecnologiaOMarca,
   },
   t.resultado && { icon: "sparkles", label: "Resultado", value: t.resultado },
-  {
+  primerPaso && {
     icon: "calendar",
     label: "Primer paso",
-    value: "Diagnóstico gratuito y sin compromiso",
+    value: primerPaso.texto,
+    href: primerPaso.href,
   },
-].filter(Boolean) as { icon: string; label: string; value: string }[];
+].filter(Boolean) as {
+  icon: string;
+  label: string;
+  value: string;
+  href?: string;
+}[];
 
 const tieneCuidados =
   (t.cuidados && t.cuidados.length > 0) ||
@@ -93,10 +127,30 @@ const tieneCuidados =
 // Secciones presentes: alimentan el índice y la numeración
 const secciones = [
   { id: "que-es", label: "En qué consiste", show: true },
-  { id: "modalidades", label: "Modalidades", show: !!t.modalidades?.length },
+  {
+    id: "diagnostico-3d",
+    label: "Diagnóstico facial 3D",
+    show: !!t.metodoDeleic,
+  },
+  {
+    id: "modalidades",
+    label: t.modalidadesTitulo ?? "Modalidades",
+    show: !!t.modalidades?.length,
+  },
   { id: "para-quien", label: "Para quién es", show: !!t.paraQuienEs },
   { id: "beneficios", label: "Beneficios", show: t.beneficios.length > 0 },
+  {
+    id: "novedad",
+    label: `Novedad: ${t.novedad?.nombre}`,
+    show: !!t.novedad,
+  },
   { id: "proceso", label: "Cómo se trabaja", show: !!t.proceso?.length },
+  {
+    id: "frecuencia",
+    label: t.frecuencia?.titulo ?? "Frecuencia de las sesiones",
+    show: !!t.frecuencia,
+  },
+  { id: "tarifas", label: "Tarifas", show: !!t.tarifas?.length },
   { id: "cuidados", label: "Cuidados", show: tieneCuidados },
   { id: "faq", label: "Preguntas frecuentes", show: !!t.faq?.length },
 ].filter((s) => s.show);
@@ -104,8 +158,9 @@ const secciones = [
 const num = (id: string) =>
   String(secciones.findIndex((s) => s.id === id) + 1).padStart(2, "0");
 
-// Schema.org: Service + BreadcrumbList (+ FAQPage si hay preguntas)
+// Schema.org: Service (con sus tarifas) + BreadcrumbList (+ FAQPage)
 const site = Astro.site ?? Astro.url;
+const precios = preciosFacial(t);
 const graph: Record<string, unknown>[] = [
   {
     "@type": "Service",
@@ -114,8 +169,33 @@ const graph: Record<string, unknown>[] = [
     description: t.seoDescription,
     areaServed: "León",
     url: new URL(`/facial-corporal/${tratamiento.id}/`, site).href,
-    image: new URL(t.imagen, site).href,
+    ...(t.imagen && { image: new URL(t.imagen, site).href }),
     provider: negocio(site),
+    ...(precios.length > 0 && {
+      hasOfferCatalog: {
+        "@type": "OfferCatalog",
+        name: `Tarifas de ${t.nombre}`,
+        itemListElement: precios.map((p) => {
+          const valor = numero(p.precio) ?? undefined;
+          const esDesde = /^desde/i.test(p.precio);
+          return {
+            "@type": "Offer",
+            name: p.grupo === t.nombre ? p.concepto : `${p.grupo} · ${p.concepto}`,
+            ...(p.nota && { description: p.nota }),
+            priceCurrency: "EUR",
+            ...(esDesde
+              ? {
+                  priceSpecification: {
+                    "@type": "PriceSpecification",
+                    minPrice: valor,
+                    priceCurrency: "EUR",
+                  },
+                }
+              : { price: valor }),
+          };
+        }),
+      },
+    }),
   },
   migas(site, [
     ["Facial & Corporal", "/facial-corporal/"],
@@ -232,9 +312,34 @@ const schema = { "@context": "https://schema.org", "@graph": graph };
             </h1>
             <p
               class="mt-5 text-base sm:text-lg text-base-100/75 max-w-xl leading-relaxed text-pretty"
-            >
-              {t.subtituloHero}
-            </p>
+              set:html={conEnlaces(t.subtituloHero, enlaceHero)}
+            />
+
+            {
+              t.novedad && (
+                <a
+                  href="#novedad"
+                  class="group mt-6 inline-flex items-center gap-2 rounded-full bg-base-100/10 py-1.5 pl-1.5 pr-4 text-sm ring-1 ring-base-100/20 backdrop-blur-sm hover:bg-base-100/15 transition-colors"
+                >
+                  <span class="rounded-full bg-base-100 px-2.5 py-0.5 text-[11px] font-bold uppercase tracking-wider text-primary">
+                    Novedad
+                  </span>
+                  <span class="font-medium">{t.novedad.nombre}</span>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="w-4 h-4 transition-transform group-hover:translate-x-0.5"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                    set:html={icons.arrow}
+                  />
+                </a>
+              )
+            }
 
             <div class="mt-8 flex flex-col sm:flex-row sm:flex-wrap gap-3">
               <a
@@ -243,7 +348,7 @@ const schema = { "@context": "https://schema.org", "@graph": graph };
                 rel="noopener"
                 class="btn h-12 px-7 rounded-full border-0 bg-base-100 text-primary hover:bg-base-200 shadow-lg shadow-black/20"
               >
-                Reservar diagnóstico gratuito
+                {reserva.texto}
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   class="w-4 h-4"
@@ -281,12 +386,13 @@ const schema = { "@context": "https://schema.org", "@graph": graph };
           <div
             class="relative aspect-4/3 sm:aspect-16/10 lg:aspect-4/5 rounded-3xl overflow-hidden bg-base-100/10 ring-1 ring-base-100/15 shadow-2xl shadow-black/30"
           >
-            <img
+            <Imagen
               src={t.imagen}
               alt={t.imagenAlt}
+              icono={t.icono}
               fetchpriority="high"
               class="absolute inset-0 w-full h-full object-cover"
-              transition:name={t.id}
+              transitionName={t.id}
             />
             <div
               aria-hidden="true"
@@ -332,7 +438,16 @@ const schema = { "@context": "https://schema.org", "@graph": graph };
                   {f.label}
                 </p>
                 <p class="mt-1 text-sm font-medium text-secondary-content leading-snug text-pretty">
-                  {f.value}
+                  {f.href ? (
+                    <a
+                      href={f.href}
+                      class="text-primary underline decoration-primary/30 underline-offset-4 hover:decoration-primary"
+                    >
+                      {f.value}
+                    </a>
+                  ) : (
+                    f.value
+                  )}
                 </p>
               </div>
             </li>
@@ -391,10 +506,16 @@ const schema = { "@context": "https://schema.org", "@graph": graph };
           </h2>
           <p
             class="mt-5 text-base sm:text-lg text-secondary-content/75 leading-relaxed text-pretty sm:first-letter:float-left sm:first-letter:mr-3 sm:first-letter:mt-1 sm:first-letter:text-6xl sm:first-letter:leading-[0.8] sm:first-letter:font-semibold sm:first-letter:text-primary"
-          >
-            {t.queEs}
-          </p>
+            set:html={conEnlaces(t.queEs)}
+          />
         </section>
+
+        <!-- Diagnóstico facial 3D (Método Deleic) -->
+        {
+          t.metodoDeleic && (
+            <MetodoDeleic modo={t.metodoDeleic} num={num("diagnostico-3d")} />
+          )
+        }
 
         <!-- Modalidades -->
         {
@@ -408,20 +529,64 @@ const schema = { "@context": "https://schema.org", "@graph": graph };
                   {num("modalidades")}
                 </span>
                 <span class="h-px w-8 bg-primary/30" aria-hidden="true" />
-                <span class="text-secondary-content/50">Dos formas de hacerlo</span>
+                <span class="text-secondary-content/50">{modalidadesEyebrow}</span>
               </div>
               <h2 class="mt-3 text-2xl sm:text-3xl font-semibold tracking-tight">
-                Modalidades
+                {t.modalidadesTitulo ?? "Modalidades"}
               </h2>
               <div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
                 {t.modalidades.map((m) => (
-                  <article class="rounded-3xl bg-base-200 p-6 md:only:col-span-2">
-                    <h3 class="text-lg font-semibold text-secondary-content">
-                      {m.titulo}
-                    </h3>
-                    <p class="mt-2 text-secondary-content/70 leading-relaxed text-pretty">
-                      {m.texto}
-                    </p>
+                  <article class="flex flex-col rounded-3xl bg-base-200 p-6 md:only:col-span-2">
+                    {m.etiqueta && (
+                      <span class="mb-3 self-start rounded-full bg-primary px-3 py-1 text-[11px] font-semibold uppercase tracking-wider text-primary-content">
+                        {m.etiqueta}
+                      </span>
+                    )}
+                    <div class="flex items-start justify-between gap-4">
+                      <h3 class="text-lg font-semibold text-secondary-content text-balance">
+                        {m.titulo}
+                      </h3>
+                      {m.precio && (
+                        <span class="shrink-0 rounded-full bg-base-100 px-3 py-1 text-base font-semibold tabular-nums text-primary ring-1 ring-black/5">
+                          {m.precio}
+                        </span>
+                      )}
+                    </div>
+                    {m.subtitulo && (
+                      <p class="mt-1.5 text-sm font-medium text-primary leading-snug text-pretty">
+                        {m.subtitulo}
+                      </p>
+                    )}
+                    <p
+                      class="mt-2 text-secondary-content/70 leading-relaxed text-pretty"
+                      set:html={conEnlaces(m.texto)}
+                    />
+                    {m.puntos && m.puntos.length > 0 && (
+                      <div class="mt-4">
+                        <p class="text-[11px] font-semibold uppercase tracking-widest text-secondary-content/50">
+                          {m.puntosTitulo ?? "Qué podemos trabajar"}
+                        </p>
+                        <ul class="mt-3 space-y-2">
+                          {m.puntos.map((p) => (
+                            <li class="flex items-start gap-3 text-sm text-secondary-content/80 leading-relaxed">
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                class="shrink-0 mt-0.5 w-4 h-4 text-primary"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                                stroke-width="2.2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                aria-hidden="true"
+                                set:html={icons.check}
+                              />
+                              <span>{p}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
                     {m.detalles && m.detalles.length > 0 && (
                       <ul class="mt-4 space-y-3">
                         {m.detalles.map((d) => (
@@ -447,6 +612,26 @@ const schema = { "@context": "https://schema.org", "@graph": graph };
                           </li>
                         ))}
                       </ul>
+                    )}
+                    {m.duracion && (
+                      <p class="mt-auto pt-5 flex items-center gap-2 text-sm font-medium text-secondary-content/70">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          class="w-4 h-4 text-primary"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                          stroke-width="1.8"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          aria-hidden="true"
+                          set:html={icons.clock}
+                        />
+                        <span>
+                          <span class="sr-only">Duración: </span>
+                          {m.duracion}
+                        </span>
+                      </p>
                     )}
                   </article>
                 ))}
@@ -543,6 +728,161 @@ const schema = { "@context": "https://schema.org", "@graph": graph };
           )
         }
 
+        <!-- Novedad dentro del tratamiento (p. ej. Global Regen) -->
+        {
+          t.novedad && (
+            <section
+              id="novedad"
+              aria-labelledby="novedad-titulo"
+              class="reveal scroll-mt-28 relative isolate overflow-hidden rounded-4xl bg-primary text-base-100 seccion-card"
+            >
+              <div
+                aria-hidden="true"
+                class="absolute inset-0 -z-10 bg-[radial-gradient(110%_80%_at_100%_0%,var(--color-primary-claro)_0%,transparent_60%),radial-gradient(80%_70%_at_0%_100%,var(--color-primary-oscuro)_0%,transparent_65%)]"
+              />
+              <div aria-hidden="true" class="textura-cursor" />
+
+              <div class="flex flex-wrap items-center gap-3 text-xs font-semibold uppercase tracking-widest">
+                <span class="tabular-nums text-base-100/70">{num("novedad")}</span>
+                <span class="h-px w-8 bg-base-100/30" aria-hidden="true" />
+                <span class="inline-flex items-center gap-2 rounded-full bg-base-100 px-3 py-1 text-[11px] font-bold tracking-wider text-primary">
+                  <span class="w-1.5 h-1.5 rounded-full bg-primary motion-safe:animate-pulse" aria-hidden="true" />
+                  Novedad
+                </span>
+              </div>
+              <h2
+                id="novedad-titulo"
+                class="mt-4 text-3xl sm:text-4xl font-semibold tracking-tight"
+              >
+                {t.novedad.nombre}
+              </h2>
+              <p
+                class="mt-4 text-base sm:text-lg text-base-100/80 leading-relaxed text-pretty"
+                set:html={conEnlaces(t.novedad.texto, enlaceHero)}
+              />
+
+              {t.novedad.activos && t.novedad.activos.length > 0 && (
+                <ul class="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  {t.novedad.activos.map((a) => (
+                    <li class="rounded-3xl bg-white/10 p-5 ring-1 ring-white/20 backdrop-blur-sm">
+                      <h3 class="flex items-center gap-2 text-lg font-semibold">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          class="w-5 h-5 text-base-100/80"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                          stroke-width="1.6"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          aria-hidden="true"
+                          set:html={icons.sparkles}
+                        />
+                        {a.titulo}
+                      </h3>
+                      <p class="mt-2 text-sm text-base-100/75 leading-relaxed text-pretty">
+                        {a.texto}
+                      </p>
+                    </li>
+                  ))}
+                </ul>
+              )}
+
+              {t.novedad.paraQuien && (
+                <p class="mt-6 flex items-start gap-3 text-base-100/85 leading-relaxed text-pretty">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="shrink-0 mt-0.5 w-5 h-5"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    stroke-width="1.7"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                    set:html={icons.user}
+                  />
+                  <span>
+                    <strong class="font-semibold text-base-100">
+                      Indicado para:
+                    </strong>{" "}
+                    {t.novedad.paraQuien}
+                  </span>
+                </p>
+              )}
+
+              {t.novedad.datos && t.novedad.datos.length > 0 && (
+                <dl class="mt-6 grid grid-cols-2 gap-3">
+                  {t.novedad.datos.map((d) => (
+                    <div class="rounded-2xl bg-white/10 p-4 ring-1 ring-white/20">
+                      <dt class="text-[11px] font-semibold uppercase tracking-widest text-base-100/60">
+                        {d.titulo}
+                      </dt>
+                      <dd class="mt-1 text-sm font-semibold leading-snug">
+                        {d.texto}
+                      </dd>
+                    </div>
+                  ))}
+                </dl>
+              )}
+
+              {t.novedad.contraindicaciones && (
+                <p class="mt-4 flex items-start gap-2.5 text-sm text-base-100/70 leading-relaxed">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="shrink-0 mt-0.5 w-4 h-4"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                    set:html={icons.alert}
+                  />
+                  {t.novedad.contraindicaciones}
+                </p>
+              )}
+
+              {t.novedad.precios && t.novedad.precios.length > 0 && (
+                <ul class="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  {t.novedad.precios.map((p) => (
+                    <li class="flex items-center justify-between gap-4 rounded-3xl bg-base-100 p-5 text-secondary-content shadow-xl shadow-black/20">
+                      <span class="text-sm font-medium text-secondary-content/70">
+                        {p.concepto}
+                      </span>
+                      <span class="text-3xl font-semibold tracking-tight tabular-nums text-primary">
+                        {p.precio}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              )}
+
+              <a
+                href={whatsapp(t.novedad.mensaje)}
+                target="_blank"
+                rel="noopener"
+                class="mt-8 btn h-12 px-7 rounded-full border-0 bg-base-100 text-primary hover:bg-base-200 shadow-lg shadow-black/20"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="w-5 h-5"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                  set:html={icons.whatsapp}
+                />
+                Pedir información de {t.novedad.nombre}
+              </a>
+            </section>
+          )
+        }
+
         <!-- Cómo se trabaja -->
         {
           t.proceso && t.proceso.length > 0 && (
@@ -569,14 +909,188 @@ const schema = { "@context": "https://schema.org", "@graph": graph };
                         <h3 class="text-lg font-semibold text-secondary-content">
                           {p.titulo}
                         </h3>
-                        <p class="mt-1.5 text-secondary-content/70 leading-relaxed text-pretty">
-                          {p.texto}
-                        </p>
+                        <p
+                          class="mt-1.5 text-secondary-content/70 leading-relaxed text-pretty"
+                          set:html={conEnlaces(p.texto)}
+                        />
                       </div>
                     </li>
                   ),
                 )}
               </ol>
+            </section>
+          )
+        }
+
+        <!-- Frecuencia de las sesiones -->
+        {
+          t.frecuencia && (
+            <section
+              id="frecuencia"
+              class="reveal scroll-mt-28 rounded-4xl bg-base-100 seccion-card ring-1 ring-black/5"
+            >
+              <div class="flex items-center gap-3 text-xs font-semibold uppercase tracking-widest">
+                <span class="tabular-nums text-primary">{num("frecuencia")}</span>
+                <span class="h-px w-8 bg-primary/30" aria-hidden="true" />
+                <span class="text-secondary-content/50">Ritmo del tratamiento</span>
+              </div>
+              <h2 class="mt-3 text-2xl sm:text-3xl font-semibold tracking-tight text-balance">
+                {t.frecuencia.titulo ?? "Frecuencia de las sesiones"}
+              </h2>
+              {t.frecuencia.texto && (
+                <p class="mt-4 text-base sm:text-lg text-secondary-content/75 leading-relaxed text-pretty">
+                  {t.frecuencia.texto}
+                </p>
+              )}
+              {t.frecuencia.items && t.frecuencia.items.length > 0 && (
+                <ul class="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  {t.frecuencia.items.map((f) => (
+                    <li class="flex items-start gap-4 rounded-3xl bg-base-200 p-5 sm:odd:last:col-span-2">
+                      <span class="shrink-0 w-10 h-10 rounded-xl bg-base-100 text-primary flex items-center justify-center ring-1 ring-black/5">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          class="w-5 h-5"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                          stroke-width="1.7"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          aria-hidden="true"
+                          set:html={icons.repeat}
+                        />
+                      </span>
+                      <div>
+                        <h3 class="font-semibold text-secondary-content">
+                          {f.titulo}
+                        </h3>
+                        <p class="mt-1 text-sm text-secondary-content/70 leading-relaxed text-pretty">
+                          {f.texto}
+                        </p>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              )}
+              {t.frecuencia.nota && (
+                <p class="mt-5 flex items-start gap-3 rounded-2xl bg-primary/5 p-4 text-sm text-secondary-content/80 leading-relaxed ring-1 ring-primary/10">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="shrink-0 mt-0.5 w-4 h-4 text-primary"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                    set:html={icons.alert}
+                  />
+                  {t.frecuencia.nota}
+                </p>
+              )}
+            </section>
+          )
+        }
+
+        <!-- Tarifas -->
+        {
+          t.tarifas && t.tarifas.length > 0 && (
+            <section
+              id="tarifas"
+              class="reveal scroll-mt-28 rounded-4xl bg-base-100 seccion-card ring-1 ring-black/5"
+            >
+              <div class="flex items-center gap-3 text-xs font-semibold uppercase tracking-widest">
+                <span class="tabular-nums text-primary">{num("tarifas")}</span>
+                <span class="h-px w-8 bg-primary/30" aria-hidden="true" />
+                <span class="text-secondary-content/50">Precios</span>
+              </div>
+              <h2 class="mt-3 text-2xl sm:text-3xl font-semibold tracking-tight">
+                Tarifas
+              </h2>
+              <div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
+                {t.tarifas.map((g) => (
+                  <article
+                    class:list={[
+                      "relative isolate overflow-hidden rounded-3xl p-6 md:last:odd:col-span-2",
+                      g.destacado
+                        ? "bg-primary text-base-100 shadow-xl shadow-primary/20"
+                        : "bg-base-200 text-secondary-content",
+                    ]}
+                  >
+                    {/* Pack: el mismo burdeos que el hero (base primary,
+                        brillo claro arriba a la derecha y oscuro en la esquina) */}
+                    {g.destacado && (
+                      <div
+                        aria-hidden="true"
+                        class="absolute inset-0 -z-10 bg-[radial-gradient(110%_80%_at_100%_0%,var(--color-primary-claro)_0%,transparent_60%),radial-gradient(80%_70%_at_0%_100%,var(--color-primary-oscuro)_0%,transparent_65%)]"
+                      />
+                    )}
+                    {g.destacado && (
+                      <span class="mb-3 inline-flex items-center gap-1.5 rounded-full bg-base-100/15 px-3 py-1 text-[11px] font-semibold uppercase tracking-wider ring-1 ring-base-100/20">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          class="w-3.5 h-3.5"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          aria-hidden="true"
+                          set:html={icons.tag}
+                        />
+                        Pack
+                      </span>
+                    )}
+                    <h3 class="text-lg font-semibold">{g.titulo}</h3>
+                    {g.texto && (
+                      <p
+                        class:list={[
+                          "mt-1.5 text-sm leading-relaxed text-pretty",
+                          g.destacado ? "text-base-100/75" : "text-secondary-content/70",
+                        ]}
+                      >
+                        {g.texto}
+                      </p>
+                    )}
+                    <ul
+                      class:list={[
+                        "mt-4 divide-y",
+                        g.destacado ? "divide-base-100/15" : "divide-base-300",
+                      ]}
+                    >
+                      {g.items.map((i) => (
+                        <li class="flex items-baseline justify-between gap-4 py-3 first:pt-0 last:pb-0">
+                          <span class="min-w-0">
+                            <span class="block text-[15px] font-medium leading-snug">
+                              {i.concepto}
+                            </span>
+                            {i.nota && (
+                              <span
+                                class:list={[
+                                  "mt-0.5 block text-xs leading-relaxed",
+                                  g.destacado ? "text-base-100/65" : "text-secondary-content/60",
+                                ]}
+                              >
+                                {i.nota}
+                              </span>
+                            )}
+                          </span>
+                          <span
+                            class:list={[
+                              "shrink-0 text-xl font-semibold tracking-tight tabular-nums",
+                              !g.destacado && "text-primary",
+                            ]}
+                          >
+                            {i.precio}
+                          </span>
+                        </li>
+                      ))}
+                    </ul>
+                  </article>
+                ))}
+              </div>
             </section>
           )
         }
@@ -670,7 +1184,7 @@ const schema = { "@context": "https://schema.org", "@graph": graph };
                             class="shrink-0 mt-2 w-1.5 h-1.5 rounded-full bg-primary"
                             aria-hidden="true"
                           />
-                          <span>{c}</span>
+                          <span set:html={conEnlaces(c)} />
                         </li>
                       ))}
                     </ul>
@@ -779,7 +1293,76 @@ const schema = { "@context": "https://schema.org", "@graph": graph };
       </aside>
     </div>
 
-    <!-- 4. OTROS TRATAMIENTOS -->
+    <!-- 4. LLAMADA FINAL (solo si el JSON la define) -->
+    {
+      t.cierre && (
+        <section
+          aria-labelledby="cierre-titulo"
+          class="reveal relative isolate overflow-hidden rounded-4xl bg-primary text-base-100 seccion-card"
+        >
+          <div
+            aria-hidden="true"
+            class="absolute inset-0 -z-10 bg-[radial-gradient(90%_90%_at_100%_100%,var(--color-primary-claro)_0%,transparent_60%),radial-gradient(70%_80%_at_0%_0%,var(--color-primary-oscuro)_0%,transparent_65%)]"
+          />
+          <div aria-hidden="true" class="textura-cursor" />
+          <div class="max-w-2xl">
+            <h2
+              id="cierre-titulo"
+              class="text-3xl sm:text-4xl font-semibold tracking-tight text-balance"
+            >
+              {t.cierre.titulo}
+            </h2>
+            {t.cierre.texto && (
+              <p class="mt-4 text-lg text-base-100/75 text-pretty">
+                {t.cierre.texto}
+              </p>
+            )}
+            <div class="mt-8 flex flex-col sm:flex-row sm:flex-wrap gap-3">
+              <a
+                href={reservaHref}
+                target="_blank"
+                rel="noopener"
+                class="btn h-12 px-7 rounded-full border-0 bg-base-100 text-primary hover:bg-base-200 shadow-lg shadow-black/20"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="w-5 h-5"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                  set:html={icons.whatsapp}
+                />
+                {reserva.texto}
+              </a>
+              <a
+                href={TELEFONO.href}
+                class="btn h-12 px-6 rounded-full bg-transparent text-base-100 border-base-100/30 hover:bg-base-100/10 hover:border-base-100/50 shadow-none"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="w-4 h-4"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                  set:html={icons.phone}
+                />
+                Llamar al {TELEFONO.visible}
+              </a>
+            </div>
+          </div>
+        </section>
+      )
+    }
+
+    <!-- 5. OTROS TRATAMIENTOS -->
     {
       relacionados.length > 0 && (
         <section class="reveal seccion">
@@ -815,15 +1398,17 @@ const schema = { "@context": "https://schema.org", "@graph": graph };
             {relacionados.map((r) => (
               <a
                 href={`/facial-corporal/${r.data.slug}/`}
+                data-foco
                 class="group shrink-0 w-[82%] sm:w-auto snap-start flex flex-col bg-base-100 rounded-3xl ring-1 ring-black/5 overflow-hidden motion-safe:hover:-translate-y-1 hover:shadow-xl hover:shadow-black/5 transition-all duration-300 sm:last:odd:col-span-2 lg:last:odd:col-span-1"
               >
                 <div class="relative aspect-16/10 bg-base-300 overflow-hidden">
-                  <img
+                  <Imagen
                     src={r.data.imagen}
                     alt={r.data.imagenAlt}
+                    icono={r.data.icono}
                     loading="lazy"
                     class="absolute inset-0 w-full h-full object-cover motion-safe:group-hover:scale-105 transition-transform duration-500"
-                    transition:name={r.data.id}
+                    transitionName={r.data.id}
                   />
                   <span class="absolute top-3 left-3 text-[11px] font-semibold uppercase tracking-wide bg-base-100/90 backdrop-blur-sm text-primary px-3 py-1 rounded-full">
                     {r.data.categoria}

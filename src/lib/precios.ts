@@ -22,10 +22,10 @@ export interface Grupo {
   items: Item[];
 }
 
-// Número inicial de una tarifa: "Desde 1.200€" → 1200
+// Número inicial de una tarifa: "Desde 1.200€" → 1200, "2,50€" → 2.5
 export const numero = (s: string) => {
-  const m = s.match(/^(?:Desde\s+)?(\d{1,3}(?:\.\d{3})+|\d+)\s*€/i);
-  return m ? Number(m[1].replace(/\./g, "")) : null;
+  const m = s.match(/^(?:Desde\s+)?(\d{1,3}(?:\.\d{3})+|\d+)(?:,(\d+))?\s*€/i);
+  return m ? Number(`${m[1].replace(/\./g, "")}.${m[2] ?? "0"}`) : null;
 };
 
 // Precio de entrada ("desde 250€") calculado con el número inicial de cada tarifa
@@ -50,3 +50,32 @@ export const gruposPublicados = (grupos: Grupo[]) =>
         .map((i) => ({ ...i, desde: desde(i.precios) })),
     }))
     .filter((g) => g.items.length > 0);
+
+// Todas las tarifas de un tratamiento facial-corporal (modalidades, novedad y
+// grupos de tarifas) en una lista plana. La leen el schema de cada página y
+// /llms.txt, así que cada precio se escribe una sola vez en facialCorporal.json
+export interface LineaPrecio {
+  grupo: string;
+  concepto: string;
+  precio: string;
+  nota?: string;
+}
+
+type PrecioConNota = Precio & { nota?: string };
+
+interface DatosFacial {
+  nombre: string;
+  modalidades?: { titulo: string; precio?: string; duracion?: string }[];
+  novedad?: { nombre: string; precios?: PrecioConNota[] };
+  tarifas?: { titulo: string; items: PrecioConNota[] }[];
+}
+
+export const preciosFacial = (t: DatosFacial): LineaPrecio[] => [
+  ...(t.modalidades ?? []).flatMap((m) =>
+    m.precio
+      ? [{ grupo: t.nombre, concepto: m.titulo, precio: m.precio, nota: m.duracion }]
+      : [],
+  ),
+  ...(t.novedad?.precios ?? []).map((p) => ({ grupo: t.novedad!.nombre, ...p })),
+  ...(t.tarifas ?? []).flatMap((g) => g.items.map((i) => ({ grupo: g.titulo, ...i }))),
+];

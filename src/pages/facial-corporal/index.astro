@@ -2,6 +2,7 @@
 // src/pages/facial-corporal/index.astro
 import { getCollection } from "astro:content";
 import Layout from "../../layouts/Layout.astro";
+import Imagen from "../../components/FacialCorporal/Imagen.astro";
 import { idNegocio, migas } from "../../lib/schema";
 
 const todos = await getCollection("facialCorporal");
@@ -14,7 +15,18 @@ const tratamientos = todos.filter((t) => t.data.slug !== SLUG_DIAGNOSTICO);
 const destacado = tratamientos.find((t) => t.data.destacadoEnNovedades);
 const resto = tratamientos.filter((t) => t !== destacado);
 
-const marcas = ["Eberlin", "Mesoestetic", "Kelaya", "Hitome"];
+// Etiqueta de novedad: nombra la novedad interna (Global Regen) o, si el
+// tratamiento entero es nuevo, solo "Novedad". Sin novedad, sin etiqueta
+type Datos = (typeof todos)[number]["data"];
+const etiquetaNovedad = (d: Datos) =>
+  d.novedad ? `Novedad: ${d.novedad.nombre}` : d.nuevo ? "Novedad" : null;
+
+// Marcas de cosmética con las que trabajamos, enlazadas a su web oficial
+const marcas = [
+  { nombre: "Mesoestetic", href: "https://www.mesoestetic.es/" },
+  { nombre: "Kelaya", href: "https://kelaya.com/" },
+  { nombre: "Mediderma", href: "https://mediderma.com/es/" },
+];
 
 // Schema para buscadores e IAs: la lista de tratamientos, cada uno con su página
 const site = Astro.site ?? Astro.url;
@@ -64,7 +76,8 @@ const schema = {
           </h1>
           <p class="mt-5 text-lg text-secondary-content/70 max-w-lg">
             Cosmética profesional y protocolos personalizados. Si no sabes cuál
-            necesitas, empezamos con un diagnóstico gratuito.
+            necesitas, empezamos con un diagnóstico gratuito o, si quieres ir
+            más allá, con nuestro diagnóstico facial 3D.
           </p>
           <div class="mt-8 flex flex-wrap items-center gap-3">
             <a
@@ -72,6 +85,12 @@ const schema = {
               class="btn btn-primary rounded-full px-7"
             >
               Diagnóstico gratuito
+            </a>
+            <a
+              href="/metodo-deleic/"
+              class="btn rounded-full px-6 bg-base-100 border-base-300 text-secondary-content shadow-none hover:bg-base-200"
+            >
+              Diagnóstico facial 3D
             </a>
             <a
               href="#tratamientos"
@@ -103,18 +122,22 @@ const schema = {
           destacado && (
             <a
               href={`/facial-corporal/${destacado.data.slug}/`}
-              class="group relative sm:col-span-2 min-h-[340px] rounded-3xl overflow-hidden bg-secondary-content flex items-end"
+              data-foco
+              class="group relative sm:col-span-2 min-h-85 rounded-3xl overflow-hidden bg-secondary-content flex items-end"
             >
-              <img
+              <Imagen
                 src={destacado.data.imagen}
                 alt={destacado.data.imagenAlt}
+                icono={destacado.data.icono}
                 class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
               />
               <div class="absolute inset-0 bg-linear-to-t from-black/85 via-black/25 to-transparent" />
 
-              <span class="absolute top-5 left-5 text-[11px] font-bold tracking-wider uppercase bg-base-100/15 backdrop-blur-sm text-base-100 px-3 py-1.5 rounded-full">
-                Novedad
-              </span>
+              {etiquetaNovedad(destacado.data) && (
+                <span class="absolute top-5 left-5 text-[11px] font-bold tracking-wide uppercase bg-primary text-primary-content px-3 py-1.5 rounded-full shadow-lg shadow-black/20">
+                  {etiquetaNovedad(destacado.data)}
+                </span>
+              )}
 
               <div class="relative p-8 max-w-lg">
                 <span class="text-[11px] font-semibold uppercase tracking-wide text-base-100/70">
@@ -144,19 +167,26 @@ const schema = {
           resto.map((t) => (
             <a
               href={`/facial-corporal/${t.data.slug}/`}
+              data-foco
               class="group flex flex-col bg-base-100 rounded-3xl border border-base-300 overflow-hidden hover:-translate-y-1 hover:shadow-xl transition-all duration-300"
             >
               <div class="relative h-45 bg-base-300 overflow-hidden">
-                <img
+                <Imagen
                   src={t.data.imagen}
                   alt={t.data.imagenAlt}
+                  icono={t.data.icono}
                   loading="lazy"
-                  transition:name={t.data.id}
+                  transitionName={t.data.id}
                   class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
                 <span class="absolute top-4 left-4 text-[11px] font-semibold uppercase tracking-wide bg-base-100/90 backdrop-blur-sm text-primary px-3 py-1 rounded-full">
                   {t.data.categoria}
                 </span>
+                {etiquetaNovedad(t.data) && (
+                  <span class="absolute top-4 right-4 text-[11px] font-bold uppercase tracking-wide bg-primary text-primary-content px-3 py-1 rounded-full shadow-lg shadow-black/20">
+                    {etiquetaNovedad(t.data)}
+                  </span>
+                )}
               </div>
 
               <div class="flex flex-1 flex-col p-6">
@@ -167,6 +197,7 @@ const schema = {
                   {t.data.descripcionCorta}
                 </p>
                 <span
+                  data-foco-flecha
                   class="mt-5 ml-auto w-9 h-9 rounded-full bg-base-200 text-secondary-content flex items-center justify-center group-hover:bg-primary group-hover:text-primary-content transition-colors"
                   aria-hidden="true"
                 >
@@ -204,8 +235,29 @@ const schema = {
       <ul class="reveal-stagger flex flex-wrap gap-3">
         {
           marcas.map((marca) => (
-            <li class="rounded-full border border-base-300 bg-base-100 px-5 py-2 text-sm font-medium text-secondary-content">
-              {marca}
+            <li>
+              <a
+                href={marca.href}
+                target="_blank"
+                rel="noopener"
+                class="group inline-flex items-center gap-2 rounded-full border border-base-300 bg-base-100 px-5 py-2 text-sm font-medium text-secondary-content transition-colors hover:border-primary/40 hover:text-primary"
+              >
+                {marca.nombre}
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="w-3.5 h-3.5 text-secondary-content/40 transition-all group-hover:text-primary group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <path d="M7 17L17 7M9 7h8v8" />
+                </svg>
+                <span class="sr-only">(web oficial, se abre en una pestaña nueva)</span>
+              </a>
             </li>
           ))
         }

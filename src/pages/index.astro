@@ -1,4 +1,5 @@
 ---
+import { getCollection } from "astro:content";
 import Layout from "../layouts/Layout.astro";
 import ServicesGrid from "../components/ServicesGrid.astro";
 import Ubication from "../components/Ubication.astro";
@@ -30,22 +31,36 @@ const confianza = [
   "En el centro de León",
 ];
 
-// Schema.org del negocio: clave para búsquedas locales y respuestas de IA
+// Schema.org del negocio: clave para búsquedas locales y respuestas de IA.
+// knowsAbout suma los tratamientos faciales y corporales de la colección
+// (un tratamiento nuevo entra solo) y las tecnologías que no van en su nombre
+const faciales = await getCollection("facialCorporal");
+const knowsAbout = [
+  ...new Set([
+    "Depilación láser",
+    "Medicina estética",
+    "Tratamientos faciales",
+    "Tratamientos corporales",
+    "Microblading",
+    "Micropigmentación",
+    "Diagnóstico facial avanzado",
+    ...faciales
+      .filter((t) => t.data.categoria !== "Diagnóstico")
+      .map((t) => t.data.nombre),
+    "Presoterapia",
+    "Radiofrecuencia",
+    "Hollywood Peel",
+    "Dermapén",
+  ]),
+];
+
 const site = Astro.site ?? Astro.url;
 const schema = {
   "@context": "https://schema.org",
   "@graph": [
     {
       ...negocio(site),
-      knowsAbout: [
-        "Depilación láser",
-        "Medicina estética",
-        "Tratamientos faciales",
-        "Tratamientos corporales",
-        "Microblading",
-        "Micropigmentación",
-        "Diagnóstico facial avanzado",
-      ],
+      knowsAbout,
     },
     {
       "@type": "WebSite",
@@ -198,10 +213,10 @@ const schema = {
           <div aria-hidden="true" class="grano -inset-[60%]"></div>
           <div class="eclipse-disco">
             <img
-              src="/img/metodo-deleic/metodo.png"
+              src="/img/metodo-deleic/metodo.webp"
               alt="Rostro con media cara en mapa de calor, como en un análisis facial multiespectral"
-              width="1145"
-              height="1374"
+              width="900"
+              height="1080"
               loading="lazy"
               class="object-top"
               transition:name="metodo-deleic"

@@ -9,18 +9,23 @@ const SIN_INDEXAR = [
   "/aviso-legal/",
   "/politica-de-privacidad-y-cookies/",
   "/contacto/",
-  "/hollywood-peel/",
-  "/ultrasonix/",
 ];
 
 // https://astro.build/config
 export default defineConfig({
   // Necesario para URLs absolutas: canonical, og:url, og:image y sitemap
   site: "https://www.deleic.es",
-  // URLs de la web anterior que ahora viven en otra ruta
+  // URLs antiguas (de la web anterior o renombradas) que ahora viven en otra ruta
   redirects: {
-    "/cosmetica/higiene-facial-con-nd-hydrabalance": "/facial-corporal/higiene-facial/",
-    "/deleic/tengo-que-hacer-una-limpieza-facial": "/facial-corporal/higiene-facial/",
+    "/cosmetica/higiene-facial-con-nd-hydrabalance": "/facial-corporal/limpieza-facial/",
+    "/deleic/tengo-que-hacer-una-limpieza-facial": "/facial-corporal/limpieza-facial/",
+    "/facial-corporal/higiene-facial": "/facial-corporal/limpieza-facial/",
+    // HidraGlow pasa a ser una modalidad de la limpieza facial
+    "/facial-corporal/hidraglow": "/facial-corporal/limpieza-facial/",
+    "/facial-corporal/oxigenante-efecto-flash": "/facial-corporal/iluminador-revitalizante/",
+    // Antes eran páginas en construcción; ahora tienen ficha propia
+    "/ultrasonix": "/facial-corporal/ultrasonix/",
+    "/hollywood-peel": "/facial-corporal/iluminador-revitalizante/",
   },
   integrations: [
     sitemap({

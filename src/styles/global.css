@@ -200,6 +200,39 @@
   }
 }
 
+/* ---------- Foco de tarjetas en táctil ----------
+   En el móvil no hay hover. scripts/foco.ts marca con .en-foco la tarjeta
+   [data-foco] que cruza el centro de la pantalla al hacer scroll, y aquí
+   recibe el mismo efecto que el ratón le da en escritorio:
+   - la foto crece un poco y se enciende si estaba atenuada;
+   - [data-foco-flecha] (el botón de flecha) se pone en burdeos.
+   Solo en táctil y sin "reducir movimiento": en escritorio no cambia nada. */
+@media (hover: none) and (prefers-reduced-motion: no-preference) {
+  [data-foco] img {
+    transition:
+      transform 0.9s cubic-bezier(0.2, 0.6, 0.2, 1),
+      opacity 0.6s ease;
+  }
+
+  [data-foco].en-foco img {
+    transform: scale(1.06);
+    opacity: 1;
+  }
+
+  [data-foco] [data-foco-flecha] {
+    transition:
+      background-color 0.4s ease,
+      color 0.4s ease,
+      transform 0.4s ease;
+  }
+
+  [data-foco].en-foco [data-foco-flecha] {
+    background-color: var(--color-primary);
+    color: var(--color-primary-content);
+    transform: translateX(3px);
+  }
+}
+
 /* ---------- Eclipse con grano ----------
    Un disco con una foto tapa una luz que gira detrás: solo se ve el filo
    brillante del borde y un halo amplio, como un eclipse (estilo hero de

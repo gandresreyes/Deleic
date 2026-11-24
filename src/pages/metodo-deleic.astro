@@ -135,12 +135,13 @@ const schema = {
         </div>
       </div>
 
-      <div class="group relative md:col-span-5 hidden md:block">
+      <!-- En móvil la foto va arriba (antes no se veía) -->
+      <div class="group relative md:col-span-5 order-first md:order-0">
         <img
           src={hero.imagen}
           width="1600"
           height="1066"
-          class="w-full h-100 object-cover rounded-3xl"
+          class="w-full h-56 sm:h-72 md:h-100 object-cover rounded-3xl"
           alt={hero.imagenAlt}
           fetchpriority="high"
           transition:name="metodo-deleic"
@@ -154,36 +155,79 @@ const schema = {
     class="card bg-base-100 seccion-card text-secondary-content"
     aria-labelledby="que-es-heading"
   >
-    <div class="reveal">
-      <span class="text-sm font-semibold tracking-widest uppercase text-primary">
-        {queEs.eyebrow}
-      </span>
-      <h2 id="que-es-heading" class="mt-3 text-3xl sm:text-4xl font-semibold">
-        {queEs.titulo}
-      </h2>
-      <p class="mt-4 max-w-3xl text-lg text-base-content/70 text-pretty">
-        {queEs.antes}<strong class="font-semibold text-secondary-content"
-          >{queEs.destacado}</strong
-        >{queEs.despues}
-      </p>
-    </div>
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+      <div class="lg:col-span-7">
+        <div class="reveal">
+          <span
+            class="text-sm font-semibold tracking-widest uppercase text-primary"
+          >
+            {queEs.eyebrow}
+          </span>
+          <h2
+            id="que-es-heading"
+            class="mt-3 text-3xl sm:text-4xl font-semibold"
+          >
+            {queEs.titulo}
+          </h2>
+          <p class="mt-4 max-w-3xl text-lg text-base-content/70 text-pretty">
+            {queEs.antes}<strong class="font-semibold text-secondary-content"
+              >{queEs.destacado}</strong
+            >{queEs.despues}
+          </p>
+        </div>
 
-    <div class="mt-10 flex items-start gap-4 rounded-2xl bg-base-200 p-6">
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        class="w-8 h-8 shrink-0 text-primary"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke="currentColor"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        aria-hidden="true"
-        set:html={icons.search}
-      />
-      <div>
-        <h3 class="font-semibold">{queEs.porQue.titulo}</h3>
-        <p class="mt-1 text-base-content/70">{queEs.porQue.texto}</p>
+        <div
+          class="mt-8 lg:mt-10 flex items-start gap-4 rounded-2xl bg-base-200 p-6"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="w-8 h-8 shrink-0 text-primary"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+            set:html={icons.search}
+          />
+          <div>
+            <h3 class="font-semibold">{queEs.porQue.titulo}</h3>
+            <p class="mt-1 text-base-content/70">{queEs.porQue.texto}</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Lo que el espejo no enseña: medio rostro en mapa de calor -->
+      <div class="reveal-scale lg:col-span-5">
+        <div
+          class="relative h-72 sm:h-96 lg:h-auto lg:aspect-5/6 overflow-hidden rounded-3xl bg-secondary-content"
+        >
+          <img
+            src="/img/metodo-deleic/metodo.webp"
+            alt="Rostro con media cara en mapa de calor, como en el análisis facial avanzado"
+            width="900"
+            height="1080"
+            loading="lazy"
+            class="absolute inset-0 h-full w-full object-cover object-[center_30%]"
+          />
+          <div
+            aria-hidden="true"
+            class="absolute inset-0 bg-linear-to-t from-black/70 via-transparent to-transparent"
+          >
+          </div>
+          <ul
+            class="absolute inset-x-4 bottom-4 flex flex-wrap gap-2 text-xs font-semibold uppercase tracking-wider text-base-100"
+          >
+            {
+              hero.puntos.slice(0, 2).map((p) => (
+                <li class="rounded-full bg-white/15 px-3 py-1.5 ring-1 ring-white/20 backdrop-blur-sm">
+                  {p.texto.join(" ")}
+                </li>
+              ))
+            }
+          </ul>
+        </div>
       </div>
     </div>
   </section>
@@ -206,14 +250,23 @@ const schema = {
       <p class="mt-4 max-w-3xl text-lg text-base-content/70 text-pretty">
         {espectros.texto}
       </p>
+      <p
+        class="sm:hidden mt-4 inline-flex items-center gap-2 text-sm font-medium text-primary"
+        aria-hidden="true"
+      >
+        Desliza para ver las {espectros.items.length} luces
+        <span class="motion-safe:animate-pulse">→</span>
+      </p>
     </div>
 
+    <!-- Móvil: carrusel deslizable (antes eran 8 bloques de texto seguidos).
+         Desde sm: rejilla -->
     <ol
-      class="reveal-stagger mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5"
+      class="reveal-stagger mt-6 sm:mt-10 -mx-6 px-6 flex gap-4 overflow-x-auto snap-x snap-mandatory scroll-px-6 pb-2 scrollbar-none [&::-webkit-scrollbar]:hidden sm:mx-0 sm:px-0 sm:pb-0 sm:grid sm:grid-cols-2 lg:grid-cols-4 sm:gap-5 sm:overflow-visible"
     >
       {
         espectros.items.map((e, i) => (
-          <li class="flex flex-col rounded-3xl bg-base-200 p-6">
+          <li class="w-[82%] shrink-0 snap-start sm:w-auto flex flex-col rounded-3xl bg-base-200 p-6">
             <span class="flex h-9 w-9 items-center justify-center rounded-full bg-primary text-sm font-semibold text-primary-content">
               {i + 1}
             </span>
@@ -264,11 +317,11 @@ const schema = {
     </div>
 
     <ul
-      class="reveal-stagger mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 sm:gap-5"
+      class="reveal-stagger mt-8 grid grid-cols-2 lg:grid-cols-5 gap-3 sm:gap-5"
     >
       {
         areas.items.map((a) => (
-          <li class="rounded-3xl border border-base-300 bg-base-100 p-6">
+          <li class="rounded-3xl border border-base-300 bg-base-100 p-5 sm:p-6 max-lg:last:odd:col-span-2">
             <span class="flex h-11 w-11 items-center justify-center rounded-xl bg-primary/10 text-primary">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
