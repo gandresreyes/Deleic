@@ -1,15 +1,15 @@
 {
   "seo": {
-    "title": "Microblading y Micropigmentación en León | Deleic",
-    "description": "Microblading y nanoblading de cejas hiperrealista, eyeliner, micro línea de pestañas, labios y micropigmentación capilar en León. Retoque incluido. Valoración sin compromiso."
+    "title": "Nanoblading y Micropigmentación en León | Deleic",
+    "description": "Nanoblading de cejas hiperrealista, la evolución del microblading, eyeliner, micro línea de pestañas, labios y micropigmentación capilar en León. Retoque incluido. Valoración sin compromiso."
   },
   "hero": {
     "eyebrow": "Maquillaje semipermanente",
-    "titulo": "Microblading y micropigmentación",
+    "titulo": "Nanoblading y micropigmentación",
     "subtitulo": "Cejas pelo a pelo, mirada definida y labios con color, con un acabado natural que se adapta a tu rostro. Todas las tarifas incluyen la primera sesión, el retoque y el producto.",
     "ctaPrincipal": {
       "texto": "Reservar valoración",
-      "mensaje": "Hola, me gustaría reservar una valoración de microblading o micropigmentación en Deleic."
+      "mensaje": "Hola, me gustaría reservar una valoración de nanoblading o micropigmentación en Deleic."
     },
     "ctaSecundario": {
       "texto": "Ver tratamientos",
@@ -33,7 +33,7 @@
       },
       {
         "titulo": "Retoque incluido",
-        "texto": "Unos dos meses después revisamos la cicatrización y perfeccionamos el diseño, sin coste añadido."
+        "texto": "A los 45 días revisamos la cicatrización y perfeccionamos el diseño, sin coste añadido."
       }
     ]
   },
@@ -44,14 +44,14 @@
     "grupos": [
       {
         "titulo": "Cejas",
-        "texto": "Rellenar huecos, dar forma o reconstruir la ceja completa.",
+        "texto": "Dar forma o reconstruir la ceja.",
         "items": [
           {
-            "nombre": "Microblading / nanoblading hiperrealista",
+            "nombre": "Nanoblading hiperrealista",
             "resumen": "Cejas pelo a pelo con acabado natural.",
             "texto": "Técnica manual que dibuja trazos finos que imitan el vello natural. El nanoblading es la evolución del microblading: trabaja con agujas ultrafinas para conseguir trazos todavía más precisos y un efecto hiperrealista. Es la técnica más natural y la que mejor cicatriza.",
             "duracion": "Entre 8 meses y año y medio, según tipo de piel, cuidados y edad",
-            "nota": "Incluye primera sesión, retoque a los dos meses y producto.",
+            "nota": "Incluye primera sesión, retoque a los 45 días y producto.",
             "precios": [
               {
                 "concepto": "Cejas completas",
@@ -93,10 +93,10 @@
           },
           {
             "nombre": "Labios",
-            "resumen": "Contorno y color uniforme.",
-            "texto": "Define el contorno, corrige pequeñas asimetrías y aporta un color uniforme y natural a los labios.",
+            "resumen": "Perfilado y corrección.",
+            "texto": "Define el contorno, corrige pequeñas asimetrías y aporta uniformidad.",
             "duracion": "Entre 1 y 5 años, según tipo de piel y cuidados",
-            "nota": "Incluye primera sesión, retoque y producto.",
+            "nota": "Se realiza bajo valoración previa. Incluye primera sesión, retoque y producto.",
             "precios": [
               {
                 "concepto": "Labios completos",
@@ -108,12 +108,12 @@
       },
       {
         "titulo": "Capilar",
-        "texto": "Densidad visual en zonas con poco pelo.",
+        "texto": "Densidad visual o efecto rapado.",
         "items": [
           {
             "nombre": "Micropigmentación capilar",
-            "resumen": "Efecto de mayor densidad en el cuero cabelludo.",
-            "texto": "Pigmentación del cuero cabelludo que disimula zonas con menos densidad o cicatrices y da sensación de cabello más poblado. Cada caso se valora antes en consulta.",
+            "resumen": "Disimula zonas con poco pelo o simula un rapado.",
+            "texto": "Pigmentación del cuero cabelludo que disimula zonas con menos densidad o cicatrices, o aporta efecto de cabeza rapada simulando el corte real. Cada caso se valora en consulta.",
             "nota": "Requiere consulta previa: el precio final depende de la zona a tratar.",
             "precios": [
               {
@@ -128,7 +128,7 @@
   },
   "tecnicas": {
     "eyebrow": "Diferencias",
-    "titulo": "Tatuaje, micropigmentación y microblading",
+    "titulo": "Tatuaje, micropigmentación y nanoblading",
     "texto": "No es lo mismo. La profundidad a la que se deposita el pigmento cambia la duración, la cicatrización y lo natural que queda el resultado.",
     "items": [
       {
@@ -146,7 +146,7 @@
         "destacado": false
       },
       {
-        "nombre": "Microblading y nanoblading",
+        "nombre": "Nanoblading",
         "profundidad": "Epidermis · trazo manual",
         "duracion": "8 meses a 1,5 años",
         "texto": "Trazos hechos a mano, pelo a pelo, con pigmento de glicerina. Es el acabado más natural, cicatriza antes y el pigmento se reabsorbe solo, sin láser.",
@@ -181,7 +181,7 @@
         "texto": "Aplicamos el pigmento y te damos por escrito los cuidados para los días siguientes."
       },
       {
-        "titulo": "Retoque a los dos meses",
+        "titulo": "Retoque a los 45 días",
         "texto": "Con la piel ya cicatrizada, ajustamos el diseño y el color. Está incluido en el precio."
       }
     ]
@@ -195,7 +195,7 @@
         "respuesta": "El nanoblading es la evolución del microblading: utiliza agujas ultrafinas que permiten trazos más precisos y delicados, con un acabado todavía más natural. Ambas técnicas dibujan la ceja pelo a pelo."
       },
       {
-        "pregunta": "¿Cuánto dura el microblading?",
+        "pregunta": "¿Cuánto dura el nanoblading?",
         "respuesta": "Entre 8 meses y año y medio. Depende del tipo de piel, de los cuidados posteriores y de la edad. El pigmento se reabsorbe de forma natural, sin necesidad de láser."
       },
       {
@@ -204,11 +204,11 @@
       },
       {
         "pregunta": "¿El retoque está incluido en el precio?",
-        "respuesta": "Sí. Todas las tarifas de maquillaje semipermanente incluyen la primera sesión, el retoque y el producto. El retoque se hace unos dos meses después, cuando la piel ya ha cicatrizado."
+        "respuesta": "Sí. Todas las tarifas de maquillaje semipermanente incluyen la primera sesión, el retoque y el producto. El retoque se hace a los 45 días, cuando la piel ya ha cicatrizado."
       },
       {
-        "pregunta": "¿Cuánto cuesta el microblading en León en Deleic?",
-        "respuesta": "El microblading o nanoblading de cejas hiperrealista cuesta 290€, con la primera sesión, el retoque y el producto incluidos."
+        "pregunta": "¿Cuánto cuesta el nanoblading en León?",
+        "respuesta": "El nanoblading de cejas hiperrealista cuesta 290€, con la primera sesión, el retoque y el producto incluidos."
       },
       {
         "pregunta": "¿Puede hacérselo cualquier persona?",

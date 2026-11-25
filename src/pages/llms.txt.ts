@@ -73,7 +73,7 @@ export const GET: APIRoute = async ({ site }) => {
   const texto = [
     "# Deleic",
     "",
-    "> Centro de medicina estética, depilación láser de diodo, tratamientos faciales y corporales, y microblading y micropigmentación en León (España). Reservas por WhatsApp o teléfono.",
+    "> Centro de medicina estética, depilación láser de diodo, tratamientos faciales y corporales, y nanoblading y micropigmentación en León (España). Reservas por WhatsApp o teléfono.",
     "",
     "## Datos del centro",
     "",

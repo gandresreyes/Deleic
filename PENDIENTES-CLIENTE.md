@@ -26,3 +26,9 @@ Nuestra recomendación: "3D" es más fácil de recordar, pero solo si es exacto.
 - **Ultrasonix:** de momento usamos una foto de banco de imágenes de una mujer sonriente con las manos en el óvalo facial. Si tienes fotos de un tratamiento real en el centro (con permiso de la clienta), la cambiamos: siempre transmite más confianza.
 - **Iluminador y revitalizante:** ¿qué cuidados o contraindicaciones hay que indicar (por ejemplo, el sol después de Skinretin o Hollywood Peel)? ¿Cuánto dura cada una de las cuatro sesiones?
 - **Preguntas frecuentes:** si tus clientas suelen preguntarte dudas concretas que la web no responde (por ejemplo, si pueden maquillarse después o si se puede hacer en verano), pásanoslas con tu respuesta y las añadimos.
+
+## 3. Medicina estética
+
+- **Toxina botulínica y dutasterida:** ya están en la web con sus precios, como pidió la doctora, pero sin nombres comerciales (Bocouture, Azzalure, Redfills). Son medicamentos que necesitan receta, y la ley española prohíbe anunciarlos al público (art. 80 de la Ley del medicamento, RDL 1/2015). Nombrar la marca es la forma más directa de anunciar el medicamento. ¿Puede la doctora confirmar que le parece bien publicarlos así? Si prefiere no anunciarlos, se quitan en un momento.
+- **Mesobotox:** sigue sin publicar. ¿Lo quieres en la web? ¿Sigue vigente el precio "en promoción" de 199€?
+- **Foto de la doctora:** cuando tengáis una buena foto suya, la añadimos a la página de Medicina estética.

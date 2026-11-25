@@ -120,7 +120,8 @@
       { "dias": "20", "label": "días antes", "texto": "No depilar con cera ni pinzas", "tipo": "restriccion", "icono": "razor-off" },
       { "dias": "15", "label": "días antes", "texto": "Evita el sol en la zona", "tipo": "restriccion", "icono": "sun-off" },
       { "dias": "3", "label": "días antes", "texto": "Sin ácido glicólico ni retinoico", "tipo": "restriccion", "icono": "droplet-off" },
-      { "dias": "0", "label": "día de la sesión", "texto": "Rasura la zona y ven sin maquillaje", "tipo": "accion", "icono": "razor" }
+      { "dias": "1", "label": "día antes", "texto": "Rasura la zona", "tipo": "accion", "icono": "razor" },
+      { "dias": "0", "label": "día de la sesión", "texto": "Ven sin maquillaje ni cremas", "tipo": "restriccion", "icono": "droplet-off" }
     ],
     "despues": [
       { "dias": "2-3", "label": "días después", "texto": "Espera antes de exponer la zona al sol", "tipo": "restriccion", "icono": "sun-off" },

@@ -104,7 +104,7 @@
               },
               {
                 "concepto": "Espiculados · 6 hilos",
-                "precio": "399€"
+                "precio": "420€"
               },
               {
                 "concepto": "Espiculados · 8 hilos",
@@ -181,6 +181,52 @@
                 "precio": "600€"
               }
             ]
+          }
+        ]
+      },
+      {
+        "titulo": "Arrugas de expresión",
+        "texto": "Suavizar el tercio superior del rostro.",
+        "items": [
+          {
+            "nombre": "Toxina botulínica",
+            "resumen": "Suaviza el tercio superior del rostro.",
+            "texto": "Tipo A: reduce la contracción muscular y suaviza los músculos del tercio superior, especialmente frente, entrecejo y contorno. Otras indicaciones bajo prescripción médica, como el bruxismo.",
+            "duracion": "4 meses (toxina líquida: 6 meses aprox.)",
+            "precios": [
+              {
+                "concepto": "1 vial",
+                "precio": "320€"
+              },
+              {
+                "concepto": "Reforzado (2 viales)",
+                "precio": "599€"
+              },
+              {
+                "concepto": "Toxina líquida (más efecto y duración)",
+                "precio": "350€"
+              },
+              {
+                "concepto": "Cóctel Mónaco (efecto flash facial)",
+                "precio": "499€"
+              }
+            ]
+          },
+          {
+            "nombre": "Mesobotox",
+            "resumen": "Microdosis para arrugas finas, poros y sebo.",
+            "texto": "Aplicación de microdosis de toxina botulínica. Reduce las arrugas finas, los poros y la producción de sebo, y mejora la textura y la elasticidad.",
+            "precios": [
+              {
+                "concepto": "En promoción",
+                "precio": "199€"
+              },
+              {
+                "concepto": "3 sesiones (para prolongar el efecto durante 6 meses)",
+                "precio": "499€"
+              }
+            ],
+            "publicar": false
           }
         ]
       },
@@ -325,11 +371,10 @@
             "texto": "Medicamento que inhibe la enzima 5-alfa-reductasa y reduce la conversión de testosterona en dihidrotestosterona (DHT), implicada en la alopecia androgenética. Puede utilizarse en determinados pacientes bajo control médico.",
             "precios": [
               {
-                "concepto": "Tratamiento",
+                "concepto": "1 sesión",
                 "precio": "150€"
               }
-            ],
-            "publicar": false
+            ]
           }
         ]
       },
@@ -415,53 +460,6 @@
               {
                 "concepto": "Tratamiento completo (2 meses)",
                 "precio": "1.199€"
-              }
-            ],
-            "publicar": false
-          }
-        ]
-      },
-      {
-        "titulo": "Expresión y poros",
-        "texto": "Suavizar el tercio superior del rostro y afinar la textura.",
-        "items": [
-          {
-            "nombre": "Toxina botulínica",
-            "resumen": "Suaviza el tercio superior del rostro.",
-            "texto": "Tipo A: reduce la contracción muscular y suaviza los músculos del tercio superior, especialmente frente, entrecejo y contorno. Otras indicaciones bajo prescripción médica, como el bruxismo.",
-            "duracion": "4 meses (Redfills: 6 meses aprox.)",
-            "precios": [
-              {
-                "concepto": "Bocouture / Azzalure",
-                "precio": "320€"
-              },
-              {
-                "concepto": "Reforzado (2 viales)",
-                "precio": "599€"
-              },
-              {
-                "concepto": "Redfills (toxina líquida, más efecto y duración)",
-                "precio": "350€"
-              },
-              {
-                "concepto": "Cóctel Mónaco (efecto flash facial)",
-                "precio": "499€"
-              }
-            ],
-            "publicar": false
-          },
-          {
-            "nombre": "Mesobotox",
-            "resumen": "Microdosis para arrugas finas, poros y sebo.",
-            "texto": "Aplicación de microdosis de toxina botulínica. Reduce las arrugas finas, los poros y la producción de sebo, y mejora la textura y la elasticidad.",
-            "precios": [
-              {
-                "concepto": "En promoción",
-                "precio": "199€"
-              },
-              {
-                "concepto": "3 sesiones (para prolongar el efecto durante 6 meses)",
-                "precio": "499€"
               }
             ],
             "publicar": false
