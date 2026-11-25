@@ -2,9 +2,15 @@
 // src/components/FacialCorporal/Imagen.astro
 // Foto de un tratamiento o, si todavía no tiene, un fondo de marca con su
 // icono. Recibe las mismas clases que la <img> para ocupar el mismo hueco.
+// La foto es una <Foto> con object-cover: `tramos` describe la caja en cada
+// tamaño de pantalla (ver sizesCubre en src/lib/imagenes.ts).
+import Foto from "../Foto.astro";
+import { sizesCubre } from "../../lib/imagenes";
+
 interface Props {
   src?: string;
   alt: string;
+  tramos: [media: string, ancho: string, caja: number][];
   icono?: string;
   class?: string;
   loading?: "lazy" | "eager";
@@ -15,6 +21,7 @@ interface Props {
 const {
   src,
   alt,
+  tramos,
   icono,
   class: clase,
   loading,
@@ -33,9 +40,10 @@ const iconos: Record<string, string> = {
 
 {
   src ? (
-    <img
+    <Foto
       src={src}
       alt={alt}
+      sizes={sizesCubre(src, tramos)}
       loading={loading}
       fetchpriority={fetchpriority}
       class={clase}

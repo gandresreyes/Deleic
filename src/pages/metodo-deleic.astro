@@ -3,6 +3,8 @@
 // Contenido de las infografías del centro (diagnóstico facial avanzado).
 // Todo sale de src/data/metodoDeleic.json; el precio, de metodo.precio.
 import Layout from "../layouts/Layout.astro";
+import Foto from "../components/Foto.astro";
+import { sizesCubre, TRAMOS_HERO } from "../lib/imagenes";
 import { whatsapp } from "../data/contacto";
 import metodo from "../data/metodoDeleic.json";
 import marcas from "../data/escanerMarcas.json";
@@ -149,10 +151,14 @@ const schema = {
 
       <!-- En móvil la foto va arriba (antes no se veía) -->
       <div class="group relative md:col-span-5 order-first md:order-0">
-        <img
+        <Foto
           src={hero.imagen}
-          width="1600"
-          height="1066"
+          sizes={sizesCubre(hero.imagen, [
+            // Aquí la foto también se ve en móvil: 224px de alto (288 desde sm)
+            ...TRAMOS_HERO.slice(0, -1),
+            ["(min-width: 640px)", "100vw", 2.05],
+            ["", "100vw", 1.46],
+          ])}
           class="w-full h-56 sm:h-72 md:h-100 object-cover rounded-3xl"
           alt={hero.imagenAlt}
           fetchpriority="high"

@@ -4,6 +4,7 @@ import Layout from "../layouts/Layout.astro";
 import ServicesGrid from "../components/ServicesGrid.astro";
 import Ubication from "../components/Ubication.astro";
 import NewFeatures from "../components/NewFeatures.astro";
+import Foto from "../components/Foto.astro";
 import metodo from "../data/metodoDeleic.json";
 import { whatsapp } from "../data/contacto";
 import { idNegocio, negocio } from "../lib/schema";
@@ -95,9 +96,12 @@ const schema = {
       </div>
 
       <div class="relative h-64 sm:h-80 lg:order-2 lg:h-auto">
-        <img
+        <!-- sizes: en escritorio la caja es más alta que la foto (1344×768),
+             que se pinta a todo su ancho; en móvil, al menos 460px -->
+        <Foto
           src="/img/screen.webp"
           alt="Aplicación de sérum facial en un tratamiento de Deleic"
+          sizes="(min-width: 1024px) 1344px, (min-width: 460px) 100vw, 460px"
           fetchpriority="high"
           class="absolute inset-0 h-full w-full object-cover object-[15%_center] sm:object-[center_30%] lg:object-[12%_center]"
         />
@@ -212,11 +216,10 @@ const schema = {
           <div aria-hidden="true" class="eclipse-luz"></div>
           <div aria-hidden="true" class="grano -inset-[60%]"></div>
           <div class="eclipse-disco">
-            <img
+            <Foto
               src="/img/metodo-deleic/metodo.webp"
               alt="Rostro con media cara en mapa de calor, como en un análisis facial multiespectral"
-              width="900"
-              height="1080"
+              sizes="(min-width: 1024px) 384px, 320px"
               loading="lazy"
               class="object-top"
               transition:name="metodo-deleic"

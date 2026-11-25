@@ -40,5 +40,13 @@ function iniciarReveal() {
   elementos.forEach((el) => observer.observe(el));
 }
 
-// Se dispara en la carga inicial y en cada navegación con ClientRouter
+// Primera carga: en cuanto se ha leído el HTML (este script es un módulo, así
+// que corre justo después). No se espera a astro:page-load porque en la
+// primera carga ClientRouter lo lanza con el evento `load`, cuando ya han
+// bajado todas las imágenes, y hasta entonces lo que está en pantalla con
+// .reveal seguiría oculto (en /promociones/ retrasaba la imagen principal ~4 s)
+iniciarReveal();
+
+// Navegaciones con ClientRouter. En la primera carga también salta (con
+// `load`): solo vuelve a observar lo que aún no ha aparecido
 document.addEventListener("astro:page-load", iniciarReveal);

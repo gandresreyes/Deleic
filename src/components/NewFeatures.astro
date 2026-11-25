@@ -1,3 +1,8 @@
+---
+// src/components/NewFeatures.astro
+import Foto from "./Foto.astro";
+---
+
 <section
   class="card seccion-card bg-secondary-content text-base-100"
   id="novedades"
@@ -39,9 +44,10 @@
         data-foco
         class="group relative md:col-span-8 h-85 sm:h-100 rounded-3xl overflow-hidden"
       >
-        <img
+        <Foto
           src="/img/novedades/hydrabalance.webp"
           alt="Hydrabalance"
+          sizes="(min-width: 768px) 67vw, (min-width: 400px) 100vw, 400px"
           loading="lazy"
           class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
         />
@@ -135,9 +141,10 @@
         data-foco
         class="group relative md:col-span-4 h-75 sm:h-85 rounded-3xl overflow-hidden bg-white/6"
       >
-        <img
+        <Foto
           src="/img/novedades/hollywood-peel.webp"
           alt="Hollywood Peel"
+          sizes="(min-width: 1536px) 520px, (min-width: 768px) 40vw, 100vw"
           loading="lazy"
           class="absolute inset-0 w-full h-full object-cover opacity-80 group-hover:scale-105 group-hover:opacity-100 transition-all duration-500"
         />
@@ -166,9 +173,10 @@
       >
         <!-- Móvil: la foto va de fondo (en escritorio va a la derecha, con corte diagonal) -->
         <div class="sm:hidden absolute inset-0" aria-hidden="true">
-          <img
+          <Foto
             src="/img/novedades/nanoblading.webp"
             alt=""
+            sizes="100vw"
             loading="lazy"
             class="w-full h-full object-cover opacity-80"
           />
@@ -220,9 +228,10 @@
           class="hidden sm:block absolute inset-y-0 right-0 w-[55%] overflow-hidden"
           style="clip-path: polygon(0 0, 100% 0, 100% 100%, 22% 100%);"
         >
-          <img
+          <Foto
             src="/img/novedades/nanoblading.webp"
             alt="Nanoblading"
+            sizes="(min-width: 1024px) 40vw, 400px"
             loading="lazy"
             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
           />

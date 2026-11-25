@@ -3,6 +3,8 @@
 import { getCollection } from "astro:content";
 import Layout from "../../layouts/Layout.astro";
 import Imagen from "../../components/FacialCorporal/Imagen.astro";
+import Foto from "../../components/Foto.astro";
+import { sizesCubre, TRAMOS_HERO } from "../../lib/imagenes";
 import { idNegocio, migas } from "../../lib/schema";
 
 const todos = await getCollection("facialCorporal");
@@ -14,6 +16,22 @@ const tratamientos = todos.filter((t) => t.data.slug !== SLUG_DIAGNOSTICO);
 // El tratamiento marcado como destacado ocupa más espacio
 const destacado = tratamientos.find((t) => t.data.destacadoEnNovedades);
 const resto = tratamientos.filter((t) => t !== destacado);
+
+// Cajas de las fotos (ancho, proporción) en cada tamaño de pantalla.
+// Destacado: 2 columnas de ancho, 340px de alto como mínimo
+const TRAMOS_DESTACADO: [string, string, number][] = [
+  ["(min-width: 1536px)", "900px", 2.6],
+  ["(min-width: 1024px)", "67vw", 1.7],
+  ["(min-width: 640px)", "100vw", 1.5],
+  ["", "100vw", 0.82],
+];
+// Tarjetas: 1, 2 o 3 columnas y 180px de alto
+const TRAMOS_TARJETA: [string, string, number][] = [
+  ["(min-width: 1536px)", "440px", 2.4],
+  ["(min-width: 1024px)", "33vw", 1.56],
+  ["(min-width: 640px)", "50vw", 1.37],
+  ["", "100vw", 1.55],
+];
 
 // Etiqueta de novedad: nombra la novedad interna (Global Regen) o, si el
 // tratamiento entero es nuevo, solo "Novedad". Sin novedad, sin etiqueta
@@ -104,8 +122,9 @@ const schema = {
 
       <!-- imagen -->
       <div class="group relative md:col-span-5 hidden md:block">
-        <img
+        <Foto
           src="/img/facialCorporal/hero.webp"
+          sizes={sizesCubre("/img/facialCorporal/hero.webp", TRAMOS_HERO)}
           class="w-full h-100 object-cover rounded-3xl"
           alt="Especialista de Deleic realizando un diagnóstico facial avanzado"
           transition:name="facial-corporal"
@@ -128,6 +147,7 @@ const schema = {
               <Imagen
                 src={destacado.data.imagen}
                 alt={destacado.data.imagenAlt}
+                tramos={TRAMOS_DESTACADO}
                 icono={destacado.data.icono}
                 class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
               />
@@ -174,6 +194,7 @@ const schema = {
                 <Imagen
                   src={t.data.imagen}
                   alt={t.data.imagenAlt}
+                  tramos={TRAMOS_TARJETA}
                   icono={t.data.icono}
                   loading="lazy"
                   transitionName={t.data.id}

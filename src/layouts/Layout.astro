@@ -4,6 +4,7 @@ import Navbar from "../components/Navbar.astro";
 import Footer from "../components/Footer.astro";
 
 import { ClientRouter } from "astro:transitions";
+import { urlImagen } from "../lib/imagenes";
 
 interface Props {
   title?: string;
@@ -27,8 +28,9 @@ const {
 
 // Canonical solo si hay `site` configurado en astro.config
 const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : undefined;
-// Las redes exigen URL absoluta para la imagen
-const ogImage = new URL(image, Astro.site ?? Astro.url).href;
+// Las redes exigen URL absoluta para la imagen. Las fotos de src/assets se
+// publican con nombre versionado: urlImagen da la de su original
+const ogImage = new URL(urlImagen(image), Astro.site ?? Astro.url).href;
 ---
 
 <html lang="es" data-theme="light">

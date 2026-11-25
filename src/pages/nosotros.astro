@@ -6,6 +6,8 @@ import ServicesGrid from "../components/ServicesGrid.astro";
 import Ubication from "../components/Ubication.astro";
 import { TITULAR, whatsapp } from "../data/contacto";
 import { negocio } from "../lib/schema";
+import Foto from "../components/Foto.astro";
+import { sizesCubre, urlImagen } from "../lib/imagenes";
 
 const APERTURA = 2019;
 const LEMA = "La calidad es el único camino para el crecimiento";
@@ -89,7 +91,7 @@ const schema = {
       "@type": "Person",
       name: TITULAR.nombre,
       jobTitle: "Fundadora y responsable de Deleic",
-      image: new URL("/img/nosotros/leila-carreira.webp", Astro.site ?? Astro.url).href,
+      image: new URL(urlImagen("/img/nosotros/leila-carreira.webp"), Astro.site ?? Astro.url).href,
     },
   },
 };
@@ -198,10 +200,9 @@ const schema = {
         <figure
           class="relative md:col-span-5 mx-auto w-full max-w-sm md:max-w-none"
         >
-          <img
+          <Foto
             src="/img/nosotros/leila-carreira.webp"
-            width="768"
-            height="960"
+            sizes="(min-width: 1536px) 620px, (min-width: 768px) 42vw, 384px"
             alt="Leila Carreira, fundadora de Deleic"
             class="aspect-4/5 w-full rounded-3xl object-cover object-top shadow-2xl shadow-black/10"
           />
@@ -362,10 +363,13 @@ const schema = {
       class="reveal-scale grid grid-cols-1 md:grid-cols-12 overflow-hidden rounded-4xl bg-linear-to-b md:bg-linear-to-r from-primary from-40% to-primary-oscuro text-primary-content"
     >
       <div class="relative md:col-span-5 min-h-72">
-        <img
+        <Foto
           src="/img/nosotros/lema.webp"
-          width="1066"
-          height="1600"
+          sizes={sizesCubre("/img/nosotros/lema.webp", [
+            ["(min-width: 1536px)", "620px", 0.9],
+            ["(min-width: 768px)", "42vw", 0.6],
+            ["", "100vw", 1.2],
+          ])}
           alt="Leila Carreira realizando un tratamiento en Deleic"
           loading="lazy"
           class="absolute inset-0 h-full w-full object-cover object-[50%_40%]"

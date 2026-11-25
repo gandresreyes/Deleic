@@ -6,6 +6,9 @@
 // <input type="range"> queda oculto solo para teclado y lectores de pantalla.
 // No escuches el arrastre en el input: iOS Safari se queda con los toques
 // de los range y no llegan los pointermove
+import Foto from "./Foto.astro";
+import { sizesCubre } from "../lib/imagenes";
+
 interface Imagen {
   imagen: string;
   alt: string;
@@ -17,6 +20,13 @@ interface Props {
 }
 
 const { antes, despues, class: className } = Astro.props;
+
+// Caja 2:1 de hasta 1024px de ancho (max-w-5xl en micropigmentación)
+const sizes = (ruta: string) =>
+  sizesCubre(ruta, [
+    ["(min-width: 1280px)", "1024px", 2],
+    ["", "100vw", 2],
+  ]);
 ---
 
 <div
@@ -27,15 +37,17 @@ const { antes, despues, class: className } = Astro.props;
   style="--pos: 50%;"
 >
   <!-- Después de fondo; antes encima, recortado hasta la posición del tirador -->
-  <img
+  <Foto
     src={despues.imagen}
+    sizes={sizes(despues.imagen)}
     alt={despues.alt}
     loading="lazy"
     draggable="false"
     class="absolute inset-0 w-full h-full object-cover pointer-events-none"
   />
-  <img
+  <Foto
     src={antes.imagen}
+    sizes={sizes(antes.imagen)}
     alt={antes.alt}
     loading="lazy"
     draggable="false"

@@ -1,6 +1,8 @@
 ---
 // src/pages/medicina-estetica.astro
 import Layout from "../../layouts/Layout.astro";
+import Foto from "../../components/Foto.astro";
+import { sizesCubre, TRAMOS_HERO } from "../../lib/imagenes";
 import Ubication from "../../components/Ubication.astro";
 import { gruposPublicados, numero, type Grupo, type Precio } from "../../lib/precios";
 import { faqPage, migas, negocio } from "../../lib/schema";
@@ -164,9 +166,10 @@ const schema = {
       </div>
 
       <div class="group relative md:col-span-5 hidden md:block">
-        <img
+        <Foto
           src={hero.imagen}
-          class="w-full h-100 object-cover rounded-3xl"
+          sizes={sizesCubre(hero.imagen, TRAMOS_HERO)}
+          class="w-full h-100 object-cover object-[50%_20%] rounded-3xl"
           alt={hero.imagenAlt}
           transition:name="medicina-estetica"
         />

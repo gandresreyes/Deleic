@@ -3,6 +3,7 @@
 import { getCollection } from "astro:content";
 import Layout from "../../layouts/Layout.astro";
 import Imagen from "../../components/FacialCorporal/Imagen.astro";
+import { urlImagen } from "../../lib/imagenes";
 import MetodoDeleic from "../../components/FacialCorporal/MetodoDeleic.astro";
 import { TELEFONO, whatsapp } from "../../data/contacto";
 import { faqPage, migas, negocio } from "../../lib/schema";
@@ -169,7 +170,7 @@ const graph: Record<string, unknown>[] = [
     description: t.seoDescription,
     areaServed: "León",
     url: new URL(`/facial-corporal/${tratamiento.id}/`, site).href,
-    ...(t.imagen && { image: new URL(t.imagen, site).href }),
+    ...(t.imagen && { image: new URL(urlImagen(t.imagen), site).href }),
     provider: negocio(site),
     ...(precios.length > 0 && {
       hasOfferCatalog: {
@@ -389,6 +390,12 @@ const schema = { "@context": "https://schema.org", "@graph": graph };
             <Imagen
               src={t.imagen}
               alt={t.imagenAlt}
+              tramos={[
+                ["(min-width: 1536px)", "600px", 0.8],
+                ["(min-width: 1024px)", "40vw", 0.8],
+                ["(min-width: 640px)", "100vw", 1.6],
+                ["", "100vw", 4 / 3],
+              ]}
               icono={t.icono}
               fetchpriority="high"
               class="absolute inset-0 w-full h-full object-cover"
@@ -1395,7 +1402,7 @@ const schema = { "@context": "https://schema.org", "@graph": graph };
           </div>
 
           <div class="mt-6 -mx-4 sm:mx-0 px-4 sm:px-0 flex sm:grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 overflow-x-auto sm:overflow-visible snap-x snap-mandatory scroll-px-4 pb-2 sm:pb-0 scrollbar-none [&::-webkit-scrollbar]:hidden">
-            {relacionados.map((r) => (
+            {relacionados.map((r, i) => (
               <a
                 href={`/facial-corporal/${r.data.slug}/`}
                 data-foco
@@ -1405,6 +1412,17 @@ const schema = { "@context": "https://schema.org", "@graph": graph };
                   <Imagen
                     src={r.data.imagen}
                     alt={r.data.imagenAlt}
+                    tramos={[
+                      ["(min-width: 1536px)", "440px", 1.6],
+                      ["(min-width: 1024px)", "33vw", 1.6],
+                      // Si son impares, la última ocupa las 2 columnas hasta lg
+                      [
+                        "(min-width: 640px)",
+                        i === relacionados.length - 1 && i % 2 === 0 ? "100vw" : "50vw",
+                        1.6,
+                      ],
+                      ["", "85vw", 1.6],
+                    ]}
                     icono={r.data.icono}
                     loading="lazy"
                     class="absolute inset-0 w-full h-full object-cover motion-safe:group-hover:scale-105 transition-transform duration-500"

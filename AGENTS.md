@@ -93,6 +93,22 @@ Usa las clases canónicas de Tailwind v4 (`bg-linear-to-r`, `bg-size-[...]`,
   grandes), `.reveal-stagger` (los hijos aparecen en cascada). No las pongas en un
   elemento con `transform`, `opacity` o `filter` propios: envuélvelo.
 
+### Imágenes
+
+- Las fotos van en `src/assets/img/<sección>/` y se pintan con `<Foto>`
+  (`src/components/Foto.astro`), nunca con `<img>` a mano: genera varios anchos
+  en WebP a calidad 90 (medida para que no se note), sin ampliar nunca el original,
+  y con caché larga.
+- `sizes` es obligatorio y es el ancho al que se **pinta** la foto. Con
+  `object-cover` en una caja más alta que la foto, se pinta más ancha que la caja:
+  usa `sizesCubre` de `src/lib/imagenes.ts` (los heroes de servicio, `TRAMOS_HERO`).
+- En los JSON y la colección la ruta se escribe `"/img/…"`, como en la web. Para
+  `og:image` o el schema, `urlImagen(ruta)` da la URL del original.
+- Logos y gráficos con transparencia: `<Image>` en PNG (sin pérdida) con
+  `densities={[1, 2, 3]}`, como el logo de `Navbar.astro`.
+- En `public/img` solo lo que se sirve tal cual: las luces del escáner (las genera
+  `npm run escaner`), su foto base y `og/home.jpg`.
+
 ### Contenido y redacción
 
 - Cada idea aparece **una sola vez** por página. Antes de añadir un texto, comprueba

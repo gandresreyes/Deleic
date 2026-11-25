@@ -9,6 +9,8 @@
 // Texto y precio salen de metodoDeleic.json, igual que en la home y en /metodo-deleic/.
 import { whatsapp } from "../../data/contacto";
 import metodo from "../../data/metodoDeleic.json";
+import Foto from "../Foto.astro";
+import { sizesCubre } from "../../lib/imagenes";
 
 interface Props {
   modo: "alternativa" | "primer-paso";
@@ -33,11 +35,10 @@ const icons = {
     >
       <div class="flex flex-col sm:flex-row sm:items-center gap-5 sm:gap-6">
         <div class="flex items-center gap-4 sm:gap-5 flex-1 min-w-0">
-          <img
+          <Foto
             src="/img/metodo-deleic/metodo.webp"
+            sizes="(min-width: 640px) 96px, 80px"
             alt="Rostro con media cara en mapa de calor, como en el análisis facial 3D"
-            width="900"
-            height="1080"
             loading="lazy"
             class="shrink-0 w-20 h-20 sm:w-24 sm:h-24 rounded-2xl object-cover object-[center_25%] ring-1 ring-white/10"
           />
@@ -90,11 +91,14 @@ const icons = {
     >
       {/* Foto: el rostro con medio mapa de calor, como en el análisis */}
       <div class="relative h-56 sm:h-auto sm:min-h-full sm:col-span-5">
-        <img
+        <Foto
           src="/img/metodo-deleic/metodo.webp"
+          sizes={sizesCubre("/img/metodo-deleic/metodo.webp", [
+            ["(min-width: 1280px)", "42vw", 1.1],
+            ["(min-width: 640px)", "42vw", 0.55],
+            ["", "100vw", 1.46],
+          ])}
           alt="Rostro con media cara en mapa de calor, como en el análisis facial 3D"
-          width="900"
-          height="1080"
           loading="lazy"
           class="absolute inset-0 w-full h-full object-cover object-[center_25%]"
         />

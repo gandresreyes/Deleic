@@ -1,4 +1,7 @@
 ---
+// Logo: PNG sin pérdida (bordes nítidos y transparencia) a 1x, 2x y 3x
+import { Image } from "astro:assets";
+import logo from "../assets/img/deleicLogo.webp";
 import { DIRECCION, HORARIO, TELEFONO, whatsapp } from "../data/contacto";
 
 // El footer enlaza todas las páginas del sitio: algunas (Ultrasonix,
@@ -51,9 +54,12 @@ const year = new Date().getFullYear();
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-10">
       <div class="lg:col-span-3">
         <a href="/" class="inline-block" aria-label="Deleic, ir al inicio">
-          <img
-            src="/img/deleicLogo.webp"
+          <Image
+            src={logo}
             alt="Deleic"
+            height={56}
+            densities={[1, 2, 3]}
+            format="png"
             loading="lazy"
             class="h-14 w-auto brightness-0 invert"
           />

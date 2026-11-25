@@ -1,6 +1,8 @@
 ---
 // src/pages/depilacion-laser.astro
 import Layout from "../layouts/Layout.astro";
+import Foto from "../components/Foto.astro";
+import { sizesCubre, TRAMOS_HERO, urlImagen } from "../lib/imagenes";
 import Price from "../components/Depilacion/Price.astro";
 import Tecnology from "../components/Depilacion/Tecnology.astro";
 import Recomendation from "../components/Depilacion/Recomendation.astro";
@@ -34,7 +36,7 @@ const schema = {
       serviceType: "Depilación láser",
       description,
       url: new URL("/depilacion-laser/", site).href,
-      image: new URL(hero.imagen, site).href,
+      image: new URL(urlImagen(hero.imagen), site).href,
       areaServed: { "@type": "City", name: "León" },
       audience: { "@type": "PeopleAudience", suggestedGender: ["female", "male"] },
       provider: negocio(site),
@@ -125,10 +127,9 @@ const schema = {
       </div>
 
       <div class="group relative md:col-span-5 hidden md:block">
-        <img
+        <Foto
           src={hero.imagen}
-          width="1066"
-          height="1600"
+          sizes={sizesCubre(hero.imagen, TRAMOS_HERO)}
           class="w-full h-100 object-cover rounded-3xl"
           alt={hero.imagenAlt}
           fetchpriority="high"

@@ -27,6 +27,17 @@ export default defineConfig({
     "/ultrasonix": "/facial-corporal/ultrasonix/",
     "/hollywood-peel": "/facial-corporal/iluminador-revitalizante/",
   },
+  // Fotos de <Foto> (src/assets/img): WebP a calidad 90. Medido frente a una
+  // reducción sin pérdida: SSIM ≥ 0,98 y PSNR 43–48 dB (visualmente igual).
+  // smartSubsample conserva mejor los rojos y los bordes de color.
+  image: {
+    service: {
+      entrypoint: "astro/assets/services/sharp",
+      config: {
+        webp: { quality: 90, smartSubsample: true, effort: 6 },
+      },
+    },
+  },
   integrations: [
     sitemap({
       filter: (page) => !SIN_INDEXAR.includes(new URL(page).pathname),

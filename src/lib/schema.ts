@@ -4,6 +4,7 @@
 // también lo que leen Google y las IAs.
 import { DIRECCION, EMAIL, HORARIO, TELEFONO } from "../data/contacto";
 import { DIAS, franja, VERANO, type FilaHorario } from "./horario";
+import { urlImagen } from "./imagenes";
 
 function horario() {
   // Se recalcula el año en cada build
@@ -36,7 +37,7 @@ export const negocio = (site: URL) => ({
     "Centro de medicina estética, depilación láser y tratamientos faciales y corporales en León.",
   url: new URL("/", site).href,
   image: new URL("/img/og/home.jpg", site).href,
-  logo: new URL("/img/deleicLogo.webp", site).href,
+  logo: new URL(urlImagen("/img/deleicLogo.webp"), site).href,
   telephone: TELEFONO.href.replace("tel:", ""),
   email: EMAIL,
   address: {

@@ -1,0 +1,39 @@
+---
+// src/components/Foto.astro
+// Foto optimizada: genera la imagen en varios anchos (WebP, calidad 90, ver
+// `image` en astro.config.mjs) y el navegador descarga solo el que necesita.
+// Nunca se amplía por encima del original, así que no pierde calidad.
+//
+//   <Foto src="/img/…" alt="…" sizes="(min-width: 1024px) 33vw, 100vw" />
+//
+// `sizes` es el ancho al que se PINTA la imagen. Con object-cover en una caja
+// más alta que la foto, la imagen se pinta más ancha que la caja: cuéntalo
+// (p. ej. caja de 400×400 con foto 3:2 → 600px).
+// Como en <img>, carga al momento salvo que se pase loading="lazy".
+import { Image } from "astro:assets";
+import type { HTMLAttributes } from "astro/types";
+import { imagen } from "../lib/imagenes";
+
+type Props = Omit<HTMLAttributes<"img">, "src" | "srcset" | "width" | "height"> & {
+  /** Ruta tal como en los datos: "/img/…" (el archivo está en src/assets/img) */
+  src: string;
+  alt: string;
+  sizes: string;
+};
+
+const { src, alt, sizes, loading = "eager", ...resto } = Astro.props;
+const foto = imagen(src);
+
+// Anchos candidatos; los mayores que el original se cambian por el original
+const ANCHOS = [400, 640, 800, 1080, 1280, 1600, 1920, 2560];
+const widths = [...ANCHOS.filter((w) => w < foto.width), foto.width];
+---
+
+<Image
+  src={foto}
+  alt={alt}
+  widths={widths}
+  sizes={sizes}
+  loading={loading}
+  {...resto}
+/>

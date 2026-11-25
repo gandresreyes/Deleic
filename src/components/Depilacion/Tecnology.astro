@@ -1,5 +1,7 @@
 ---
 import data from "../../data/depilacionLaser.json";
+import Foto from "../Foto.astro";
+import { sizesCubre } from "../../lib/imagenes";
 
 const { tecnologia } = data;
 ---
@@ -9,11 +11,10 @@ const { tecnologia } = data;
   aria-labelledby="tecnologia-heading"
 >
   <!-- Imagen -->
-  <img
+  <Foto
     src={tecnologia.imagen}
+    sizes={sizesCubre(tecnologia.imagen, [["", "896px", 1.2]])}
     alt={tecnologia.imagenAlt}
-    width="1536"
-    height="1024"
     loading="lazy"
     class="absolute inset-0 h-full w-full object-cover object-left transition-all duration-700 ease-out group-hover:scale-105 group-hover:-translate-x-6 hidden lg:block max-w-4xl"
   />
