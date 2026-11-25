@@ -31,4 +31,11 @@ Nuestra recomendación: "3D" es más fácil de recordar, pero solo si es exacto.
 
 - **Toxina botulínica y dutasterida:** ya están en la web con sus precios, como pidió la doctora, pero sin nombres comerciales (Bocouture, Azzalure, Redfills). Son medicamentos que necesitan receta, y la ley española prohíbe anunciarlos al público (art. 80 de la Ley del medicamento, RDL 1/2015). Nombrar la marca es la forma más directa de anunciar el medicamento. ¿Puede la doctora confirmar que le parece bien publicarlos así? Si prefiere no anunciarlos, se quitan en un momento.
 - **Mesobotox:** sigue sin publicar. ¿Lo quieres en la web? ¿Sigue vigente el precio "en promoción" de 199€?
-- **Foto de la doctora:** cuando tengáis una buena foto suya, la añadimos a la página de Medicina estética.
+- **La doctora:** es lo que más confianza da en medicina estética, y ahora la web no dice quién hace los tratamientos. Necesitamos:
+  - una buena foto suya;
+  - su nombre y su número de colegiada;
+  - el número de registro sanitario del centro. En muchas comunidades es obligatorio que la publicidad de un centro sanitario lo muestre; conviene confirmarlo.
+- **¿La valoración de medicina estética es gratuita?** En depilación y en facial la web dice "valoración gratuita". En medicina estética solo pone "sin compromiso", y quien lo lee puede entender que se paga.
+  - Si es gratis, lo ponemos en el botón y en el hero: es de lo que más anima a pedir cita.
+  - Si tiene precio, ¿cuánto cuesta? ¿Se descuenta si después se hace el tratamiento?
+- **Opiniones de clientas:** ¿tenéis reseñas en Google? Si nos pasáis el enlace a la ficha, mostramos la nota y el número de opiniones en la página. Solo pondríamos datos reales.

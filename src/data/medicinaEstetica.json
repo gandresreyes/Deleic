@@ -18,25 +18,6 @@
     "imagen": "/img/medicinaEstetica/hero.webp",
     "imagenAlt": "Medicina estética facial en Deleic, León"
   },
-  "intro": {
-    "eyebrow": "Nuestro enfoque",
-    "titulo": "Cuando la estética necesita un paso más",
-    "texto": "Hay técnicas estéticas que, por sí solas, se quedan cortas. En esos casos, la medicina estética completa el trabajo de cabina: rellena, tensa o regenera donde hace falta para conseguir un resultado óptimo y natural.",
-    "pilares": [
-      {
-        "titulo": "Complementa la cabina",
-        "texto": "Cuando una técnica estética se queda corta, la medicina estética la lleva más lejos."
-      },
-      {
-        "titulo": "Resultado natural",
-        "texto": "El objetivo no es transformarte, sino que te veas mejor sin que se note el cambio."
-      },
-      {
-        "titulo": "Valoración sin compromiso",
-        "texto": "Antes de proponerte nada, analizamos la zona y lo que buscas."
-      }
-    ]
-  },
   "tratamientos": {
     "eyebrow": "Tratamientos y tarifas",
     "titulo": "Tratamientos médico-estéticos",
@@ -48,7 +29,7 @@
         "items": [
           {
             "nombre": "Ácido hialurónico",
-            "resumen": "Hidratación, calidad de piel y volumen.",
+            "resumen": "Labios, ojeras, surcos, nariz y mentón.",
             "texto": "En medicina estética aporta hidratación, mejora la calidad de la piel y devuelve volumen. Disponemos de distintos tipos según la zona y el objetivo.",
             "duracion": "6-12 meses, pudiendo ser mayor según la capacidad de cada piel de retener el ácido hialurónico",
             "precios": [
@@ -90,7 +71,7 @@
         "items": [
           {
             "nombre": "Hilos tensores",
-            "resumen": "Estimulan y tensan el tejido.",
+            "resumen": "Tensan y recolocan la piel caída.",
             "texto": "Los hilos monofilamento son lisos, sin espículas: no tienen un efecto de tracción inmediato, sino que estimulan y remodelan el tejido. Los espiculados, tipo arpón, tienen pequeñas estructuras que se anclan al tejido y producen un efecto de tensado y reposición.",
             "duracion": "Monofilamento: 1 año aprox. · Espiculados: 12-18 meses",
             "precios": [
@@ -114,7 +95,7 @@
           },
           {
             "nombre": "Hidroxiapatita cálcica (tipo Radiesse)",
-            "resumen": "Soporte, tensado y remodelación del colágeno.",
+            "resumen": "Tensa y da soporte a la piel. Dura hasta 18 meses.",
             "texto": "Inyectable que produce un efecto de soporte y tensado, además de remodelar el colágeno.",
             "duracion": "8-18 meses",
             "precios": [
@@ -134,7 +115,7 @@
           },
           {
             "nombre": "Carboximetilcelulosa (tipo Ellanse)",
-            "resumen": "Inductor de colágeno sin generar volumen.",
+            "resumen": "Tensa y mejora la piel sin dar volumen.",
             "texto": "Inductor del colágeno con efecto tensor que mejora la piel sin generar volumen.",
             "duracion": "12 meses",
             "precios": [
@@ -146,7 +127,7 @@
           },
           {
             "nombre": "Ultracol",
-            "resumen": "Lifting natural con polidioxanona líquida.",
+            "resumen": "Efecto lifting natural que estimula el colágeno.",
             "texto": "Inyectable inductor del colágeno elaborado con polidioxanona líquida; equivale a 1400 hilos monofilamento. Efecto lifting natural: a las 4 semanas se aprecia un aumento natural del volumen gracias a la estimulación del colágeno. Se recomienda repetir a los 4-6 meses para prolongar y potenciar el efecto.",
             "precios": [
               {
@@ -157,7 +138,7 @@
           },
           {
             "nombre": "Ácido poliláctico (PLLA)",
-            "resumen": "Bioestimulador de colágeno de efecto progresivo.",
+            "resumen": "Flacidez y pérdida de firmeza, con efecto progresivo.",
             "texto": "Bioestimulador de colágeno que estimula su producción de forma progresiva. Se usa sobre todo para la flacidez y la pérdida de firmeza, y para mejorar la calidad y el grosor de la piel. Los resultados son progresivos, de semanas a meses después, y pueden mantenerse hasta dos años.",
             "nota": "Se prepara 24 horas antes.",
             "precios": [
@@ -190,7 +171,7 @@
         "items": [
           {
             "nombre": "Toxina botulínica",
-            "resumen": "Suaviza el tercio superior del rostro.",
+            "resumen": "Frente, entrecejo y contorno de ojos.",
             "texto": "Tipo A: reduce la contracción muscular y suaviza los músculos del tercio superior, especialmente frente, entrecejo y contorno. Otras indicaciones bajo prescripción médica, como el bruxismo.",
             "duracion": "4 meses (toxina líquida: 6 meses aprox.)",
             "precios": [
@@ -236,7 +217,7 @@
         "items": [
           {
             "nombre": "Biorevitalización (Rebok 50)",
-            "resumen": "Hidratación, elasticidad y aspecto general.",
+            "resumen": "Hidrata cara, cuello, escote y manos.",
             "texto": "Inyectable de ácido hialurónico de alto peso molecular y aminoácidos para mejorar la piel, su hidratación, su elasticidad y su aspecto general. Se aplica en facial y cuello, escote completo, manos, brazos...",
             "precios": [
               {
@@ -251,7 +232,7 @@
           },
           {
             "nombre": "Mesoterapia facial (ácido hialurónico + péptidos)",
-            "resumen": "Hidrata, mejora la piel y reafirma.",
+            "resumen": "Contorno de ojos o cara completa: hidrata y reafirma.",
             "texto": "Infiltración superficial de pequeñas cantidades de sustancias para mejorar determinados aspectos de la calidad de la piel. Con ácido hialurónico y péptidos hidratamos, mejoramos el estado de la piel y reafirmamos.",
             "duracion": "4 meses aprox.",
             "precios": [
@@ -271,7 +252,7 @@
           },
           {
             "nombre": "Polinucleótidos",
-            "resumen": "Reparación y renovación de la piel.",
+            "resumen": "Estrías, cicatrices y marcas de acné.",
             "texto": "Inyectables que mejoran la calidad cutánea y favorecen la renovación y reparación de la piel: mejoran su estado, las estrías, las cicatrices y las marcas de acné, y retrasan el envejecimiento tisular. Son fracciones naturales de ADN y ARN.",
             "precios": [
               {
@@ -282,7 +263,7 @@
           },
           {
             "nombre": "Exosomas",
-            "resumen": "Regeneración de la piel y del entorno del folículo.",
+            "resumen": "Calidad de la piel y del cabello.",
             "texto": "Mensajeros celulares que favorecen la regeneración y la calidad de la piel. En capilar, favorecen el entorno del folículo y mejoran el crecimiento y la calidad del cabello.",
             "precios": [
               {
@@ -318,7 +299,7 @@
         "items": [
           {
             "nombre": "Mascarilla despigmentante",
-            "resumen": "Peeling profundo para renovar y despigmentar.",
+            "resumen": "Peeling profundo que renueva la piel y aclara las manchas.",
             "texto": "Peeling químico profundo que produce una lesión controlada de la piel para favorecer su renovación y su despigmentación.",
             "nota": "Incluye retoque, crema regenerante y fórmula despigmentante.",
             "precios": [
@@ -330,7 +311,7 @@
           },
           {
             "nombre": "Prostolane",
-            "resumen": "Mantenimiento y prevención de manchas.",
+            "resumen": "Previene las manchas y se puede aplicar con sol.",
             "texto": "Tratamiento inyectable indicado para el mantenimiento y la prevención de manchas. Se puede aplicar con sol.",
             "precios": [
               {
@@ -351,7 +332,7 @@
         "items": [
           {
             "nombre": "PRP capilar",
-            "resumen": "Favorece el entorno del folículo.",
+            "resumen": "Caída y calidad del cabello.",
             "texto": "Favorece el entorno del folículo, mejora determinados parámetros del cabello y ayuda a controlar la caída en pacientes seleccionados.",
             "nota": "Las sesiones pueden realizarse aproximadamente una vez al mes y combinarse con otros tratamientos según valoración.",
             "precios": [
@@ -367,7 +348,7 @@
           },
           {
             "nombre": "Dutasterida + tratamiento capilar",
-            "resumen": "Control médico de la alopecia androgenética.",
+            "resumen": "Caída del pelo de origen hormonal, con control médico.",
             "texto": "Medicamento que inhibe la enzima 5-alfa-reductasa y reduce la conversión de testosterona en dihidrotestosterona (DHT), implicada en la alopecia androgenética. Puede utilizarse en determinados pacientes bajo control médico.",
             "precios": [
               {
@@ -416,7 +397,7 @@
           },
           {
             "nombre": "Carboxiterapia",
-            "resumen": "CO2 para mejorar la piel y el tejido subcutáneo.",
+            "resumen": "Mejora la piel y reduce la grasa bajo ella.",
             "texto": "Administración médica de CO2 mediante infiltraciones para mejorar el aspecto de la piel y disminuir el tejido subcutáneo.",
             "precios": [
               {
@@ -427,7 +408,7 @@
           },
           {
             "nombre": "Eliminación de verrugas",
-            "resumen": "Energía de plasma sobre lesiones superficiales.",
+            "resumen": "Verrugas y pequeñas lesiones de la piel.",
             "texto": "Procedimiento para tratar determinadas lesiones cutáneas superficiales mediante energía de plasma.",
             "precios": [
               {
@@ -520,23 +501,13 @@
       }
     ]
   },
-  "pasos": {
-    "eyebrow": "Cómo trabajamos",
-    "titulo": "Un proceso claro, de principio a fin",
-    "items": [
-      {
-        "titulo": "Valoración sin compromiso",
-        "texto": "Analizamos la zona y lo que quieres conseguir antes de proponer nada."
-      },
-      {
-        "titulo": "Plan a tu medida",
-        "texto": "Te explicamos qué técnica encaja contigo y si conviene combinarla con otros tratamientos."
-      },
-      {
-        "titulo": "Tratamiento",
-        "texto": "Lo aplicamos en cabina y te damos las indicaciones de cuidado para después."
-      }
-    ]
+  "ayuda": {
+    "titulo": "¿No sabes cuál es el tuyo?",
+    "texto": "Es lo normal. En la valoración analizamos la zona y lo que quieres conseguir, y te explicamos qué técnica encaja contigo y si conviene combinarla con otra. Sin compromiso.",
+    "cta": {
+      "texto": "Reservar valoración",
+      "mensaje": "Hola, no sé qué tratamiento de medicina estética necesito y me gustaría reservar una valoración en Deleic."
+    }
   },
   "faq": {
     "eyebrow": "Preguntas frecuentes",
@@ -557,10 +528,6 @@
       {
         "pregunta": "¿Cuántas sesiones de esclerosis de varices hacen falta?",
         "respuesta": "Lo decide la valoración médica; de media, 3 sesiones. Después es obligatorio llevar medias de compresión, normal o fuerte, según indique el tratamiento."
-      },
-      {
-        "pregunta": "¿Puedo venir sin saber qué tratamiento necesito?",
-        "respuesta": "Sí. Empieza con una valoración sin compromiso: analizamos la zona, escuchamos lo que buscas y te orientamos."
       }
     ]
   }

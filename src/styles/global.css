@@ -146,6 +146,34 @@
   }
 }
 
+/* ---------- Pestañas en móvil ----------
+   Una lista larga partida en grupos: en móvil (< lg) solo se ve un grupo y
+   los chips cambian de uno a otro; desde lg se ven todos. Uso:
+     <section data-pestanas> … <a data-pestana href="#grupo"> …
+       <div id="grupo" data-grupo [data-oculto]> …
+   data-oculto marca qué grupos no se ven, y el script de la página lo quita
+   y lo pone. Hasta que arranca, este CSS los oculta para que no salten al
+   cargar. Después, el script pone data-listo en la sección y los oculta con
+   hidden="until-found": no se pintan, pero "Buscar en la página" y los
+   enlaces de Google a un texto concreto sí los encuentran, y el script
+   cambia a esa pestaña. Sin JavaScript no se oculta nada, así que se ven
+   todos los grupos. */
+@media (scripting: enabled) and (width < 64rem) {
+  [data-pestanas]:not([data-listo]) [data-grupo][data-oculto] {
+    display: none;
+  }
+}
+
+/* until-found no pinta el contenido, pero deja la caja con su margen y, en
+   Safari, también con el alto que tenía al verse: cada grupo ya visitado
+   sumaba su hueco encima del actual. Se fuerza a cero en todos los
+   navegadores (el clip, por si alguno pintara el contenido) */
+[data-pestanas] [data-grupo][hidden] {
+  margin-top: 0;
+  block-size: 0;
+  overflow: clip;
+}
+
 /* ---------- Textura que sigue al cursor (estilo Google) ----------
    Una rejilla de puntos tenue; alrededor del cursor los puntos se encienden,
    crecen un poco y dejan un brillo burdeos que lo sigue con retraso.

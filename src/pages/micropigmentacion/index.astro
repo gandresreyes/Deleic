@@ -5,7 +5,7 @@ import Foto from "../../components/Foto.astro";
 import { sizesCubre, TRAMOS_HERO } from "../../lib/imagenes";
 import Ubication from "../../components/Ubication.astro";
 import AntesDespues from "../../components/AntesDespues.astro";
-import { gruposPublicados, numero, type Grupo } from "../../lib/precios";
+import { gruposPublicados, numero, partirPrecio, type Grupo } from "../../lib/precios";
 import { faqPage, migas, negocio } from "../../lib/schema";
 import { whatsapp } from "../../data/contacto";
 import data from "../../data/micropigmentacion.json";
@@ -291,13 +291,18 @@ const schema = {
                     <p class="text-sm text-base-content/70 leading-relaxed">
                       {item.texto}
                     </p>
+                    {/* La etiqueta en mayúsculas; el dato, en texto normal: una
+                        frase larga en mayúsculas cuesta de leer */}
                     {item.duracion && (
-                      <p class="mt-3 text-xs font-semibold uppercase tracking-wider text-primary">
-                        Duración · {item.duracion}
+                      <p class="mt-3 text-sm text-base-content/70 leading-relaxed">
+                        <span class="block text-xs font-semibold uppercase tracking-wider text-primary">
+                          Duración
+                        </span>
+                        {item.duracion}
                       </p>
                     )}
                     {item.nota && (
-                      <p class="mt-3 text-xs text-base-content/60 leading-relaxed">
+                      <p class="mt-3 text-xs text-base-content/65 leading-relaxed">
                         {item.nota}
                       </p>
                     )}
@@ -305,16 +310,22 @@ const schema = {
 
                   {item.precios && item.precios.length > 0 && (
                     <ul class="md:col-span-2 self-start rounded-2xl bg-base-200 p-5 space-y-2">
-                      {item.precios.map((pr) => (
-                        <li class="flex items-baseline justify-between gap-4 text-sm">
-                          <span class="text-base-content/70">
-                            {pr.concepto}
-                          </span>
-                          <span class="shrink-0 text-right font-semibold text-secondary-content">
-                            {pr.precio}
-                          </span>
-                        </li>
-                      ))}
+                      {item.precios.map((pr) => {
+                        const { precio, extra } = partirPrecio(pr.precio);
+                        return (
+                          <li class="flex items-baseline justify-between gap-4 text-sm">
+                            <span class="text-base-content/70">{pr.concepto}</span>
+                            <span class="shrink-0 text-right font-semibold text-secondary-content">
+                              {precio}
+                              {extra && (
+                                <span class="block text-xs font-normal text-base-content/65">
+                                  {extra}
+                                </span>
+                              )}
+                            </span>
+                          </li>
+                        );
+                      })}
                     </ul>
                   )}
                 </div>

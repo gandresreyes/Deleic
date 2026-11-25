@@ -28,6 +28,14 @@ export const numero = (s: string) => {
   return m ? Number(`${m[1].replace(/\./g, "")}.${m[2] ?? "0"}`) : null;
 };
 
+// Precio con un añadido entre paréntesis, "280€ (2.ª sesión: 250€)": las
+// páginas lo pintan en dos líneas (precio y, debajo, el añadido) para que la
+// columna del precio no apriete el concepto en móvil
+export const partirPrecio = (s: string) => {
+  const m = s.match(/^(.*?)\s*\((.+)\)$/);
+  return m ? { precio: m[1], extra: m[2] } : { precio: s, extra: undefined };
+};
+
 // Precio de entrada ("desde 250€") calculado con el número inicial de cada tarifa
 export const desde = (precios?: Precio[]) => {
   if (!precios?.length) return null;

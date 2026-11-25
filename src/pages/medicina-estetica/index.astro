@@ -4,7 +4,13 @@ import Layout from "../../layouts/Layout.astro";
 import Foto from "../../components/Foto.astro";
 import { sizesCubre, TRAMOS_HERO } from "../../lib/imagenes";
 import Ubication from "../../components/Ubication.astro";
-import { gruposPublicados, numero, type Grupo, type Precio } from "../../lib/precios";
+import {
+  gruposPublicados,
+  numero,
+  partirPrecio,
+  type Grupo,
+  type Precio,
+} from "../../lib/precios";
 import { faqPage, migas, negocio } from "../../lib/schema";
 import { whatsapp } from "../../data/contacto";
 import data from "../../data/medicinaEstetica.json";
@@ -18,7 +24,7 @@ interface Combo {
   enlaces?: { texto: string; href: string }[];
 }
 
-const { seo, hero, intro, tratamientos, combinaciones, pasos, faq } = data;
+const { seo, hero, tratamientos, combinaciones, ayuda, faq } = data;
 
 const grupos = gruposPublicados(tratamientos.grupos as Grupo[]);
 
@@ -177,43 +183,13 @@ const schema = {
     </div>
   </section>
 
-  <!-- Enfoque -->
-  <section class="card bg-base-100 seccion-card">
-    <div class="reveal">
-      <span
-        class="text-sm font-semibold tracking-widest uppercase text-primary"
-      >
-        {intro.eyebrow}
-      </span>
-      <h2
-        class="mt-3 text-3xl sm:text-4xl font-semibold text-secondary-content"
-      >
-        {intro.titulo}
-      </h2>
-      <p class="mt-4 text-base-content/70 text-lg">{intro.texto}</p>
-    </div>
-
-    <div class="mt-8">
-      <div class="reveal-stagger grid grid-cols-1 sm:grid-cols-3 gap-8">
-        {
-          intro.pilares.map((p) => (
-            <div>
-              <div class="w-3.5 h-3.5 rounded-full mb-4 bg-primary" />
-              <p class="text-sm font-semibold text-secondary-content mb-1">
-                {p.titulo}
-              </p>
-              <p class="text-sm text-base-content/70 leading-relaxed">
-                {p.texto}
-              </p>
-            </div>
-          ))
-        }
-      </div>
-    </div>
-  </section>
-
-  <!-- Tratamientos y tarifas -->
-  <section id="tratamientos" class="card bg-base-100 seccion-card scroll-mt-24">
+  <!-- Tratamientos y tarifas. En móvil, pestañas: un grupo cada vez (ver
+       "Pestañas en móvil" en global.css); desde lg, todos los grupos -->
+  <section
+    id="tratamientos"
+    data-pestanas
+    class="card bg-base-100 seccion-card scroll-mt-24"
+  >
     <div class="reveal">
       <span
         class="text-sm font-semibold tracking-widest uppercase text-primary"
@@ -226,27 +202,36 @@ const schema = {
         {tratamientos.titulo}
       </h2>
       <p class="mt-4 text-base-content/70 text-lg">{tratamientos.texto}</p>
-
-      <!-- Salto rápido a cada grupo -->
-      <div class="mt-6 flex flex-wrap gap-2">
-        {
-          grupos.map((g) => (
-            <a
-              href={`#${slugify(g.titulo)}`}
-              class="px-4 py-2 rounded-full bg-base-200 text-sm font-medium text-secondary-content hover:bg-primary hover:text-primary-content transition-colors"
-            >
-              {g.titulo}
-            </a>
-          ))
-        }
-      </div>
     </div>
 
+    <!-- Chips de grupo, todos a la vista para que se vea el catálogo entero.
+         En móvil cambian de pestaña; desde lg, saltan al grupo -->
+    <nav aria-label="Grupos de tratamientos" class="mt-6">
+      <ul class="flex flex-wrap gap-2">
+        {
+          grupos.map((g, i) => (
+            <li>
+              <a
+                href={`#${slugify(g.titulo)}`}
+                data-pestana
+                aria-current={i === 0 ? "true" : undefined}
+                class="block whitespace-nowrap px-4 py-2 rounded-full bg-base-200 text-sm font-medium text-secondary-content hover:bg-primary hover:text-primary-content max-lg:aria-current:bg-primary max-lg:aria-current:text-primary-content transition-colors"
+              >
+                {g.titulo}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
     {
-      grupos.map((g) => (
+      grupos.map((g, i) => (
         <div
           id={slugify(g.titulo)}
-          class="reveal mt-14 grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-12 scroll-mt-24"
+          data-grupo
+          data-oculto={i > 0 ? "" : undefined}
+          class="reveal mt-8 lg:mt-14 grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-12 scroll-mt-24"
         >
           <div class="lg:sticky lg:top-28 self-start">
             <h3 class="text-2xl font-semibold text-secondary-content">
@@ -290,13 +275,18 @@ const schema = {
                     <p class="text-sm text-base-content/70 leading-relaxed">
                       {item.texto}
                     </p>
+                    {/* La etiqueta en mayúsculas; el dato, en texto normal: una
+                        frase larga en mayúsculas cuesta de leer */}
                     {item.duracion && (
-                      <p class="mt-3 text-xs font-semibold uppercase tracking-wider text-primary">
-                        Duración · {item.duracion}
+                      <p class="mt-3 text-sm text-base-content/70 leading-relaxed">
+                        <span class="block text-xs font-semibold uppercase tracking-wider text-primary">
+                          Duración
+                        </span>
+                        {item.duracion}
                       </p>
                     )}
                     {item.nota && (
-                      <p class="mt-3 text-xs text-base-content/60 leading-relaxed">
+                      <p class="mt-3 text-xs text-base-content/65 leading-relaxed">
                         {item.nota}
                       </p>
                     )}
@@ -304,146 +294,172 @@ const schema = {
 
                   {item.precios && item.precios.length > 0 && (
                     <ul class="md:col-span-2 self-start rounded-2xl bg-base-200 p-5 space-y-2">
-                      {item.precios.map((pr) => (
-                        <li class="flex items-baseline justify-between gap-4 text-sm">
-                          <span class="text-base-content/70">
-                            {pr.concepto}
-                          </span>
-                          <span class="shrink-0 text-right font-semibold text-secondary-content">
-                            {pr.precio}
-                          </span>
-                        </li>
-                      ))}
+                      {item.precios.map((pr) => {
+                        const { precio, extra } = partirPrecio(pr.precio);
+                        return (
+                          <li class="flex items-baseline justify-between gap-4 text-sm">
+                            <span class="text-base-content/70">{pr.concepto}</span>
+                            <span class="shrink-0 text-right font-semibold text-secondary-content">
+                              {precio}
+                              {extra && (
+                                <span class="block text-xs font-normal text-base-content/65">
+                                  {extra}
+                                </span>
+                              )}
+                            </span>
+                          </li>
+                        );
+                      })}
                     </ul>
                   )}
                 </div>
               </details>
             ))}
+
+            {/* Móvil: pasar al grupo siguiente sin volver a los chips, para
+                quien quiere verlo todo (desde lg ya se ven todos) */}
+            {grupos[i + 1] && (
+              <a
+                href={`#${slugify(grupos[i + 1].titulo)}`}
+                data-siguiente
+                class="lg:hidden mt-6 flex items-center justify-center gap-2 px-4 py-3 rounded-full bg-base-100 text-secondary-content border border-base-300 font-bold"
+              >
+                Siguiente: {grupos[i + 1].titulo}
+                <span class="text-primary" aria-hidden="true">→</span>
+              </a>
+            )}
           </div>
         </div>
       ))
     }
+
+    <!-- Para quien no sabe qué elegir (la mayoría). Misma tarjeta que el
+         "¿Por qué?" del Método Deleic; en móvil queda tras el grupo abierto -->
+    <div
+      class="reveal mt-10 lg:mt-14 flex items-start gap-4 rounded-3xl bg-base-200 p-6"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="w-8 h-8 shrink-0 text-primary"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        aria-hidden="true"
+        set:html={icons.clipboard}
+      />
+      <div>
+        <h3 class="font-semibold text-secondary-content">{ayuda.titulo}</h3>
+        <p class="mt-1 text-base-content/70">{ayuda.texto}</p>
+        <a
+          href={whatsapp(ayuda.cta.mensaje)}
+          target="_blank"
+          rel="noopener"
+          class="mt-5 inline-block px-4 sm:px-6 py-3 sm:py-4 rounded-full bg-primary text-primary-content font-bold"
+        >
+          {ayuda.cta.texto}
+        </a>
+      </div>
+    </div>
   </section>
 
-  <!-- Protocolos combinados -->
-  <section class="card bg-base-100 seccion-card">
+  <!-- Protocolos combinados: bloque burdeos (el de "Novedad" en las fichas)
+       para romper la página; en móvil, carrusel horizontal (el de "Otros
+       tratamientos") -->
+  <section
+    aria-labelledby="combinaciones-titulo"
+    class="relative isolate overflow-hidden card seccion-card bg-primary text-base-100"
+  >
+    <div
+      aria-hidden="true"
+      class="absolute inset-0 -z-10 bg-[radial-gradient(110%_80%_at_100%_0%,var(--color-primary-claro)_0%,transparent_60%),radial-gradient(80%_70%_at_0%_100%,var(--color-primary-oscuro)_0%,transparent_65%)]"
+    >
+    </div>
+    <div aria-hidden="true" class="textura-cursor"></div>
+
     <div class="reveal">
       <span
-        class="text-sm font-semibold tracking-widest uppercase text-primary"
+        class="inline-flex items-center gap-2 rounded-full bg-base-100/10 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.2em] ring-1 ring-base-100/20 backdrop-blur-sm"
       >
         {combinaciones.eyebrow}
       </span>
       <h2
-        class="mt-3 text-3xl sm:text-4xl font-semibold text-secondary-content"
+        id="combinaciones-titulo"
+        class="mt-4 text-3xl sm:text-4xl font-semibold tracking-tight"
       >
         {combinaciones.titulo}
       </h2>
-      <p class="mt-4 text-base-content/70 text-lg">{combinaciones.texto}</p>
+      <p class="mt-4 text-lg text-base-100/75 text-pretty">
+        {combinaciones.texto}
+      </p>
     </div>
 
-    <div class="reveal-stagger mt-8 grid grid-cols-1 md:grid-cols-3 gap-4">
-      {
-        (combinaciones.items as Combo[]).map((c) => (
-          <article class="flex flex-col rounded-3xl bg-base-200 p-6">
-            <div class="flex flex-wrap items-center gap-2">
-              {c.piezas.map((pieza, i) => (
-                <>
-                  {i > 0 && <span class="text-sm text-base-content/65">+</span>}
-                  <span class="rounded-full border border-base-300 bg-base-100 px-3 py-1 text-xs text-secondary-content">
-                    {pieza}
-                  </span>
-                </>
-              ))}
-            </div>
-
-            <h3 class="mt-5 text-xl font-semibold text-secondary-content">
-              {c.nombre}
-            </h3>
-            <p class="mt-2 text-sm text-base-content/70 leading-relaxed">
-              {c.texto}
-            </p>
-            {c.nota && (
-              <p class="mt-3 text-xs text-base-content/60 leading-relaxed">
-                {c.nota}
-              </p>
-            )}
-
-            {c.precios && c.precios.length > 0 && (
-              <ul class="mt-auto pt-4 space-y-1.5">
-                {c.precios.map((p) => (
-                  <li class="flex items-baseline justify-between gap-4 border-t border-base-300 pt-1.5 text-sm">
-                    <span class="text-base-content/70">{p.concepto}</span>
-                    <span class="shrink-0 text-right font-semibold text-secondary-content">
-                      {p.precio}
+    <!-- El reveal va en un envoltorio: dentro de un carrusel, la subida de
+         .reveal-stagger se recortaría -->
+    <div class="reveal mt-8">
+      <div
+        class="-mx-6 sm:-mx-10 md:mx-0 px-6 sm:px-10 md:px-0 flex md:grid md:grid-cols-3 gap-4 overflow-x-auto md:overflow-visible snap-x snap-mandatory scroll-px-6 sm:scroll-px-10 pb-2 md:pb-0 scrollbar-none [&::-webkit-scrollbar]:hidden"
+      >
+        {
+          (combinaciones.items as Combo[]).map((c) => (
+            <article class="shrink-0 w-[82%] sm:w-[60%] md:w-auto snap-start flex flex-col rounded-3xl bg-white/10 p-6 ring-1 ring-white/20 backdrop-blur-sm">
+              <div class="flex flex-wrap items-center gap-2">
+                {c.piezas.map((pieza, i) => (
+                  <>
+                    {i > 0 && (
+                      <span class="text-sm text-base-100/65" aria-hidden="true">
+                        +
+                      </span>
+                    )}
+                    <span class="rounded-full bg-white/10 ring-1 ring-white/20 px-3 py-1 text-xs">
+                      {pieza}
                     </span>
-                  </li>
-                ))}
-              </ul>
-            )}
-
-            {c.enlaces && (
-              <div class="mt-4 flex flex-wrap gap-x-5 gap-y-1">
-                {c.enlaces.map((e) => (
-                  <a
-                    href={e.href}
-                    class="text-sm font-medium text-primary hover:underline"
-                  >
-                    {e.texto} →
-                  </a>
+                  </>
                 ))}
               </div>
-            )}
-          </article>
-        ))
-      }
-    </div>
-  </section>
 
-  <!-- Cómo trabajamos (misma línea de tiempo que depilación láser) -->
-  <section class="card bg-base-100 seccion-card">
-    <div class="reveal">
-      <span
-        class="text-sm font-semibold tracking-widest uppercase text-primary"
-      >
-        {pasos.eyebrow}
-      </span>
-      <h2
-        class="mt-3 text-3xl sm:text-4xl font-semibold text-secondary-content"
-      >
-        {pasos.titulo}
-      </h2>
-    </div>
-
-    <div class="mt-8">
-      <div class="relative">
-        <!-- línea base -->
-        <div
-          class="absolute top-1.75 left-0 right-0 h-px bg-black/10 hidden md:block"
-        >
-        </div>
-
-        <div class="reveal-stagger relative grid grid-cols-1 sm:grid-cols-3 gap-8">
-          {
-            pasos.items.map((paso, i) => (
-              <div>
-                <div
-                  class:list={[
-                    "w-3.5 h-3.5 rounded-full mb-4",
-                    i === pasos.items.length - 1
-                      ? "border-2 border-primary bg-base-100"
-                      : "bg-primary",
-                  ]}
-                />
-                <p class="text-sm font-semibold text-secondary-content mb-1">
-                  {paso.titulo}
+              <h3 class="mt-5 text-xl font-semibold">{c.nombre}</h3>
+              <p class="mt-2 text-sm text-base-100/75 leading-relaxed text-pretty">
+                {c.texto}
+              </p>
+              {c.nota && (
+                <p class="mt-3 text-xs text-base-100/65 leading-relaxed">
+                  {c.nota}
                 </p>
-                <p class="text-sm text-base-content/70 leading-relaxed">
-                  {paso.texto}
-                </p>
-              </div>
-            ))
-          }
-        </div>
+              )}
+
+              {c.precios && c.precios.length > 0 && (
+                <ul class="mt-auto pt-5 divide-y divide-base-100/15">
+                  {c.precios.map((p) => (
+                    <li class="flex items-baseline justify-between gap-4 py-3 first:pt-0 last:pb-0">
+                      <span class="text-[15px] font-medium leading-snug">
+                        {p.concepto}
+                      </span>
+                      <span class="shrink-0 text-xl font-semibold tracking-tight tabular-nums">
+                        {p.precio}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              )}
+
+              {c.enlaces && (
+                <div class="mt-4 flex flex-wrap gap-x-5 gap-y-1">
+                  {c.enlaces.map((e) => (
+                    <a
+                      href={e.href}
+                      class="text-sm font-medium text-base-100 underline decoration-base-100/40 underline-offset-4 hover:decoration-base-100"
+                    >
+                      {e.texto} →
+                    </a>
+                  ))}
+                </div>
+              )}
+            </article>
+          ))
+        }
       </div>
     </div>
   </section>
@@ -484,3 +500,134 @@ const schema = {
 
   <script type="application/ld+json" set:html={JSON.stringify(schema)} />
 </Layout>
+
+<script>
+  // Pestañas de tratamientos en móvil: los chips y los botones "Siguiente"
+  // enseñan un grupo y ocultan el resto (solo por debajo de lg; ver
+  // "Pestañas en móvil" en global.css). Desde lg son saltos normales al grupo.
+  // Con ClientRouter hay que engancharlas de nuevo en cada navegación
+  const movil = matchMedia("(width < 64rem)");
+  const sinAnimacion = matchMedia("(prefers-reduced-motion: reduce)");
+  // El aviso de cambio de ancho va en `movil`, que sobrevive a cada
+  // navegación: se quita el de la visita anterior antes de poner el nuevo
+  let escucha = new AbortController();
+
+  function iniciarPestanas() {
+    escucha.abort();
+    escucha = new AbortController();
+    const seccion = document.querySelector<HTMLElement>("[data-pestanas]");
+    if (!seccion) return;
+    const chips = [
+      ...seccion.querySelectorAll<HTMLAnchorElement>("[data-pestana]"),
+    ];
+    const grupos = [...seccion.querySelectorAll<HTMLElement>("[data-grupo]")];
+
+    const marcar = (grupo: HTMLElement) =>
+      chips.forEach((c) =>
+        c.hash === `#${grupo.id}`
+          ? c.setAttribute("aria-current", "true")
+          : c.removeAttribute("aria-current"),
+      );
+
+    // En móvil, los grupos con data-oculto se ocultan con hidden="until-found"
+    // (ver "Pestañas en móvil" en global.css); desde lg se ven todos. Donde
+    // el navegador no conoce until-found (Safari), hidden a secas: su
+    // display: none sí puede con el display: grid del grupo
+    const valorOculto = "onbeforematch" in document.body ? "until-found" : "";
+    const sincronizar = () =>
+      grupos.forEach((g) =>
+        movil.matches && g.hasAttribute("data-oculto")
+          ? g.setAttribute("hidden", valorOculto)
+          : g.removeAttribute("hidden"),
+      );
+
+    const mostrar = (grupo: HTMLElement) => {
+      grupos.forEach((g) => g.toggleAttribute("data-oculto", g !== grupo));
+      sincronizar();
+      // Sin la animación de .reveal: al pasar de oculto a visible, el
+      // navegador la repetiría entera (1 s) cada vez
+      grupo.classList.add("is-visible");
+      grupo.style.animation = "none";
+    };
+
+    // Transición en dos tiempos, sin que se monten los textos: el grupo actual
+    // se desvanece, se cambia (y con "Siguiente" se sube, mientras no se ve
+    // nada) y el nuevo entra subiendo un poco. Con "reducir movimiento", el
+    // cambio es directo
+    let cambiando = false;
+    const cambiar = async (grupo: HTMLElement, subir: boolean) => {
+      if (cambiando) return;
+      cambiando = true;
+      marcar(grupo);
+      const animar = !sinAnimacion.matches;
+      const actual = grupos.find((g) => !g.hasAttribute("data-oculto"));
+      try {
+        if (animar && actual) {
+          await actual.animate(
+            [{ opacity: 1 }, { opacity: 0, transform: "translateY(-8px)" }],
+            { duration: 180, easing: "ease-in", fill: "forwards" },
+          ).finished;
+        }
+        mostrar(grupo);
+        // Quita el "forwards" para que vuelva a verse si se elige otra vez
+        actual?.getAnimations().forEach((a) => a.cancel());
+        if (subir) grupo.scrollIntoView({ block: "start" });
+        if (animar) {
+          await grupo.animate(
+            [
+              { opacity: 0, transform: "translateY(16px)" },
+              { opacity: 1, transform: "none" },
+            ],
+            { duration: 400, easing: "cubic-bezier(0.2, 0.6, 0.2, 1)" },
+          ).finished;
+        }
+      } finally {
+        cambiando = false;
+      }
+    };
+
+    // Los chips están justo encima del grupo: no hace falta mover la página.
+    // "Siguiente" está al final del grupo anterior: se sube al principio del
+    // nuevo para leerlo desde arriba
+    seccion
+      .querySelectorAll<HTMLAnchorElement>("[data-pestana], [data-siguiente]")
+      .forEach((enlace) =>
+        enlace.addEventListener("click", (e) => {
+          if (!movil.matches) return;
+          const grupo = grupos.find((g) => `#${g.id}` === enlace.hash);
+          if (!grupo) return;
+          e.preventDefault();
+          if (grupo.hasAttribute("data-oculto")) {
+            cambiar(grupo, enlace.hasAttribute("data-siguiente"));
+          }
+        }),
+      );
+
+    // El script toma el relevo del CSS: los ocultos pasan a hidden en el
+    // mismo paso, sin que se llegue a pintar nada entre medias
+    sincronizar();
+    seccion.setAttribute("data-listo", "");
+    movil.addEventListener("change", sincronizar, { signal: escucha.signal });
+
+    // "Buscar en la página" o un enlace de Google ha encontrado texto en un
+    // grupo oculto: el navegador avisa antes de enseñarlo y se cambia a esa
+    // pestaña, sin animación, porque el navegador ya baja hasta el texto
+    grupos.forEach((g) =>
+      g.addEventListener("beforematch", () => {
+        marcar(g);
+        mostrar(g);
+      }),
+    );
+
+    // Llegada con un grupo en la URL (/medicina-estetica/#cabello): se abre
+    // ese y se baja hasta él, que oculto no tenía dónde hacer scroll
+    const pedido = grupos.find((g) => `#${g.id}` === location.hash);
+    if (movil.matches && pedido?.hasAttribute("data-oculto")) {
+      marcar(pedido);
+      mostrar(pedido);
+      pedido.scrollIntoView({ block: "start" });
+    }
+  }
+
+  document.addEventListener("astro:page-load", iniciarPestanas);
+</script>
