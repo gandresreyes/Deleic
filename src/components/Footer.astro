@@ -76,7 +76,7 @@ const year = new Date().getFullYear();
         {
           columnas.map((col) => (
             <nav aria-label={col.titulo}>
-              <p class="text-[11px] font-semibold uppercase tracking-[0.2em] text-base-100/40">
+              <p class="text-[11px] font-semibold uppercase tracking-[0.2em] text-base-100/50">
                 {col.titulo}
               </p>
               <ul class="mt-4 space-y-2.5 text-sm">
@@ -98,7 +98,7 @@ const year = new Date().getFullYear();
 
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-10 sm:col-span-2 lg:col-span-5">
         <div>
-          <p class="text-[11px] font-semibold uppercase tracking-[0.2em] text-base-100/40">
+          <p class="text-[11px] font-semibold uppercase tracking-[0.2em] text-base-100/50">
             Contacto
           </p>
           <address class="mt-4 space-y-2.5 text-sm not-italic text-base-100/75">
@@ -117,7 +117,7 @@ const year = new Date().getFullYear();
         </div>
 
         <div>
-          <p class="text-[11px] font-semibold uppercase tracking-[0.2em] text-base-100/40">
+          <p class="text-[11px] font-semibold uppercase tracking-[0.2em] text-base-100/50">
             Horario
           </p>
           <dl class="mt-4 space-y-1.5 text-sm text-base-100/75">
@@ -132,7 +132,7 @@ const year = new Date().getFullYear();
                 ))
             }
           </dl>
-          <p class="mt-2 text-xs text-base-100/40">
+          <p class="mt-2 text-xs text-base-100/50">
             Verano:{" "}
             {HORARIO.verano
               .filter((f) => f.horas)
@@ -145,7 +145,7 @@ const year = new Date().getFullYear();
 
     <!-- Móvil y tablet: apilado y centrado (legales primero); desde lg, una fila -->
     <div
-      class="mt-12 flex flex-col items-center gap-3 border-t border-base-100/10 pt-6 text-center text-xs text-base-100/40 lg:flex-row lg:justify-between lg:gap-6 lg:text-left"
+      class="mt-12 flex flex-col items-center gap-3 border-t border-base-100/10 pt-6 text-center text-xs text-base-100/50 lg:flex-row lg:justify-between lg:gap-6 lg:text-left"
     >
       <nav aria-label="Información legal" class="lg:order-2">
         <ul class="flex flex-wrap justify-center gap-x-6 gap-y-1">

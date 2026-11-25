@@ -37,6 +37,7 @@ function iniciarEscaner() {
   const tarjetas = [...seccion.querySelectorAll<HTMLElement>("[data-escaner-tarjeta]")];
   const capas = [...visor.querySelectorAll<HTMLElement>("[data-escaner-luz]")];
   const minis = [...fijo.querySelectorAll<HTMLAnchorElement>("[data-escaner-ir]")];
+  const lista = seccion.querySelector<HTMLElement>("[data-escaner-lista]");
   const etiqueta = visor.querySelector("[data-escaner-etiqueta]");
   const contador = visor.querySelector("[data-escaner-contador]");
   const control = new AbortController();
@@ -145,6 +146,21 @@ function iniciarEscaner() {
   observer.observe(seccion);
   dosColumnas.addEventListener("change", pedir, { signal });
 
+  // Dos columnas: el visor se suelta cuando la lista acaba, así que debajo de
+  // la última tarjeta hace falta aire para que esta llegue a barrer su luz
+  // con el visor aún fijo. Depende de la altura del visor (que crece con la
+  // pantalla), por eso se mide en vez de fijarlo en el CSS
+  const ajustarAire = () => {
+    if (!lista) return;
+    const ultima = tarjetas[tarjetas.length - 1];
+    const paso = tarjetas[1].offsetTop - tarjetas[0].offsetTop;
+    const falta = fijo.offsetHeight - ultima.offsetHeight - paso * TRAMO_DOS_COLUMNAS[1] + 48;
+    lista.style.setProperty("--aire", `${Math.max(0, Math.round(falta))}px`);
+  };
+  const medidas = new ResizeObserver(ajustarAire);
+  medidas.observe(fijo);
+  medidas.observe(tarjetas[tarjetas.length - 1]);
+
   // Miniaturas: bajan hasta que la tarjeta de esa luz ha barrido entera (sin
   // JavaScript, el enlace salta a la tarjeta)
   minis.forEach((mini, k) =>
@@ -185,6 +201,7 @@ function iniciarEscaner() {
 
   desmontar = () => {
     observer.disconnect();
+    medidas.disconnect();
     escuchar(false);
     control.abort();
     cancelAnimationFrame(frame);

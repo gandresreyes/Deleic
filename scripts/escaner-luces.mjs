@@ -29,7 +29,7 @@ import { mkdir, writeFile } from "node:fs/promises";
 
 const FOTO = "public/img/metodo-deleic/realist.webp";
 
-// Si la foto trae media cara natural y media procesada (como metodo.png),
+// Si la foto trae media cara natural y media procesada (como metodo.webp),
 // ESPEJO = { x, ancho } usa esa mitad natural y su reflejo. Con una foto
 // normal de la cara entera: null
 const ESPEJO = null;
