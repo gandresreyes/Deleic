@@ -41,7 +41,13 @@ const year = new Date().getFullYear();
   >
   </div>
 
-  <div class="container mx-auto px-4 sm:px-6 lg:px-8 pt-14 sm:pt-16 pb-8">
+  <!--
+    Padding inferior amplio: el botón flotante "Reservar cita" (Navbar.astro)
+    ocupa ~68px abajo y taparía la última línea (crédito y legales).
+  -->
+  <div
+    class="container mx-auto px-4 sm:px-6 lg:px-8 pt-14 sm:pt-16 pb-[calc(6rem+env(safe-area-inset-bottom))]"
+  >
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-10">
       <div class="lg:col-span-3">
         <a href="/" class="inline-block" aria-label="Deleic, ir al inicio">
@@ -162,6 +168,8 @@ const year = new Date().getFullYear();
         Diseño y desarrollo:
         <a
           href="https://www.bygabo.dev/"
+          target="_blank"
+          rel="noopener"
           class="inline-block py-1.5 text-base-100/60 transition-colors hover:text-base-100"
         >
           Gabriel Reyes

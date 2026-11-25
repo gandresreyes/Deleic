@@ -64,6 +64,7 @@
     "items": [
       {
         "nombre": "RGB",
+        "luz": "blanca",
         "detalle": "Luz blanca",
         "texto": "Imagen natural del rostro. Base para valorar tono, arrugas, poros, manchas visibles y acné.",
         "detecta": [
@@ -74,6 +75,7 @@
       },
       {
         "nombre": "Polarizada paralela",
+        "luz": "paralela",
         "detalle": "",
         "texto": "Reduce la información de capas profundas y potencia la superficie. Muestra textura y detalles finos.",
         "detecta": [
@@ -84,6 +86,7 @@
       },
       {
         "nombre": "Polarizada cruzada",
+        "luz": "cruzada",
         "detalle": "",
         "texto": "Reduce reflejos superficiales. Mejora la visualización de tono irregular, microvasculatura y rojeces.",
         "detecta": [
@@ -94,6 +97,7 @@
       },
       {
         "nombre": "Luz azul",
+        "luz": "azul",
         "detalle": "405 nm",
         "texto": "Fluorescencia asociada a sebo, porfirinas y actividad bacteriana. Muy útil en pieles con acné.",
         "detecta": [
@@ -104,6 +108,7 @@
       },
       {
         "nombre": "UV",
+        "luz": "uv",
         "detalle": "365 nm",
         "texto": "Resalta manchas relacionadas con radiación UV y pigmentación profunda.",
         "detecta": [
@@ -114,6 +119,7 @@
       },
       {
         "nombre": "Luz de Wood",
+        "luz": "wood",
         "detalle": "",
         "texto": "Detecta alteraciones pigmentarias y vasculares. Muestra fluorescencia en ciertas sustancias.",
         "detecta": [
@@ -124,6 +130,7 @@
       },
       {
         "nombre": "Mapa Erythromin",
+        "luz": "eritema",
         "detalle": "",
         "texto": "Imagen procesada que muestra la distribución del componente rojo. Asociado a rojeces e inflamación.",
         "detecta": [
@@ -134,6 +141,7 @@
       },
       {
         "nombre": "Mapa termodinámico",
+        "luz": "termica",
         "detalle": "",
         "texto": "Imagen procesada que indica zonas con mayor señal asociada a inflamación profunda.",
         "detecta": [

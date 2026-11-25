@@ -9,7 +9,8 @@
     "dev": "astro dev --host",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "escaner": "node scripts/escaner-luces.mjs"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.4",

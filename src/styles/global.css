@@ -15,6 +15,13 @@
 @theme {
     --color-primary-claro: #8f1a1a;
     --color-primary-oscuro: #2a0101;
+
+    /* Color de cada luz del escáner del Método Deleic (ver "Escáner de luces").
+       No son colores de marca: úsalos solo dentro de ese visor oscuro */
+    --color-luz-azul: #4d6bff;
+    --color-luz-uv: #9a4dff;
+    --color-luz-wood: #3fd6ee;
+    --color-luz-calor: #ffc23d;
 }
 
 [data-theme="light"] {
@@ -336,5 +343,285 @@
 @keyframes eclipse-giro {
   to {
     transform: rotate(1turn);
+  }
+}
+
+/* ---------- Escáner de luces (Método Deleic) ----------
+   Un visor fijo (sticky) enseña la cara bajo la luz de la tarjeta que se
+   está leyendo. Al bajar, cada tarjeta nueva barre la cara de arriba abajo
+   con su luz, como el escáner del equipo. En móvil el visor va arriba y la
+   lista debajo; desde md, el visor a la izquierda (con miniaturas de las 8
+   luces y una linterna para el ratón) y la lista a la derecha.
+   - scripts/escaner.ts escribe --luz en el visor: de 0 a 7 con decimales
+     (3.4 = la luz 4 ha barrido el 40% de la cara sobre la luz 3).
+   - Cada .escaner-luz lleva su número en --k y su tipo en data-luz, que fija
+     el color de su línea (--brillo). Sus fotos y su capa de análisis (lo que
+     marca el software: manchas, poros, rojeces…) las genera
+     scripts/escaner-luces.mjs a partir de una sola foto (npm run escaner).
+   - La luz activa lleva .activa y su capa de análisis se dibuja trazo a trazo.
+   - Solo se mueven translate y opacity, y solo se pintan las dos capas en
+     juego (.en-uso): la que está y la que llega.
+   Sin JavaScript se ve la luz blanca; con "reducir movimiento" la luz cambia
+   de golpe, sin barrido. El color de cada luz está al final del bloque */
+@layer components {
+  .escaner-visor {
+    --brillo: white;
+    /* Halo de la luz activa sobre la página (con luz blanca no se ve) */
+    box-shadow: 0 22px 44px -26px var(--brillo);
+    transition: box-shadow 0.6s ease;
+  }
+
+  .escaner-luz {
+    /* Cuánto se ha destapado esta capa: 0 nada, 1 entera */
+    --r: clamp(0, calc(var(--luz, 0) - var(--k, 0) + 1), 1);
+    /* Luz blanca; [data-luz] lo cambia (al final del bloque) */
+    --brillo: white;
+
+    position: absolute;
+    inset: 0;
+  }
+
+  .escaner-luz:not(.en-uso) {
+    visibility: hidden;
+  }
+
+  /* La ventana baja hasta la línea y la foto sube lo mismo: la foto queda
+     quieta y se destapa de arriba abajo sin repintar */
+  .escaner-capa {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    translate: 0 calc((var(--r) - 1) * 100%);
+  }
+
+  .escaner-foto {
+    position: absolute;
+    inset: 0;
+    translate: 0 calc((1 - var(--r)) * 100%);
+  }
+
+  .escaner-foto > img {
+    @apply h-full w-full object-cover;
+  }
+
+  .en-uso > .escaner-capa,
+  .en-uso .escaner-foto {
+    will-change: translate;
+  }
+
+  /* Capa de análisis: SVG con el mismo encuadre que la foto (slice = cover).
+     Los trazos llevan pathLength="1": con el guion a 1 se dibujan al pasar
+     el desfase de 1 a 0, uno detrás de otro (--j) */
+  .escaner-analisis {
+    @apply absolute inset-0 h-full w-full;
+  }
+
+  .escaner-analisis path {
+    fill: none;
+    stroke: white;
+    stroke-width: 3.5;
+    stroke-linecap: round;
+    stroke-dasharray: 1 1;
+    stroke-dashoffset: 1;
+    transition: stroke-dashoffset 0.9s cubic-bezier(0.2, 0.6, 0.2, 1) calc(var(--j, 0) * 70ms);
+  }
+
+  .escaner-analisis .guia {
+    stroke-width: 2;
+    stroke-opacity: 0.7;
+  }
+
+  /* Celdas de la rejilla de textura: más opacas donde hay más textura */
+  .escaner-analisis .celda {
+    fill: white;
+    fill-opacity: 0;
+    stroke: none;
+    transition: fill-opacity 0.6s ease calc(var(--j, 0) * 40ms);
+  }
+
+  .escaner-analisis text {
+    fill: white;
+    font-size: var(--tam);
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    /* Halo oscuro para que se lea sobre la cara */
+    paint-order: stroke;
+    stroke: rgb(0 0 0 / 0.55);
+    stroke-width: 6px;
+    stroke-linejoin: round;
+    opacity: 0;
+    transition: opacity 0.5s ease 0.5s;
+  }
+
+  .activa .escaner-analisis path {
+    stroke-dashoffset: 0;
+  }
+
+  .activa .escaner-analisis .celda {
+    fill-opacity: var(--o);
+  }
+
+  .activa .escaner-analisis text {
+    opacity: 1;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .escaner-analisis :is(path, text) {
+      transition: none;
+    }
+  }
+
+  /* La línea del barrido, con la estela de su luz por encima. Mide lo mismo
+     que el visor y empieza medio visor más arriba: así su centro (la línea)
+     baja de 0 al 100% con --r. Se apaga al empezar y al acabar el barrido */
+  .escaner-linea {
+    position: absolute;
+    inset-inline: 0;
+    top: -50%;
+    height: 100%;
+    translate: 0 calc(var(--r) * 100%);
+    opacity: clamp(0, calc(min(var(--r), 1 - var(--r)) * 12), 1);
+    background:
+      linear-gradient(white, white) center / 100% 2px no-repeat,
+      linear-gradient(
+        to bottom,
+        transparent 46%,
+        color-mix(in oklab, var(--brillo) 80%, transparent) 50%,
+        transparent 54%
+      ),
+      linear-gradient(
+        to bottom,
+        transparent 20%,
+        color-mix(in oklab, var(--brillo) 22%, transparent) 50%,
+        transparent 50%
+      );
+  }
+
+  /* Esquinas de visor de cámara */
+  .escaner-marco {
+    --largo: 14px;
+    --grosor: 1.5px;
+    --color: rgb(255 255 255 / 0.6);
+
+    position: absolute;
+    inset: 12px;
+    background:
+      linear-gradient(var(--color) 0 0) top left / var(--largo) var(--grosor),
+      linear-gradient(var(--color) 0 0) top left / var(--grosor) var(--largo),
+      linear-gradient(var(--color) 0 0) top right / var(--largo) var(--grosor),
+      linear-gradient(var(--color) 0 0) top right / var(--grosor) var(--largo),
+      linear-gradient(var(--color) 0 0) bottom left / var(--largo) var(--grosor),
+      linear-gradient(var(--color) 0 0) bottom left / var(--grosor) var(--largo),
+      linear-gradient(var(--color) 0 0) bottom right / var(--largo) var(--grosor),
+      linear-gradient(var(--color) 0 0) bottom right / var(--grosor) var(--largo);
+    background-repeat: no-repeat;
+  }
+
+  /* La tarjeta que manda en el visor marca su número */
+  .escaner-num {
+    transition: box-shadow 0.4s ease;
+  }
+
+  .activa > .escaner-num {
+    box-shadow: 0 0 0 5px color-mix(in oklab, var(--color-primary) 15%, transparent);
+  }
+
+  /* Linterna (con ratón): dentro de un círculo que sigue al cursor se ve la
+     piel con luz natural. scripts/escaner.ts escribe --x/--y en el visor y le
+     pone .con-linterna mientras el ratón está encima. Con la luz blanca
+     activa no aparece: no habría nada que comparar */
+  .escaner-visor {
+    --radio-linterna: 76px;
+  }
+
+  .escaner-linterna,
+  .escaner-linterna-aro {
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .escaner-linterna {
+    position: absolute;
+    inset: 0;
+    mask-image: radial-gradient(
+      circle var(--radio-linterna) at var(--x, 50%) var(--y, 50%),
+      black 96%,
+      transparent
+    );
+  }
+
+  .escaner-linterna > img {
+    @apply h-full w-full object-cover;
+  }
+
+  .escaner-linterna-aro {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: calc(var(--radio-linterna) * 2);
+    height: calc(var(--radio-linterna) * 2);
+    border-radius: 9999px;
+    box-shadow:
+      0 0 0 1.5px rgb(255 255 255 / 0.85),
+      0 0 28px rgb(255 255 255 / 0.25);
+    translate: calc(var(--x, 0px) - var(--radio-linterna)) calc(var(--y, 0px) - var(--radio-linterna));
+  }
+
+  .con-linterna:not([data-luz="blanca"]) :is(.escaner-linterna, .escaner-linterna-aro) {
+    opacity: 1;
+  }
+
+  /* Miniaturas de las 8 luces (desde md): la activa, encendida y con anillo */
+  .escaner-mini {
+    @apply block overflow-hidden rounded-xl bg-secondary-content;
+    opacity: 0.5;
+    transition:
+      opacity 0.3s ease,
+      box-shadow 0.3s ease;
+  }
+
+  .escaner-mini > img {
+    @apply aspect-4/3 h-full w-full object-cover;
+  }
+
+  .escaner-mini:hover,
+  .escaner-mini.activa {
+    opacity: 1;
+  }
+
+  .escaner-mini.activa {
+    box-shadow:
+      0 0 0 2px var(--color-base-100),
+      0 0 0 4px var(--color-primary);
+  }
+
+  .escaner-mini:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 3px;
+  }
+
+  /* Color de cada luz: el de su línea y, mientras está activa, el del halo
+     del visor (que recibe el data-luz de la luz activa) */
+  [data-luz="cruzada"],
+  [data-luz="eritema"] {
+    --brillo: color-mix(in oklab, var(--color-primary-claro), white 35%);
+  }
+
+  [data-luz="azul"] {
+    --brillo: var(--color-luz-azul);
+  }
+
+  [data-luz="uv"] {
+    --brillo: var(--color-luz-uv);
+  }
+
+  [data-luz="wood"] {
+    --brillo: var(--color-luz-wood);
+  }
+
+  [data-luz="termica"] {
+    --brillo: var(--color-luz-calor);
   }
 }

@@ -5,6 +5,7 @@
 import Layout from "../layouts/Layout.astro";
 import { whatsapp } from "../data/contacto";
 import metodo from "../data/metodoDeleic.json";
+import marcas from "../data/escanerMarcas.json";
 import { faqPage, migas, negocio } from "../lib/schema";
 import Oferta from "../components/Metodo/Oferta.astro";
 import Ubication from "../components/Ubication.astro";
@@ -17,6 +18,17 @@ const conPrecio = (s: string) => s.replaceAll("{precio}", precio);
 
 const description = conPrecio(seo.description);
 const preguntas = faq.items.map((f) => ({ ...f, respuesta: conPrecio(f.respuesta) }));
+
+// Rótulo de cada luz en el visor del escáner: "Luz azul · 405 nm"
+const etiquetaLuz = (e: { nombre: string; detalle: string }) =>
+  [e.nombre, e.detalle].filter(Boolean).join(" · ");
+
+// Capa de análisis de cada luz (la genera scripts/escaner-luces.mjs)
+type Analisis = {
+  formas: { d: string; clase: string; o?: number }[];
+  textos: { x: number; y: number; ancla: string; lineas: string[] }[];
+};
+const analisis = marcas.luces as Record<string, Analisis>;
 
 // Nivel de la escala → fondo cada vez más intenso
 const tonosNivel = [
@@ -236,6 +248,7 @@ const schema = {
   <section
     class="card bg-base-100 seccion-card text-secondary-content"
     aria-labelledby="espectros-heading"
+    data-escaner
   >
     <div class="reveal">
       <span class="text-sm font-semibold tracking-widest uppercase text-primary">
@@ -250,55 +263,191 @@ const schema = {
       <p class="mt-4 max-w-3xl text-lg text-base-content/70 text-pretty">
         {espectros.texto}
       </p>
-      <p
-        class="sm:hidden mt-4 inline-flex items-center gap-2 text-sm font-medium text-primary"
-        aria-hidden="true"
-      >
-        Desliza para ver las {espectros.items.length} luces
-        <span class="motion-safe:animate-pulse">→</span>
-      </p>
     </div>
 
-    <!-- Móvil: carrusel deslizable (antes eran 8 bloques de texto seguidos).
-         Desde sm: rejilla -->
-    <ol
-      class="reveal-stagger mt-6 sm:mt-10 -mx-6 px-6 flex gap-4 overflow-x-auto snap-x snap-mandatory scroll-px-6 pb-2 scrollbar-none [&::-webkit-scrollbar]:hidden sm:mx-0 sm:px-0 sm:pb-0 sm:grid sm:grid-cols-2 lg:grid-cols-4 sm:gap-5 sm:overflow-visible"
+    <!-- Escáner: al bajar, cada tarjeta barre la cara del visor con su luz
+         (global.css, "Escáner de luces", y scripts/escaner.ts). En móvil el
+         visor va fijo arriba y la lista debajo; desde md, el visor va fijo a
+         la izquierda, con las 8 luces en miniatura, y la lista a la derecha -->
+    <div
+      class="mt-6 md:mt-10 md:grid md:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)] md:items-start md:gap-10 lg:gap-14"
     >
-      {
-        espectros.items.map((e, i) => (
-          <li class="w-[82%] shrink-0 snap-start sm:w-auto flex flex-col rounded-3xl bg-base-200 p-6">
-            <span class="flex h-9 w-9 items-center justify-center rounded-full bg-primary text-sm font-semibold text-primary-content">
-              {i + 1}
+      <div
+        data-escaner-fijo
+        class="sticky top-16 z-10 -mx-6 bg-base-100 px-6 pt-2 pb-4 md:top-28 md:mx-0 md:bg-transparent md:px-0 md:pt-0 md:pb-0"
+      >
+        <div class="reveal-scale">
+          <!-- Decorativo: el contenido está en la lista -->
+          <div
+            aria-hidden="true"
+            data-escaner-visor
+            data-luz={espectros.items[0].luz}
+            class="escaner-visor relative isolate max-h-[36svh] w-full overflow-hidden rounded-3xl bg-secondary-content md:max-h-[calc(100svh-15rem)]"
+            style={`aspect-ratio: ${marcas.ancho} / ${marcas.alto}`}
+          >
+            {
+              espectros.items.map((e, i) => (
+                <div
+                  data-escaner-luz
+                  data-luz={e.luz}
+                  class:list={["escaner-luz", i === 0 && "en-uso"]}
+                  style={`--k: ${i}`}
+                >
+                  <div class="escaner-capa">
+                    <div class="escaner-foto">
+                      <img
+                        src={`/img/metodo-deleic/escaner/${e.luz}.webp`}
+                        alt=""
+                        width={marcas.ancho}
+                        height={marcas.alto}
+                        loading="lazy"
+                        decoding="async"
+                      />
+                      <svg
+                        class="escaner-analisis"
+                        viewBox={`0 0 ${marcas.ancho} ${marcas.alto}`}
+                        preserveAspectRatio="xMidYMid slice"
+                        style={`--tam: ${marcas.tamTexto}px`}
+                      >
+                        {analisis[e.luz]?.formas.map((f, j) => (
+                          <path
+                            d={f.d}
+                            pathLength="1"
+                            class={f.clase}
+                            style={`--j: ${j}${f.o ? `; --o: ${f.o}` : ""}`}
+                          />
+                        ))}
+                        {analisis[e.luz]?.textos.map((t) => (
+                          <text text-anchor={t.ancla} dominant-baseline="middle">
+                            {t.lineas.map((linea, k) => (
+                              <tspan x={t.x} y={t.y + k * marcas.altoLinea}>
+                                {linea}
+                              </tspan>
+                            ))}
+                          </text>
+                        ))}
+                      </svg>
+                    </div>
+                  </div>
+                  {i > 0 && <span class="escaner-linea" />}
+                </div>
+              ))
+            }
+            <!-- Linterna (con ratón): la piel con luz natural dentro de un
+                 círculo que sigue al cursor, para comparar -->
+            <div class="escaner-linterna">
+              <img
+                src="/img/metodo-deleic/escaner/blanca.webp"
+                alt=""
+                width={marcas.ancho}
+                height={marcas.alto}
+                loading="lazy"
+                decoding="async"
+              />
+            </div>
+            <span class="escaner-linterna-aro">
+              <span
+                class="absolute top-full left-1/2 mt-2 -translate-x-1/2 whitespace-nowrap text-[11px] font-semibold uppercase tracking-widest text-white [text-shadow:0_1px_3px_rgb(0_0_0/0.8)]"
+              >
+                Luz natural
+              </span>
             </span>
-            <h3 class="mt-4 text-lg font-semibold leading-tight">
-              {e.nombre}
-              {e.detalle && (
-                <span class="block text-sm font-medium text-primary">
-                  {e.detalle}
-                </span>
-              )}
-            </h3>
-            <p class="mt-2 text-sm text-base-content/70 leading-relaxed">
-              {e.texto}
-            </p>
-            <ul
-              class="mt-auto pt-4 space-y-1 text-sm"
-              aria-label={`Qué detecta: ${e.nombre}`}
+            <span class="escaner-marco"></span>
+            <!-- Las luces se calculan sobre una foto de muestra: no es una captura del equipo -->
+            <span
+              class="absolute left-7 top-5 text-[10px] font-semibold uppercase tracking-widest text-white/60 md:left-8 md:top-6 md:text-xs"
             >
-              {e.detecta.map((d) => (
-                <li class="flex gap-2">
-                  <span
-                    aria-hidden="true"
-                    class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-primary"
-                  />
-                  {d}
-                </li>
-              ))}
-            </ul>
-          </li>
-        ))
-      }
-    </ol>
+              Simulación
+            </span>
+            <!-- Nombre de la luz sin fondo, para no tapar la imagen -->
+            <div
+              class="absolute inset-x-7 bottom-5 flex items-center justify-between gap-3 text-xs font-semibold uppercase tracking-wider text-base-100 [text-shadow:0_1px_3px_rgb(0_0_0/0.8)] md:inset-x-8 md:bottom-6 md:text-sm"
+            >
+              <span data-escaner-etiqueta>
+                {etiquetaLuz(espectros.items[0])}
+              </span>
+              <span class="tabular-nums text-white/70">
+                <span data-escaner-contador>1</span>/{espectros.items.length}
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Desde md: las 8 luces en miniatura; cada una lleva a su tarjeta -->
+        <nav aria-label="Ir a cada luz" class="mt-4 hidden grid-cols-8 gap-2 md:grid">
+          {
+            espectros.items.map((e, i) => (
+              <a
+                href={`#luz-${e.luz}`}
+                data-escaner-ir
+                aria-label={etiquetaLuz(e)}
+                aria-current={i === 0 ? "true" : undefined}
+                class:list={["escaner-mini", i === 0 && "activa"]}
+              >
+                <img
+                  src={`/img/metodo-deleic/escaner/${e.luz}.webp`}
+                  alt=""
+                  width={marcas.ancho}
+                  height={marcas.alto}
+                  loading="lazy"
+                  decoding="async"
+                />
+              </a>
+            ))
+          }
+        </nav>
+
+        <!-- Móvil: las tarjetas se funden al pasar bajo el visor -->
+        <div
+          class="pointer-events-none absolute inset-x-0 top-full h-6 bg-linear-to-b from-base-100 to-transparent md:hidden"
+        >
+        </div>
+      </div>
+
+      <!-- md:pb-40: aire bajo la última tarjeta para que llegue a barrir su
+           luz mientras el visor sigue fijo -->
+      <ol class="reveal-stagger mt-2 grid grid-cols-1 gap-4 md:mt-0 md:gap-5 md:pb-40">
+        {
+          espectros.items.map((e, i) => (
+            <li
+              id={`luz-${e.luz}`}
+              data-escaner-tarjeta
+              data-etiqueta={etiquetaLuz(e)}
+              class="flex scroll-mt-28 flex-col rounded-3xl bg-base-200 p-6"
+            >
+              <span class="escaner-num flex h-9 w-9 items-center justify-center rounded-full bg-primary text-sm font-semibold text-primary-content">
+                {i + 1}
+              </span>
+              <h3 class="mt-4 text-lg font-semibold leading-tight">
+                {e.nombre}
+                {e.detalle && (
+                  <span class="block text-sm font-medium text-primary">
+                    {e.detalle}
+                  </span>
+                )}
+              </h3>
+              <p class="mt-2 text-sm text-base-content/70 leading-relaxed">
+                {e.texto}
+              </p>
+              <ul
+                class="mt-auto pt-4 space-y-1 text-sm"
+                aria-label={`Qué detecta: ${e.nombre}`}
+              >
+                {e.detecta.map((d) => (
+                  <li class="flex gap-2">
+                    <span
+                      aria-hidden="true"
+                      class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-primary"
+                    />
+                    {d}
+                  </li>
+                ))}
+              </ul>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
   </section>
 
   <!-- Las 5 áreas -->
@@ -314,14 +463,23 @@ const schema = {
       <h2 id="areas-heading" class="mt-3 text-3xl sm:text-4xl font-semibold">
         {areas.titulo}
       </h2>
+      <p
+        class="sm:hidden mt-4 inline-flex items-center gap-2 text-sm font-medium text-primary"
+        aria-hidden="true"
+      >
+        Desliza para ver las {areas.items.length} áreas
+        <span class="motion-safe:animate-pulse">→</span>
+      </p>
     </div>
 
+    <!-- Móvil: carrusel deslizable; asoma la tarjeta siguiente para que se
+         vea que hay más. Desde sm: rejilla -->
     <ul
-      class="reveal-stagger mt-8 grid grid-cols-2 lg:grid-cols-5 gap-3 sm:gap-5"
+      class="reveal-stagger mt-6 sm:mt-8 -mx-4 px-4 flex gap-4 overflow-x-auto snap-x snap-mandatory scroll-px-4 pb-2 scrollbar-none [&::-webkit-scrollbar]:hidden sm:mx-0 sm:px-0 sm:pb-0 sm:grid sm:grid-cols-2 lg:grid-cols-5 sm:gap-5 sm:overflow-visible"
     >
       {
         areas.items.map((a) => (
-          <li class="rounded-3xl border border-base-300 bg-base-100 p-5 sm:p-6 max-lg:last:odd:col-span-2">
+          <li class="w-[82%] shrink-0 snap-start sm:w-auto rounded-3xl border border-base-300 bg-base-100 p-5 sm:p-6 max-lg:last:odd:col-span-2">
             <span class="flex h-11 w-11 items-center justify-center rounded-xl bg-primary/10 text-primary">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
