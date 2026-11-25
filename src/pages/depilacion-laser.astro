@@ -46,7 +46,7 @@ const schema = {
         itemListElement: precios.grupos.map((g) => ({
           "@type": "Offer",
           name: `Zona ${g.talla} · ${g.nombre}`,
-          description: g.zonas.join(", "),
+          description: [g.zonas.join(", "), g.regalo].filter(Boolean).join(". "),
           price: g.precio,
           priceCurrency: "EUR",
           unitText: "sesión",

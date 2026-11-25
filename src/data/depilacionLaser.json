@@ -70,7 +70,8 @@
           "Perianal",
           "Línea alba",
           "Areolas",
-          "Axilas"
+          "Axilas",
+          "Ingle normal"
         ]
       },
       {
@@ -93,7 +94,8 @@
         "talla": "L",
         "nombre": "Zonas grandes",
         "precio": 65,
-        "zonas": ["Media pierna inferior", "Media pierna superior", "Rodillas"]
+        "zonas": ["Media pierna inferior", "Media pierna superior"],
+        "regalo": "Rodillas de regalo con la media pierna inferior o la superior"
       },
       {
         "talla": "XL",

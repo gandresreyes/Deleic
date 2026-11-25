@@ -98,7 +98,8 @@ export const GET: APIRoute = async ({ site }) => {
     `### ${depilacion.hero.titulo} (precio por sesión y zona)`,
     "",
     ...depilacion.precios.grupos.map(
-      (g) => `- Zona ${g.talla} (${g.nombre}), ${g.precio} €: ${g.zonas.join(", ")}`,
+      (g) =>
+        `- Zona ${g.talla} (${g.nombre}), ${g.precio} €: ${g.zonas.join(", ")}${g.regalo ? `. ${g.regalo}` : ""}`,
     ),
     "",
     "### Método Deleic (diagnóstico facial avanzado)",
