@@ -22,3 +22,14 @@ export const conEnlaces = (
   });
 
 export const sinEnlaces = (texto: string) => texto.replace(ENLACE, "$1");
+
+// Ancla de un grupo a partir de su título: "Arrugas de expresión" →
+// "arrugas-de-expresion". La usan las páginas con grupos (medicina estética,
+// micropigmentación) y el selector de la home que enlaza a ellos
+export const slugify = (s: string) =>
+  s
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[̀-ͯ]/g, "")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/(^-|-$)/g, "");

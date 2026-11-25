@@ -8,6 +8,7 @@ import AntesDespues from "../../components/AntesDespues.astro";
 import { gruposPublicados, numero, partirPrecio, type Grupo } from "../../lib/precios";
 import { faqPage, migas, negocio } from "../../lib/schema";
 import { whatsapp } from "../../data/contacto";
+import { slugify } from "../../lib/texto";
 import data from "../../data/micropigmentacion.json";
 
 
@@ -15,14 +16,6 @@ const { seo, hero, intro, tratamientos, tecnicas, resultados, pasos, faq } =
   data;
 
 const grupos = gruposPublicados(tratamientos.grupos as Grupo[]);
-
-const slugify = (s: string) =>
-  s
-    .toLowerCase()
-    .normalize("NFD")
-    .replace(/[̀-ͯ]/g, "")
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/(^-|-$)/g, "");
 
 // Iconos (trazo, 24x24). Heredan el color con currentColor
 const icons: Record<string, string> = {

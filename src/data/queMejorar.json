@@ -1,0 +1,322 @@
+{
+  "eyebrow": "Por dónde empezar",
+  "titulo": "¿Qué te gustaría mejorar?",
+  "texto": "Señala la zona del rostro o del cuerpo que te preocupa y te enseñamos los tratamientos que suelen encajar. En la valoración confirmamos cuál es el tuyo.",
+  "pista": "Toca un punto",
+  "cta": "Reservar valoración",
+  "opciones": [
+    {
+      "id": "manchas",
+      "titulo": "Manchas",
+      "zonas": {
+        "rostro": {
+          "x": 33,
+          "y": 60,
+          "r": 13
+        }
+      },
+      "texto": "Solares, hormonales o por medicamentos: cada tipo se trata de una forma distinta, por eso conviene diagnosticarlas bien.",
+      "mensaje": "Hola, me gustaría mejorar unas manchas de la piel y quiero reservar una valoración en Deleic.",
+      "tratamientos": [
+        {
+          "facial": "despigmentantes"
+        },
+        {
+          "medicina": "Manchas"
+        }
+      ]
+    },
+    {
+      "id": "arrugas",
+      "titulo": "Arrugas",
+      "zonas": {
+        "rostro": {
+          "x": 42,
+          "y": 24,
+          "r": 13
+        }
+      },
+      "texto": "Líneas de expresión en la frente y el entrecejo, surcos o arrugas finas por falta de hidratación.",
+      "mensaje": "Hola, me gustaría mejorar mis arrugas y quiero reservar una valoración en Deleic.",
+      "tratamientos": [
+        {
+          "facial": "antiedad"
+        },
+        {
+          "medicina": "Arrugas de expresión"
+        },
+        {
+          "medicina": "Rellenar y definir",
+          "texto": "Ácido hialurónico para los surcos y las zonas que han perdido volumen."
+        }
+      ]
+    },
+    {
+      "id": "flacidez",
+      "titulo": "Flacidez",
+      "zonas": {
+        "rostro": {
+          "x": 66,
+          "y": 75,
+          "r": 14,
+          "lado": "abajo"
+        },
+        "cuerpo": {
+          "x": 39,
+          "y": 30,
+          "r": 7,
+          "lado": "izquierda"
+        }
+      },
+      "texto": "Piel que ha perdido firmeza en el óvalo facial, el cuello o el cuerpo.",
+      "mensaje": "Hola, me gustaría mejorar la flacidez y quiero reservar una valoración en Deleic.",
+      "tratamientos": [
+        {
+          "facial": "reafirmante-reductor"
+        },
+        {
+          "facial": "ultrasonix"
+        },
+        {
+          "medicina": "Tensar y reafirmar"
+        }
+      ]
+    },
+    {
+      "id": "acne",
+      "titulo": "Acné y marcas",
+      "zonas": {
+        "rostro": {
+          "x": 57,
+          "y": 31,
+          "r": 8
+        }
+      },
+      "texto": "Acné activo, puntos negros o las marcas que deja la inflamación.",
+      "mensaje": "Hola, me gustaría tratar el acné o sus marcas y quiero reservar una valoración en Deleic.",
+      "tratamientos": [
+        {
+          "facial": "antiacne-marcas"
+        },
+        {
+          "facial": "limpieza-facial"
+        },
+        {
+          "medicina": "Calidad de la piel",
+          "texto": "Polinucleótidos, que mejoran las cicatrices y las marcas de acné."
+        }
+      ]
+    },
+    {
+      "id": "piel-apagada",
+      "titulo": "Piel apagada",
+      "zonas": {
+        "rostro": {
+          "x": 50,
+          "y": 50,
+          "r": 30,
+          "lado": "izquierda",
+          "efecto": "luz"
+        }
+      },
+      "texto": "Falta de luz, deshidratación, poros dilatados o textura irregular.",
+      "mensaje": "Hola, me gustaría darle luz a mi piel y quiero reservar una valoración en Deleic.",
+      "tratamientos": [
+        {
+          "facial": "iluminador-revitalizante"
+        },
+        {
+          "facial": "limpieza-facial"
+        },
+        {
+          "medicina": "Calidad de la piel"
+        }
+      ]
+    },
+    {
+      "id": "ojeras",
+      "titulo": "Ojeras y bolsas",
+      "zonas": {
+        "rostro": {
+          "x": 63.5,
+          "y": 55,
+          "r": 9,
+          "lado": "abajo"
+        }
+      },
+      "texto": "Por pigmentación, por retención de líquidos o por flacidez del contorno: según la causa, cambia el tratamiento.",
+      "mensaje": "Hola, me gustaría mejorar mis ojeras o bolsas y quiero reservar una valoración en Deleic.",
+      "tratamientos": [
+        {
+          "facial": "ojeras-bolsas-contorno"
+        },
+        {
+          "medicina": "Rellenar y definir",
+          "texto": "Ácido hialurónico para las ojeras que han perdido volumen."
+        }
+      ]
+    },
+    {
+      "id": "labios",
+      "titulo": "Labios",
+      "zonas": {
+        "rostro": {
+          "x": 50,
+          "y": 70.5,
+          "r": 10,
+          "lado": "izquierda"
+        }
+      },
+      "texto": "Más volumen e hidratación, o más definición y color.",
+      "mensaje": "Hola, me gustaría mejorar mis labios y quiero reservar una valoración en Deleic.",
+      "tratamientos": [
+        {
+          "medicina": "Rellenar y definir",
+          "texto": "Ácido hialurónico que hidrata los labios y les devuelve volumen."
+        },
+        {
+          "micropigmentacion": "Ojos y labios",
+          "nombre": "Micropigmentación de labios",
+          "texto": "Perfilado y corrección, con una definición y un color que duran más que el maquillaje diario."
+        }
+      ]
+    },
+    {
+      "id": "cejas-pestanas",
+      "titulo": "Cejas y pestañas",
+      "zonas": {
+        "rostro": {
+          "x": 37,
+          "y": 37,
+          "r": 10
+        }
+      },
+      "texto": "Cejas con más forma o densidad y una mirada más definida, con pigmento o sin él.",
+      "mensaje": "Hola, me gustaría mejorar mis cejas o pestañas y quiero reservar una cita en Deleic.",
+      "tratamientos": [
+        {
+          "micropigmentacion": "Cejas",
+          "nombre": "Nanoblading de cejas",
+          "texto": "Cejas pelo a pelo con acabado natural, para dar forma o reconstruir la ceja."
+        },
+        {
+          "facial": "laminado-lifting-pestanas-cejas"
+        },
+        {
+          "micropigmentacion": "Ojos y labios",
+          "nombre": "Micro línea de pestañas",
+          "texto": "Más densidad en la raíz de las pestañas, sin que parezca maquillaje."
+        }
+      ]
+    },
+    {
+      "id": "vello",
+      "titulo": "Vello",
+      "zonas": {
+        "cuerpo": {
+          "x": 44.5,
+          "y": 61.5,
+          "r": 7,
+          "lado": "izquierda"
+        }
+      },
+      "texto": "Para mujer y hombre, con un láser de diodo de alta potencia.",
+      "mensaje": "Hola, me gustaría reservar una valoración gratuita de depilación láser en Deleic.",
+      "tratamientos": [
+        {
+          "href": "/depilacion-laser/",
+          "servicio": "Depilación láser",
+          "nombre": "Depilación láser de diodo",
+          "texto": "Reducimos el vello de forma progresiva, segura y eficaz, adaptando cada sesión a tu tipo de piel."
+        }
+      ]
+    },
+    {
+      "id": "caida-pelo",
+      "titulo": "Caída del pelo",
+      "zonas": {
+        "rostro": {
+          "x": 40,
+          "y": 9,
+          "r": 20,
+          "lado": "izquierda"
+        }
+      },
+      "texto": "Caída estacional, reaccional u hormonal, o un cabello que ha perdido fuerza.",
+      "mensaje": "Hola, me gustaría tratar la caída del pelo y quiero reservar una valoración en Deleic.",
+      "tratamientos": [
+        {
+          "facial": "tratamiento-capilar"
+        },
+        {
+          "medicina": "Cabello"
+        }
+      ]
+    },
+    {
+      "id": "grasa-celulitis",
+      "titulo": "Grasa y celulitis",
+      "zonas": {
+        "cuerpo": {
+          "x": 50,
+          "y": 35.5,
+          "r": 8
+        }
+      },
+      "texto": "Grasa localizada, celulitis o una zona del cuerpo que te gustaría remodelar.",
+      "mensaje": "Hola, me gustaría tratar la grasa localizada o la celulitis y quiero reservar una valoración en Deleic.",
+      "tratamientos": [
+        {
+          "facial": "reafirmante-reductor",
+          "texto": "Radiofrecuencia Symmed que reduce y remodela el contorno corporal."
+        },
+        {
+          "facial": "drenante-presoterapia"
+        },
+        {
+          "medicina": "Cuerpo",
+          "texto": "Lipoterapia y carboxiterapia para la grasa localizada."
+        }
+      ]
+    },
+    {
+      "id": "piernas",
+      "titulo": "Piernas cansadas",
+      "zonas": {
+        "cuerpo": {
+          "x": 56.5,
+          "y": 74,
+          "r": 8,
+          "lado": "derecha"
+        }
+      },
+      "texto": "Retención de líquidos, pesadez, arañas vasculares o varices.",
+      "mensaje": "Hola, me gustaría mejorar mis piernas cansadas y quiero reservar una valoración en Deleic.",
+      "tratamientos": [
+        {
+          "facial": "drenante-presoterapia"
+        },
+        {
+          "medicina": "Cuerpo",
+          "texto": "Esclerosis para cerrar arañas vasculares, varices y capilares."
+        }
+      ]
+    },
+    {
+      "id": "no-lo-se",
+      "titulo": "No lo tengo claro",
+      "zonas": {
+        "rostro": {
+          "efecto": "escaneo"
+        }
+      },
+      "texto": "Es lo más normal. En la valoración vemos tu piel y lo que te gustaría conseguir, y te decimos por dónde empezar, sin compromiso.",
+      "mensaje": "Hola, no tengo claro qué tratamiento necesito y me gustaría reservar una valoración en Deleic.",
+      "tratamientos": [
+        {
+          "facial": "diagnostico-facial-corporal"
+        }
+      ]
+    }
+  ]
+}

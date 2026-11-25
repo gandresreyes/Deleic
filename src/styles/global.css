@@ -174,6 +174,213 @@
   overflow: clip;
 }
 
+/* ---------- Selector "¿Qué te gustaría mejorar?" ----------
+   Lo mismo que las pestañas, pero en todos los anchos y sin ninguna abierta
+   al cargar (QueMejorar.astro). Hasta que arranca el script, este CSS oculta
+   las respuestas; sin JavaScript se ven todas */
+@media (scripting: enabled) {
+  [data-recomendador]:not([data-listo]) [data-respuesta] {
+    display: none;
+  }
+}
+
+[data-recomendador] [data-respuesta][hidden] {
+  margin-top: 0;
+  block-size: 0;
+  overflow: clip;
+}
+
+/* Mapas del rostro y del cuerpo del selector. Se ve uno cada vez
+   ([data-activo]); el paso de uno a otro es un zoom que anima el script.
+   Mientras dura ([data-cambiando]) se ven los dos, sin puntos ni pista.
+   Al elegir una zona, la foto se oscurece salvo un círculo de luz sobre ella;
+   el script pone su centro (--foco-x/y, en % de la foto) y su radio
+   (--foco-r, en % del ancho, por eso cqi). Registrar las variables deja que el
+   foco viaje de una zona a otra en vez de saltar */
+.mapa {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.mapa[data-activo],
+[data-cambiando] .mapa {
+  opacity: 1;
+  visibility: visible;
+}
+
+.mapa [data-opcion] {
+  transition: opacity 0.3s ease;
+}
+
+[data-cambiando] .mapa [data-opcion] {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Efecto "luz" (piel apagada): la foto gana brillo y color, y un destello
+   suave sobre la cara aparece y se queda tenue, como el "efecto flash" del
+   Iluminador */
+.mapa img {
+  transition: filter 0.9s ease;
+}
+
+.mapa[data-efecto="luz"] img {
+  filter: brightness(1.12) saturate(1.15) contrast(1.03);
+}
+
+.mapa-destello {
+  background: radial-gradient(
+    32% 40% at 50% 52%,
+    rgb(255 255 255 / 0.35),
+    transparent
+  );
+  opacity: 0;
+  mix-blend-mode: soft-light;
+  pointer-events: none;
+}
+
+.mapa[data-efecto="luz"] .mapa-destello {
+  opacity: 0.6;
+  transition: opacity 0.9s ease;
+}
+
+@keyframes destello {
+  0% {
+    opacity: 0;
+  }
+  35% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.6;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .mapa[data-efecto="luz"] .mapa-destello {
+    animation: destello 1.4s ease-out;
+  }
+}
+
+/* Efecto "escaneo" (no lo tengo claro): una línea de luz fina con una estela
+   tenue recorre la cara de arriba abajo, como el escáner del diagnóstico.
+   Dos pasadas y se para: menos de 5 s, el límite de WCAG para lo que se mueve
+   solo. Si coincide con el zoom de cambio de mapa, espera a que acabe */
+.mapa-escaneo {
+  height: 30%;
+  opacity: 0;
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    rgb(255 255 255 / 0.1) calc(100% - 3px),
+    rgb(255 255 255 / 0.9) calc(100% - 2px),
+    rgb(255 255 255 / 0.9)
+  );
+  filter: drop-shadow(0 0 6px rgb(255 255 255 / 0.6));
+  mix-blend-mode: screen;
+  pointer-events: none;
+}
+
+@keyframes escaneo {
+  0% {
+    transform: translateY(-30cqi);
+    opacity: 0;
+  }
+  12%,
+  88% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100cqi);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .mapa[data-efecto="escaneo"] .mapa-escaneo {
+    animation: escaneo 2.2s cubic-bezier(0.45, 0, 0.55, 1) 2;
+  }
+
+  /* Más específica que la de arriba, cuyo `animation` la pondría en marcha */
+  [data-mapas][data-cambiando] .mapa[data-efecto] .mapa-escaneo {
+    animation-play-state: paused;
+  }
+}
+
+@property --foco-x {
+  syntax: "<percentage>";
+  inherits: false;
+  initial-value: 50%;
+}
+@property --foco-y {
+  syntax: "<percentage>";
+  inherits: false;
+  initial-value: 45%;
+}
+@property --foco-r {
+  syntax: "<number>";
+  inherits: false;
+  initial-value: 60;
+}
+
+.mapa-foco {
+  background: radial-gradient(
+    circle at var(--foco-x) var(--foco-y),
+    transparent calc(var(--foco-r) * 1cqi),
+    rgb(0 0 0 / 0.7) calc(var(--foco-r) * 1cqi + 12cqi)
+  );
+  opacity: 0;
+  transition:
+    --foco-x 0.7s cubic-bezier(0.2, 0.6, 0.2, 1),
+    --foco-y 0.7s cubic-bezier(0.2, 0.6, 0.2, 1),
+    --foco-r 0.7s cubic-bezier(0.2, 0.6, 0.2, 1),
+    opacity 0.5s ease;
+}
+
+.mapa[data-zona] .mapa-foco {
+  opacity: 1;
+}
+
+/* Mientras no se ha elegido nada, los puntos laten por turnos para invitar a
+   tocarlos, y se ve la pista de abajo */
+.mapa-latido {
+  opacity: 0;
+}
+
+@keyframes latido {
+  0% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+  70%,
+  100% {
+    transform: scale(3);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  [data-recomendador]:not([data-elegida]) .mapa-latido {
+    animation: latido 2.4s cubic-bezier(0, 0, 0.2, 1) infinite;
+    animation-delay: var(--retraso);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mapa-foco {
+    transition: opacity 0.3s ease;
+  }
+}
+
+.mapa-pista {
+  transition: opacity 0.4s ease;
+}
+
+[data-recomendador][data-elegida] .mapa-pista,
+[data-cambiando] .mapa-pista {
+  opacity: 0;
+}
+
 /* ---------- Textura que sigue al cursor (estilo Google) ----------
    Una rejilla de puntos tenue; alrededor del cursor los puntos se encienden,
    crecen un poco y dejan un brillo burdeos que lo sigue con retraso.

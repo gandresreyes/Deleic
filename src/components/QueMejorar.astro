@@ -1,0 +1,573 @@
+---
+// src/components/QueMejorar.astro
+// Selector "¿Qué te gustaría mejorar?": la persona elige un problema y ve los
+// tratamientos que suelen encajar, con un WhatsApp que ya dice qué le
+// preocupa. El mapa problema → tratamientos está en src/data/queMejorar.json;
+// el nombre y el texto de cada tarjeta salen de los datos de su servicio, así
+// que no se escriben dos veces y lo que tiene `publicar: false` no aparece.
+//
+// Encima, un mapa del rostro: las opciones con `zona` (en % de la foto)
+// tienen un punto en la cara, y al elegirlas un foco de luz se va a esa zona.
+// Es un atajo visual: los chips son la vía completa y accesible.
+import { getCollection } from "astro:content";
+import Foto from "./Foto.astro";
+import { whatsapp } from "../data/contacto";
+import { gruposPublicados, type Grupo } from "../lib/precios";
+import { slugify } from "../lib/texto";
+import datos from "../data/queMejorar.json";
+import medicina from "../data/medicinaEstetica.json";
+import micropigmentacion from "../data/micropigmentacion.json";
+
+interface Referencia {
+  facial?: string;
+  medicina?: string;
+  micropigmentacion?: string;
+  href?: string;
+  servicio?: string;
+  nombre?: string;
+  texto?: string;
+}
+
+interface Tarjeta {
+  href: string;
+  servicio: string;
+  nombre: string;
+  texto: string;
+}
+
+const faciales = await getCollection("facialCorporal");
+
+// Grupo de una página con grupos (medicina, micropigmentación). Si todos sus
+// tratamientos están ocultos, la tarjeta no sale; si el título no existe, es
+// una errata en el JSON y el build se para
+const grupo = (grupos: Grupo[], titulo: string, pagina: string) => {
+  const g = gruposPublicados(grupos).find((g) => g.titulo === titulo);
+  if (!g && !grupos.some((g) => g.titulo === titulo)) {
+    throw new Error(`queMejorar.json: no hay un grupo "${titulo}" en ${pagina}`);
+  }
+  return g;
+};
+
+const resolver = (ref: Referencia): Tarjeta | null => {
+  if (ref.facial) {
+    const t = faciales.find((t) => t.data.slug === ref.facial);
+    if (!t) {
+      throw new Error(`queMejorar.json: no hay un tratamiento facial "${ref.facial}"`);
+    }
+    return {
+      href: `/facial-corporal/${t.data.slug}/`,
+      servicio: "Facial y corporal",
+      nombre: ref.nombre ?? t.data.nombre,
+      texto: ref.texto ?? t.data.descripcionCorta,
+    };
+  }
+  if (ref.medicina) {
+    const g = grupo(medicina.tratamientos.grupos as Grupo[], ref.medicina, "medicinaEstetica.json");
+    return g
+      ? {
+          href: `/medicina-estetica/#${slugify(g.titulo)}`,
+          servicio: "Medicina estética",
+          nombre: ref.nombre ?? g.titulo,
+          texto: ref.texto ?? g.texto,
+        }
+      : null;
+  }
+  if (ref.micropigmentacion) {
+    const g = grupo(
+      micropigmentacion.tratamientos.grupos as Grupo[],
+      ref.micropigmentacion,
+      "micropigmentacion.json",
+    );
+    return g
+      ? {
+          href: `/micropigmentacion/#${slugify(g.titulo)}`,
+          servicio: "Micropigmentación",
+          nombre: ref.nombre ?? g.titulo,
+          texto: ref.texto ?? g.texto,
+        }
+      : null;
+  }
+  if (ref.href && ref.servicio && ref.nombre && ref.texto) {
+    return ref as Tarjeta;
+  }
+  throw new Error(`queMejorar.json: tratamiento incompleto ${JSON.stringify(ref)}`);
+};
+
+const opciones = datos.opciones
+  .map((o) => ({
+    ...o,
+    tarjetas: (o.tratamientos as Referencia[])
+      .map(resolver)
+      .filter((t): t is Tarjeta => t !== null),
+  }))
+  .filter((o) => o.tarjetas.length > 0);
+
+const idRespuesta = (id: string) => `mejorar-${id}`;
+
+// Dos mapas, rostro y cuerpo, con la misma luz y el mismo fondo negro. Cada
+// opción puede tener punto en uno, en los dos (flacidez) o en ninguno.
+// La etiqueta sale hacia el centro de la foto, que es donde hay sitio, salvo
+// que la zona diga otro `lado` (si taparía otro punto)
+const LADOS = {
+  izquierda: "right-full mr-0.5 top-1/2 -translate-y-1/2",
+  derecha: "left-full ml-0.5 top-1/2 -translate-y-1/2",
+  abajo: "top-full -mt-1 left-1/2 -translate-x-1/2",
+};
+// `efecto`: además del foco, un efecto propio sobre la foto (ver "luz" y
+// "escaneo" en global.css). Una zona sin x/y no pinta punto ni foco: solo
+// lleva a ese mapa y lanza su efecto ("No lo tengo claro" → escaneo)
+type Zona = {
+  x?: number;
+  y?: number;
+  r?: number;
+  lado?: keyof typeof LADOS;
+  efecto?: string;
+};
+// `ojos`: centro de los ojos (x, y) y distancia entre ellos (d), en % de la
+// foto. El zoom al cambiar de mapa los hace coincidir, así que la cara del
+// cuerpo se convierte en la del rostro sin saltos. Si cambias una foto, mídelos
+const MAPAS = [
+  {
+    id: "rostro",
+    titulo: "Rostro",
+    foto: "/img/queMejorar/rostro.webp",
+    ojos: { x: 50.36, y: 47.05, d: 24.48 },
+  },
+  {
+    id: "cuerpo",
+    titulo: "Cuerpo",
+    foto: "/img/queMejorar/cuerpo.webp",
+    ojos: { x: 49.97, y: 8.73, d: 3.94 },
+  },
+] as const;
+
+const puntos = (mapa: (typeof MAPAS)[number]["id"]) =>
+  opciones.flatMap((o) => {
+    const z = ("zonas" in o ? (o.zonas as Record<string, Zona>) : {})[mapa];
+    if (!z) return [];
+    const lado = z.lado ?? ((z.x ?? 0) > 55 ? "izquierda" : "derecha");
+    return [{ id: o.id, titulo: o.titulo, ...z, lado: LADOS[lado] }];
+  });
+---
+
+<!-- Sin JavaScript, los chips y los puntos son enlaces a cada respuesta y se
+     ven todas, una debajo de otra. Con él, solo se ve la elegida (ver
+     "Selector ¿Qué te gustaría mejorar?" en global.css) -->
+<section
+  id="que-mejorar"
+  data-recomendador
+  aria-labelledby="que-mejorar-heading"
+  class="card bg-base-100 seccion-card scroll-mt-24 text-secondary-content"
+>
+  <!-- Móvil: cabecera, mapas, chips y respuesta. Escritorio: los mapas fijos
+       a la izquierda y el resto a la derecha -->
+  <div
+    class="grid grid-cols-1 lg:grid-cols-12 lg:grid-rows-[auto_1fr] gap-x-12 gap-y-8"
+  >
+    <div class="reveal lg:col-span-7 lg:col-start-6 lg:row-start-1">
+      <span
+        class="text-sm font-semibold tracking-widest uppercase text-primary"
+      >
+        {datos.eyebrow}
+      </span>
+      <h2
+        id="que-mejorar-heading"
+        class="mt-3 text-3xl sm:text-4xl font-semibold tracking-tight text-balance"
+      >
+        {datos.titulo}
+      </h2>
+      <p class="mt-4 text-lg text-secondary-content/70 text-pretty">
+        {datos.texto}
+      </p>
+    </div>
+
+    <!-- Mapas del rostro y del cuerpo. Repiten lo que hacen los chips, así
+         que se ocultan a los lectores de pantalla y sus controles quedan
+         fuera del tabulador -->
+    <div class="lg:col-span-5 lg:col-start-1 lg:row-start-1 lg:row-span-2">
+      <div class="lg:sticky lg:top-28">
+        <div class="reveal-scale">
+          <div
+            data-mapas
+            aria-hidden="true"
+            class="relative mx-auto aspect-square w-full max-w-md lg:max-w-none overflow-hidden rounded-3xl bg-black @container"
+          >
+            {
+              MAPAS.map((m, i) => (
+                <div
+                  data-vista={m.id}
+                  data-activo={i === 0 ? "" : undefined}
+                  data-ojos-x={m.ojos.x}
+                  data-ojos-y={m.ojos.y}
+                  data-ojos-d={m.ojos.d}
+                  class="mapa absolute inset-0"
+                >
+                  <Foto
+                    src={m.foto}
+                    alt=""
+                    sizes="(min-width: 1024px) 480px, 448px"
+                    loading="lazy"
+                    class="absolute inset-0 h-full w-full object-cover"
+                  />
+                  <div class="mapa-foco absolute inset-0" />
+                  <div class="mapa-destello absolute inset-0" />
+                  <div class="mapa-escaneo absolute inset-x-0 top-0" />
+
+                  {puntos(m.id).map((z, j) =>
+                    z.x === undefined ? (
+                      <a
+                        href={`#${idRespuesta(z.id)}`}
+                        data-opcion
+                        data-efecto={z.efecto}
+                        tabindex="-1"
+                        hidden
+                      />
+                    ) : (
+                    <a
+                      href={`#${idRespuesta(z.id)}`}
+                      data-opcion
+                      data-x={z.x}
+                      data-y={z.y}
+                      data-r={z.r}
+                      data-efecto={z.efecto}
+                      tabindex="-1"
+                      style={`left: ${z.x}%; top: ${z.y}%; --retraso: ${j * 0.3}s`}
+                      class="group absolute flex h-10 w-10 -translate-x-1/2 -translate-y-1/2 items-center justify-center"
+                    >
+                      <span class="mapa-latido absolute h-3.5 w-3.5 rounded-full bg-base-100" />
+                      <span class="relative h-3.5 w-3.5 rounded-full bg-base-100 ring-4 ring-base-100/30 shadow-md shadow-black/40 transition-all duration-300 group-hover:scale-125 group-aria-expanded:scale-125 group-aria-expanded:bg-primary group-aria-expanded:ring-base-100" />
+                      <span
+                        class:list={[
+                          "pointer-events-none absolute whitespace-nowrap rounded-full bg-base-100 px-2.5 py-1 text-xs font-semibold text-secondary-content shadow-lg shadow-black/30 opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-aria-expanded:opacity-100",
+                          z.lado,
+                        ]}
+                      >
+                        {z.titulo}
+                      </span>
+                    </a>
+                    ),
+                  )}
+                </div>
+              ))
+            }
+
+            <!-- Conmutador Rostro | Cuerpo: la píldora de cristal del hero -->
+            <div class="absolute right-3 top-3 flex gap-0.5 rounded-full bg-base-100/10 p-1 ring-1 ring-base-100/20 backdrop-blur-sm">
+              {
+                MAPAS.map((m, i) => (
+                  <button
+                    type="button"
+                    data-ver={m.id}
+                    data-activo={i === 0 ? "" : undefined}
+                    tabindex="-1"
+                    class="rounded-full px-2.5 py-1.5 text-[11px] font-semibold text-base-100/80 transition-colors hover:text-base-100 data-activo:bg-base-100 data-activo:text-secondary-content"
+                  >
+                    {m.titulo}
+                  </button>
+                ))
+              }
+            </div>
+
+            <p class="mapa-pista pointer-events-none absolute bottom-3 left-3">
+              <span class="block rounded-full bg-base-100/10 px-3 py-1.5 text-xs font-semibold text-base-100 ring-1 ring-base-100/20 backdrop-blur-sm">
+                {datos.pista}
+              </span>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="min-w-0 lg:col-span-7 lg:col-start-6 lg:row-start-2">
+      <!-- Chips: los de los grupos de Medicina estética. En móvil, en una fila
+           que se desliza (como los carruseles del sitio), para que la
+           respuesta quede justo debajo de los mapas -->
+      <nav aria-label={datos.titulo} class="reveal">
+        <ul
+          data-chips
+          class="relative -mx-6 sm:-mx-10 lg:mx-0 px-6 sm:px-10 lg:px-0 flex lg:flex-wrap gap-2 overflow-x-auto lg:overflow-visible snap-x scroll-px-6 sm:scroll-px-10 pb-2 lg:pb-0 scrollbar-none [&::-webkit-scrollbar]:hidden"
+        >
+          {
+            opciones.map((o) => (
+              <li class="shrink-0 snap-start">
+                <a
+                  href={`#${idRespuesta(o.id)}`}
+                  data-opcion
+                  aria-controls={idRespuesta(o.id)}
+                  class="block whitespace-nowrap px-4 py-2 rounded-full bg-base-200 text-sm font-medium text-secondary-content hover:bg-primary hover:text-primary-content aria-expanded:bg-primary aria-expanded:text-primary-content transition-colors"
+                >
+                  {o.titulo}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+
+      {
+        opciones.map((o) => (
+          <div id={idRespuesta(o.id)} data-respuesta class="mt-8 scroll-mt-24">
+            <h3 class="text-2xl font-semibold text-secondary-content">
+              {o.titulo}
+            </h3>
+            <p class="mt-1 text-base-content/70 text-pretty">{o.texto}</p>
+
+            <ul class="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
+              {o.tarjetas.map((t) => (
+                <li class="sm:last:odd:col-span-2">
+                  <a
+                    href={t.href}
+                    data-foco
+                    class="group flex h-full flex-col rounded-3xl bg-base-200 p-6 transition-all duration-300 motion-safe:hover:-translate-y-1 hover:shadow-xl hover:shadow-black/5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+                  >
+                    <span class="text-[11px] font-semibold uppercase tracking-widest text-primary">
+                      {t.servicio}
+                    </span>
+                    <h4 class="mt-2 text-lg font-semibold text-secondary-content">
+                      {t.nombre}
+                    </h4>
+                    <p class="mt-1.5 text-sm text-secondary-content/70 leading-snug text-pretty">
+                      {t.texto}
+                    </p>
+                    <span
+                      data-foco-flecha
+                      class="mt-5 ml-auto w-9 h-9 rounded-full bg-base-100 text-secondary-content flex items-center justify-center group-hover:bg-primary group-hover:text-primary-content transition-colors"
+                      aria-hidden="true"
+                    >
+                      →
+                    </span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+
+            <!-- El botón de "¿No sabes cuál es el tuyo?" de Medicina estética -->
+            <a
+              href={whatsapp(o.mensaje)}
+              target="_blank"
+              rel="noopener"
+              class="mt-6 inline-block px-4 sm:px-6 py-3 sm:py-4 rounded-full bg-primary text-primary-content font-bold"
+            >
+              {datos.cta}
+            </a>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<script>
+  // Al elegir una opción (chip o punto de un mapa) se enseña su respuesta y se
+  // ocultan las demás, con hidden="until-found" (como las pestañas de Medicina
+  // estética): "Buscar en la página" y los enlaces de Google a un texto sí
+  // las encuentran. Donde el navegador no lo conoce (Safari), hidden a secas.
+  // En cada mapa donde la opción tiene punto, el foco de luz se va a su zona;
+  // si no lo tiene en el que se ve pero sí en el otro, se cambia de mapa.
+  // Con ClientRouter hay que engancharlo de nuevo en cada navegación
+  const sinAnimacion = matchMedia("(prefers-reduced-motion: reduce)");
+
+  function iniciarRecomendador() {
+    const seccion = document.querySelector<HTMLElement>("[data-recomendador]");
+    if (!seccion) return;
+    const opciones = [
+      ...seccion.querySelectorAll<HTMLAnchorElement>("[data-opcion]"),
+    ];
+    const respuestas = [
+      ...seccion.querySelectorAll<HTMLElement>("[data-respuesta]"),
+    ];
+    const mapas = [...seccion.querySelectorAll<HTMLElement>("[data-vista]")];
+    const botonesMapa = [
+      ...seccion.querySelectorAll<HTMLButtonElement>("[data-ver]"),
+    ];
+    const filaChips = seccion.querySelector<HTMLElement>("[data-chips]");
+    const valorOculto = "onbeforematch" in document.body ? "until-found" : "";
+    const conducta = () => (sinAnimacion.matches ? "auto" : "smooth");
+
+    // Cambio de mapa con zoom de cámara: del rostro al cuerpo la cámara se
+    // aleja y del cuerpo al rostro se acerca. Los dos mapas se mueven juntos
+    // con los ojos siempre en el mismo punto, y se funden cuando la foto del
+    // cuerpo está poco ampliada (al ampliarla 6 veces pierde nitidez)
+    const contenedor = seccion.querySelector<HTMLElement>("[data-mapas]");
+    let animaciones: Animation[] = [];
+    const ojos = (m: HTMLElement) => ({
+      x: Number(m.dataset.ojosX),
+      y: Number(m.dataset.ojosY),
+      d: Number(m.dataset.ojosD),
+    });
+    // Lleva el mapa `de` a encajar con `con`: sus ojos sobre los del otro
+    const encajar = (de: HTMLElement, con: HTMLElement) => {
+      const a = ojos(de);
+      const b = ojos(con);
+      return `translate(${b.x - a.x}%, ${b.y - a.y}%) scale(${b.d / a.d})`;
+    };
+    const limpiar = (...ms: HTMLElement[]) => {
+      contenedor?.removeAttribute("data-cambiando");
+      ms.forEach((m) => {
+        m.style.transformOrigin = "";
+        m.style.zIndex = "";
+        m.style.removeProperty("mask-image");
+        m.style.removeProperty("-webkit-mask-image");
+      });
+    };
+
+    const verMapa = (id: string) => {
+      const actual = mapas.find((m) => m.hasAttribute("data-activo"));
+      const nuevo = mapas.find((m) => m.dataset.vista === id);
+      if (!nuevo || nuevo === actual) return;
+      botonesMapa.forEach((b) =>
+        b.toggleAttribute("data-activo", b.dataset.ver === id),
+      );
+      animaciones.forEach((a) => a.cancel());
+      limpiar(...mapas);
+      actual?.removeAttribute("data-activo");
+      nuevo.setAttribute("data-activo", "");
+      if (!actual || !contenedor || sinAnimacion.matches) return;
+
+      const acerca = ojos(nuevo).d > ojos(actual).d;
+      [actual, nuevo].forEach((m) => {
+        const o = ojos(m);
+        m.style.transformOrigin = `${o.x}% ${o.y}%`;
+      });
+      // El primer plano (la cara) va encima y solo enseña la cara: su fondo
+      // y su jersey negros taparían los hombros del cuerpo
+      const cerca = acerca ? nuevo : actual;
+      const lejos = acerca ? actual : nuevo;
+      const o = ojos(cerca);
+      const mascara = `radial-gradient(${o.d * 2.1}% ${o.d * 2.1}% at ${o.x}% ${o.y}%, black 45%, transparent 80%)`;
+      cerca.style.setProperty("mask-image", mascara);
+      cerca.style.setProperty("-webkit-mask-image", mascara);
+      cerca.style.zIndex = "1";
+      // Debajo, el cuerpo entra antes de que la cara se vaya (o se va
+      // después de que la cara llegue), para que nunca quede una cabeza sola
+      const ventanas = acerca
+        ? { cerca: [0.15, 0.45], lejos: [0.5, 0.8] }
+        : { cerca: [0.55, 0.85], lejos: [0.2, 0.5] };
+
+      contenedor.setAttribute("data-cambiando", "");
+      // fill "forwards" mantiene el final hasta que limpiar() quita el estado
+      // de cambio en el mismo paso: sin él, un fotograma volvería a enseñar
+      // el mapa que se va
+      const tiempo = { duration: 1000, fill: "forwards" } as const;
+      const movimiento = { ...tiempo, easing: "cubic-bezier(0.65, 0, 0.35, 1)" };
+      const fundido = (sale: boolean, [desde, hasta]: number[]) => {
+        const [de, a] = sale ? [1, 0] : [0, 1];
+        return [
+          { opacity: de, offset: 0 },
+          { opacity: de, offset: desde },
+          { opacity: a, offset: hasta },
+          { opacity: a, offset: 1 },
+        ];
+      };
+      animaciones = [
+        actual.animate({ transform: ["none", encajar(actual, nuevo)] }, movimiento),
+        nuevo.animate({ transform: [encajar(nuevo, actual), "none"] }, movimiento),
+        cerca.animate(fundido(cerca === actual, ventanas.cerca), tiempo),
+        lejos.animate(fundido(lejos === actual, ventanas.lejos), tiempo),
+      ];
+      Promise.all(animaciones.map((a) => a.finished))
+        .then(() => {
+          limpiar(actual, nuevo);
+          animaciones.forEach((a) => a.cancel());
+        })
+        .catch(() => {});
+    };
+    const puntoEn = (mapa: HTMLElement, hash: string) =>
+      mapa.querySelector<HTMLElement>(`[data-opcion][href="${hash}"]`);
+
+    const mostrar = (elegida?: HTMLElement) => {
+      respuestas.forEach((r) =>
+        r === elegida
+          ? r.removeAttribute("hidden")
+          : r.setAttribute("hidden", valorOculto),
+      );
+      const hash = `#${elegida?.id}`;
+      opciones.forEach((o) =>
+        o.setAttribute("aria-expanded", String(o.hash === hash)),
+      );
+      seccion.toggleAttribute("data-elegida", Boolean(elegida));
+
+      // Foco de luz sobre su zona en cada mapa (o ninguno)
+      mapas.forEach((mapa) => {
+        const punto = elegida && puntoEn(mapa, hash);
+        const conFoco = Boolean(punto && punto.dataset.x);
+        const foco = mapa.querySelector<HTMLElement>(".mapa-foco");
+        if (punto && conFoco && foco) {
+          foco.style.setProperty("--foco-x", `${punto.dataset.x}%`);
+          foco.style.setProperty("--foco-y", `${punto.dataset.y}%`);
+          foco.style.setProperty("--foco-r", punto.dataset.r ?? "10");
+        }
+        mapa.toggleAttribute("data-zona", conFoco);
+        if (punto && punto.dataset.efecto) mapa.dataset.efecto = punto.dataset.efecto;
+        else delete mapa.dataset.efecto;
+      });
+
+      // Si su zona está en el otro mapa, se pasa a ese
+      const visible = mapas.find((m) => m.hasAttribute("data-activo"));
+      if (elegida && visible && !puntoEn(visible, hash)) {
+        const otro = mapas.find((m) => puntoEn(m, hash));
+        if (otro?.dataset.vista) verMapa(otro.dataset.vista);
+      }
+    };
+
+    botonesMapa.forEach((b) =>
+      b.addEventListener("click", () => b.dataset.ver && verMapa(b.dataset.ver)),
+    );
+
+    // En móvil los chips van en una fila que se desliza: al elegir desde un
+    // mapa, se centra el chip de esa opción para que se vea cuál es
+    const centrarChip = (hash: string) => {
+      const chip = filaChips?.querySelector<HTMLElement>(`[href="${hash}"]`);
+      if (!filaChips || !chip || filaChips.scrollWidth <= filaChips.clientWidth)
+        return;
+      filaChips.scrollTo({
+        left: chip.offsetLeft - (filaChips.clientWidth - chip.offsetWidth) / 2,
+        behavior: conducta(),
+      });
+    };
+
+    opciones.forEach((opcion) =>
+      opcion.addEventListener("click", (e) => {
+        const respuesta = respuestas.find((r) => `#${r.id}` === opcion.hash);
+        if (!respuesta) return;
+        e.preventDefault();
+        if (!respuesta.hasAttribute("hidden")) return;
+        mostrar(respuesta);
+        centrarChip(opcion.hash);
+        if (!sinAnimacion.matches) {
+          respuesta.animate(
+            [
+              { opacity: 0, transform: "translateY(16px)" },
+              { opacity: 1, transform: "none" },
+            ],
+            { duration: 400, easing: "cubic-bezier(0.2, 0.6, 0.2, 1)" },
+          );
+        }
+        // Si de la respuesta se ve muy poco, se sube hasta que empiece al 60%
+        // de la pantalla: así se ve que ha aparecido y, en móvil, la cara con
+        // su foco de luz sigue arriba
+        const arriba = respuesta.getBoundingClientRect().top;
+        if (arriba > innerHeight - 160) {
+          scrollBy({ top: arriba - innerHeight * 0.6, behavior: conducta() });
+        }
+      }),
+    );
+
+    // "Buscar en la página" ha encontrado texto en una respuesta oculta
+    respuestas.forEach((r) =>
+      r.addEventListener("beforematch", () => mostrar(r)),
+    );
+
+    // Llegada con una opción en la URL (/#mejorar-manchas): se abre esa.
+    // Si no, ninguna, hasta que la persona elija
+    const pedida = respuestas.find((r) => `#${r.id}` === location.hash);
+    mostrar(pedida);
+    seccion.setAttribute("data-listo", "");
+    if (pedida) {
+      centrarChip(location.hash);
+      pedida.scrollIntoView({ block: "start" });
+    }
+  }
+
+  document.addEventListener("astro:page-load", iniciarRecomendador);
+</script>

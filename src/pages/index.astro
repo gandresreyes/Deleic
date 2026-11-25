@@ -4,6 +4,7 @@ import Layout from "../layouts/Layout.astro";
 import ServicesGrid from "../components/ServicesGrid.astro";
 import Ubication from "../components/Ubication.astro";
 import NewFeatures from "../components/NewFeatures.astro";
+import QueMejorar from "../components/QueMejorar.astro";
 import Foto from "../components/Foto.astro";
 import metodo from "../data/metodoDeleic.json";
 import { whatsapp } from "../data/contacto";
@@ -322,7 +323,11 @@ const schema = {
     <!-- 3. SERVICIOS -->
     <ServicesGrid />
 
-    <!-- 4. NOVEDADES -->
+    <!-- 4. QUÉ TE GUSTARÍA MEJORAR: la otra puerta a los tratamientos, por
+         problema en vez de por especialidad -->
+    <QueMejorar />
+
+    <!-- 5. NOVEDADES -->
     <NewFeatures />
 
     <!-- 6. UBICACIÓN -->

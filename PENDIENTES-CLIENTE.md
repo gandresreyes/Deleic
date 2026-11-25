@@ -39,3 +39,25 @@ Nuestra recomendación: "3D" es más fácil de recordar, pero solo si es exacto.
   - Si es gratis, lo ponemos en el botón y en el hero: es de lo que más anima a pedir cita.
   - Si tiene precio, ¿cuánto cuesta? ¿Se descuenta si después se hace el tratamiento?
 - **Opiniones de clientas:** ¿tenéis reseñas en Google? Si nos pasáis el enlace a la ficha, mostramos la nota y el número de opiniones en la página. Solo pondríamos datos reales.
+
+## 4. Selector "¿Qué te gustaría mejorar?" de la portada
+
+En la portada hay un bloque nuevo, debajo de los servicios. La clienta elige lo que le preocupa y ve los tratamientos que suelen encajar, con un botón de WhatsApp que ya dice qué quiere mejorar. Así sabes de qué te escribe antes de contestar.
+
+Las recomendaciones las hemos preparado nosotros a partir de los textos de la web. **¿Puedes revisarlas y decirnos qué quitarías, añadirías o cambiarías?**
+
+- **Manchas:** Despigmentante · Medicina estética: Manchas
+- **Arrugas:** Tratamiento antiedad · Medicina estética: Arrugas de expresión · Ácido hialurónico (surcos)
+- **Flacidez:** Reafirmante y reductor · Ultrasonix · Medicina estética: Tensar y reafirmar
+- **Acné y marcas:** Antiacné y marcas · Limpieza facial · Polinucleótidos
+- **Piel apagada:** Iluminador y revitalizante · Limpieza facial · Medicina estética: Calidad de la piel
+- **Ojeras y bolsas:** Ojeras, bolsas y contorno · Ácido hialurónico (ojeras)
+- **Labios:** Ácido hialurónico · Micropigmentación de labios
+- **Cejas y pestañas:** Nanoblading · Laminado de cejas y lifting de pestañas · Micro línea de pestañas
+- **Vello:** Depilación láser
+- **Caída del pelo:** Tratamiento capilar · Medicina estética: Cabello
+- **Grasa y celulitis:** Radiofrecuencia corporal · Presoterapia · Lipoterapia y carboxiterapia
+- **Piernas cansadas:** Presoterapia · Esclerosis de varices
+- **No lo tengo claro:** Diagnóstico facial-corporal gratuito
+
+También nos sirve saber si **falta algún problema** por el que te pregunten a menudo.
