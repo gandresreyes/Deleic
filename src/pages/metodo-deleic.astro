@@ -8,7 +8,7 @@ import { sizesCubre, TRAMOS_HERO } from "../lib/imagenes";
 import { whatsapp } from "../data/contacto";
 import metodo from "../data/metodoDeleic.json";
 import marcas from "../data/escanerMarcas.json";
-import { faqPage, migas, negocio } from "../lib/schema";
+import { faqPage, migas, negocio, zonaServida } from "../lib/schema";
 import Oferta from "../components/Metodo/Oferta.astro";
 import Ubication from "../components/Ubication.astro";
 
@@ -66,7 +66,7 @@ const schema = {
       name: "Diagnóstico facial avanzado · Método Deleic",
       serviceType: "Diagnóstico facial",
       description,
-      areaServed: "León",
+      areaServed: zonaServida,
       url: new URL("/metodo-deleic/", site).href,
       provider: negocio(site),
       offers: {
@@ -397,7 +397,7 @@ const schema = {
                 {i + 1}
               </span>
               <h3 class="mt-4 text-lg font-semibold leading-tight">
-                {e.nombre}
+                {e.nombre}{" "}
                 {e.detalle && (
                   <span class="block text-sm font-medium text-primary">
                     {e.detalle}

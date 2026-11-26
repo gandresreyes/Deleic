@@ -9,7 +9,7 @@ import Recomendation from "../components/Depilacion/Recomendation.astro";
 import Ubication from "../components/Ubication.astro";
 import data from "../data/depilacionLaser.json";
 import { whatsapp } from "../data/contacto";
-import { migas, negocio } from "../lib/schema";
+import { migas, negocio, zonaServida } from "../lib/schema";
 
 const { seo, hero, funcionamiento, precios } = data;
 
@@ -37,7 +37,7 @@ const schema = {
       description,
       url: new URL("/depilacion-laser/", site).href,
       image: new URL(urlImagen(hero.imagen), site).href,
-      areaServed: { "@type": "City", name: "León" },
+      areaServed: zonaServida,
       audience: { "@type": "PeopleAudience", suggestedGender: ["female", "male"] },
       provider: negocio(site),
       hasOfferCatalog: {

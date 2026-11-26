@@ -11,7 +11,7 @@ import {
   type Grupo,
   type Precio,
 } from "../../lib/precios";
-import { faqPage, migas, negocio } from "../../lib/schema";
+import { faqPage, migas, negocio, zonaServida } from "../../lib/schema";
 import { whatsapp } from "../../data/contacto";
 import { slugify } from "../../lib/texto";
 import data from "../../data/medicinaEstetica.json";
@@ -50,7 +50,7 @@ const schema = {
       serviceType: "Medicina estética",
       description: seo.description,
       url: new URL("/medicina-estetica/", site).href,
-      areaServed: { "@type": "City", name: "León" },
+      areaServed: zonaServida,
       provider: negocio(site),
       hasOfferCatalog: {
         "@type": "OfferCatalog",

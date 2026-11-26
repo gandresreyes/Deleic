@@ -2,7 +2,7 @@
 // Piezas de schema.org que se repiten en varias páginas. El negocio se
 // construye desde contacto.ts: si cambia el horario o el teléfono, cambia
 // también lo que leen Google y las IAs.
-import { DIRECCION, EMAIL, HORARIO, TELEFONO } from "../data/contacto";
+import { APERTURA, DIRECCION, EMAIL, HORARIO, REDES, TELEFONO, TITULAR, ZONA } from "../data/contacto";
 import { DIAS, franja, VERANO, type FilaHorario } from "./horario";
 import { urlImagen } from "./imagenes";
 
@@ -28,6 +28,19 @@ function horario() {
 
 export const idNegocio = (site: URL) => new URL("/#negocio", site).href;
 
+/** León y su alfoz (ZONA de contacto.ts), para el negocio y cada servicio */
+export const zonaServida = ZONA.map((name) => ({ "@type": "City", name }));
+
+/** La fundadora, con su propio @id para que cualquier página pueda citarla */
+const fundadora = (site: URL) => ({
+  "@type": "Person",
+  "@id": new URL("/nosotros/#fundadora", site).href,
+  name: TITULAR.nombre,
+  jobTitle: "Fundadora y responsable de Deleic",
+  url: new URL("/nosotros/", site).href,
+  image: new URL(urlImagen("/img/nosotros/leila-carreira.webp"), site).href,
+});
+
 /** El centro completo. Mismo @id en todas las páginas: es una sola entidad */
 export const negocio = (site: URL) => ({
   "@type": "HealthAndBeautyBusiness",
@@ -37,7 +50,8 @@ export const negocio = (site: URL) => ({
     "Centro de medicina estética, depilación láser y tratamientos faciales y corporales en León.",
   url: new URL("/", site).href,
   image: new URL("/img/og/home.jpg", site).href,
-  logo: new URL(urlImagen("/img/deleicLogo.webp"), site).href,
+  // PNG en public con URL fija: la de src/assets lleva un hash que cambia
+  logo: new URL("/img/logo/deleic.png", site).href,
   telephone: TELEFONO.href.replace("tel:", ""),
   email: EMAIL,
   address: {
@@ -48,9 +62,17 @@ export const negocio = (site: URL) => ({
     addressRegion: "León",
     addressCountry: "ES",
   },
+  geo: {
+    "@type": "GeoCoordinates",
+    latitude: DIRECCION.geo.lat,
+    longitude: DIRECCION.geo.lng,
+  },
   hasMap: DIRECCION.maps,
-  areaServed: { "@type": "City", name: "León" },
+  sameAs: Object.values(REDES),
+  areaServed: zonaServida,
   openingHoursSpecification: horario(),
+  foundingDate: String(APERTURA),
+  founder: fundadora(site),
 });
 
 /** Migas de pan: [nombre, ruta] desde la portada hasta la página actual */

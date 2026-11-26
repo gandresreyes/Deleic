@@ -77,7 +77,7 @@ export const GET: APIRoute = async ({ site }) => {
     "",
     "## Datos del centro",
     "",
-    `- Dirección: ${DIRECCION.calle}, ${DIRECCION.cp} ${DIRECCION.ciudad}, España`,
+    `- Dirección: ${DIRECCION.calle}, ${DIRECCION.cp} ${DIRECCION.ciudad}, España (${DIRECCION.referencia})`,
     `- Cómo llegar: ${DIRECCION.maps}`,
     `- Teléfono: ${TELEFONO.visible}`,
     `- WhatsApp (reservas): ${whatsappVisible}`,
@@ -136,6 +136,7 @@ export const GET: APIRoute = async ({ site }) => {
     "## Optional",
     "",
     `- [Nosotros](${url("/nosotros/")}): Historia del centro y su fundadora.`,
+    `- [Contacto](${url("/contacto/")}): Teléfono, WhatsApp, email, horario y mapa.`,
     `- [Promociones del mes](${url("/promociones/")}): Ofertas vigentes.`,
     "",
   ].join("\n");

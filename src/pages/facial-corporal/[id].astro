@@ -6,7 +6,7 @@ import Imagen from "../../components/FacialCorporal/Imagen.astro";
 import { urlImagen } from "../../lib/imagenes";
 import MetodoDeleic from "../../components/FacialCorporal/MetodoDeleic.astro";
 import { TELEFONO, whatsapp } from "../../data/contacto";
-import { faqPage, migas, negocio } from "../../lib/schema";
+import { faqPage, migas, negocio, zonaServida } from "../../lib/schema";
 import { numero, preciosFacial } from "../../lib/precios";
 import { conEnlaces } from "../../lib/texto";
 
@@ -168,7 +168,7 @@ const graph: Record<string, unknown>[] = [
     name: t.nombre,
     serviceType: t.categoria,
     description: t.seoDescription,
-    areaServed: "León",
+    areaServed: zonaServida,
     url: new URL(`/facial-corporal/${tratamiento.id}/`, site).href,
     ...(t.imagen && { image: new URL(urlImagen(t.imagen), site).href }),
     provider: negocio(site),

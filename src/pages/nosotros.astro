@@ -4,12 +4,11 @@
 import Layout from "../layouts/Layout.astro";
 import ServicesGrid from "../components/ServicesGrid.astro";
 import Ubication from "../components/Ubication.astro";
-import { TITULAR, whatsapp } from "../data/contacto";
+import { APERTURA, whatsapp } from "../data/contacto";
 import { negocio } from "../lib/schema";
 import Foto from "../components/Foto.astro";
-import { sizesCubre, urlImagen } from "../lib/imagenes";
+import { sizesCubre } from "../lib/imagenes";
 
-const APERTURA = 2019;
 const LEMA = "La calidad es el único camino para el crecimiento";
 
 const hitos = [
@@ -77,7 +76,8 @@ const icons: Record<string, string> = {
 
 const descripcion = `Deleic es un centro médico-estético en León fundado en ${APERTURA} por Leila Carreira. Cercanía, rigor y resultados reales en depilación láser, medicina estética y tratamientos faciales y corporales.`;
 
-// Schema: página "Sobre nosotros" con el negocio y su fundadora
+// Schema: página "Sobre nosotros" con el negocio (que ya incluye la fecha
+// de apertura y la fundadora) y su lema
 const schema = {
   "@context": "https://schema.org",
   "@type": "AboutPage",
@@ -86,19 +86,12 @@ const schema = {
   mainEntity: {
     ...negocio(Astro.site ?? Astro.url),
     slogan: LEMA,
-    foundingDate: String(APERTURA),
-    founder: {
-      "@type": "Person",
-      name: TITULAR.nombre,
-      jobTitle: "Fundadora y responsable de Deleic",
-      image: new URL(urlImagen("/img/nosotros/leila-carreira.webp"), Astro.site ?? Astro.url).href,
-    },
   },
 };
 ---
 
 <Layout
-  title="Nosotros: centro médico-estético en León desde 2019 | Deleic"
+  title={`Nosotros: centro médico-estético en León desde ${APERTURA} | Deleic`}
   description={descripcion}
   image="/img/nosotros/leila-carreira.webp"
   imageAlt="Leila Carreira, fundadora de Deleic"

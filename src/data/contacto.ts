@@ -31,11 +31,38 @@ export const DIRECCION = {
   calle: "Calle Roa de la Vega 18, bajo",
   cp: "24001",
   ciudad: "León",
+  // Referencia para encontrar el centro (de la página "¿Dónde estamos?" de la web anterior)
+  referencia: "esquina con la Gran Vía de San Marcos",
   maps: "https://maps.app.goo.gl/8PsN3qRNrA8dv4Mv7",
+  // Pin de la ficha de Google: los valores !3d (latitud) y !4d (longitud) de
+  // la URL a la que lleva `maps`. Si se mueve el pin, se actualizan aquí
+  geo: { lat: 42.5997189, lng: -5.5776134 },
   // Mapa embebido de Ubication.astro (solo se carga cuando la persona lo pide)
   mapaEmbed:
     "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2263.564021969237!2d-5.578883671647799!3d42.599309365224656!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd379bd16ad32fa3%3A0x7784e6ee80d07d20!2sDeleic!5e1!3m2!1ses!2ses!4v1784250648752!5m2!1ses!2ses",
 };
+
+// Año de apertura del centro (Nosotros y schema.org)
+export const APERTURA = 2019;
+
+// Perfiles oficiales del centro. Van en el footer y como `sameAs` en el
+// schema: así Google y las IAs saben que son la misma entidad. La web anterior
+// enlazaba @deleic_laser_estetica; la cuenta actual es @deleic.es
+export const REDES = {
+  instagram: "https://www.instagram.com/deleic.es/",
+  facebook: "https://www.facebook.com/deleic",
+};
+
+// Zona de servicio (`areaServed` en el schema): León y los municipios de su
+// alfoz. Solo va en el schema: no se crean páginas por municipio (Google las
+// penaliza como páginas puerta)
+export const ZONA = [
+  "León",
+  "San Andrés del Rabanedo",
+  "Villaquilambre",
+  "Valverde de la Virgen",
+  "Sariegos",
+];
 
 export const HORARIO = {
   invierno: [

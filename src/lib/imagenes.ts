@@ -4,7 +4,7 @@
 // en los JSON y en la colección. Así Astro puede optimizarlas (varios tamaños,
 // nombres con hash y caché larga) sin cambiar los datos.
 // Lo que sigue en public/img (escáner, foto base del escáner, imagen OG por
-// defecto) se sirve tal cual.
+// defecto y logo del schema) se sirve tal cual.
 
 import type { ImageMetadata } from "astro";
 

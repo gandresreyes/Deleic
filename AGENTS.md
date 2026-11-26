@@ -107,7 +107,9 @@ Usa las clases canónicas de Tailwind v4 (`bg-linear-to-r`, `bg-size-[...]`,
 - Logos y gráficos con transparencia: `<Image>` en PNG (sin pérdida) con
   `densities={[1, 2, 3]}`, como el logo de `Navbar.astro`.
 - En `public/img` solo lo que se sirve tal cual: las luces del escáner (las genera
-  `npm run escaner`), su foto base y `og/home.jpg`.
+  `npm run escaner`), su foto base, `og/home.jpg` y `logo/deleic.png` (el logo del
+  schema, con URL fija; es el mismo que `src/assets/img/deleicLogo.webp` en PNG:
+  si cambia uno, cambia el otro).
 
 ### Contenido y redacción
 
@@ -135,6 +137,16 @@ Usa las clases canónicas de Tailwind v4 (`bg-linear-to-r`, `bg-size-[...]`,
 - `robots.txt`, `llms.txt` (resumen para IAs) y el sitemap se generan en el build.
   Un servicio nuevo se añade también a `src/pages/llms.txt.ts`, y una página con
   `noindex` a `SIN_INDEXAR` en `astro.config.mjs`.
+- El `lastmod` del sitemap es la fecha del último commit que tocó el contenido de
+  cada página. Una página nueva se añade a `FUENTES` en `astro.config.mjs` con sus
+  archivos de contenido (página, JSON y componentes propios); sin entrada sale sin
+  fecha. Nunca uses la fecha del build: Google y Bing dejan de fiarse del sitemap.
+- Redes sociales, coordenadas, año de apertura y municipios del `areaServed` están en
+  `src/data/contacto.ts` (`REDES`, `DIRECCION.geo`, `APERTURA`, `ZONA`). En el
+  schema de cada servicio, `areaServed: zonaServida` (de `src/lib/schema.ts`).
+- Tras publicar cambios en producción, `npm run indexnow` avisa a Bing de las páginas
+  modificadas (ChatGPT y Copilot buscan sobre su índice). Su clave es pública y vive
+  en `public/<clave>.txt`.
 
 ### Legal, privacidad y cookies (RGPD, LOPDGDD, LSSI)
 

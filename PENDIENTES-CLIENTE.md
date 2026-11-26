@@ -26,6 +26,13 @@ Nuestra recomendación: "3D" es más fácil de recordar, pero solo si es exacto.
 - **Ultrasonix:** de momento usamos una foto de banco de imágenes de una mujer sonriente con las manos en el óvalo facial. Si tienes fotos de un tratamiento real en el centro (con permiso de la clienta), la cambiamos: siempre transmite más confianza.
 - **Iluminador y revitalizante:** ¿qué cuidados o contraindicaciones hay que indicar (por ejemplo, el sol después de Skinretin o Hollywood Peel)? ¿Cuánto dura cada una de las cuatro sesiones?
 - **Preguntas frecuentes:** si tus clientas suelen preguntarte dudas concretas que la web no responde (por ejemplo, si pueden maquillarse después o si se puede hacer en verano), pásanoslas con tu respuesta y las añadimos.
+- **Cómo llegar:** la página de contacto ya está publicada, con la dirección "esquina con la Gran Vía de San Marcos". Para completarla nos faltan:
+  - el aparcamiento que sueles recomendar (nombre o calle);
+  - las líneas de autobús con parada cerca;
+  - si el centro tiene acceso sin escalones.
+
+  Google y los asistentes como ChatGPT usan estos datos cuando alguien pregunta cómo llegar.
+- **Redes sociales:** la web enlaza en el pie de página tu Instagram (@deleic.es) y tu Facebook (facebook.com/deleic), y le indica a Google que son las cuentas oficiales del centro. ¿El Facebook sigue siendo ese? ¿Tienes alguna otra red, como TikTok?
 
 ## 3. Medicina estética
 

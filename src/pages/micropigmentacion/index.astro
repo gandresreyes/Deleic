@@ -6,7 +6,7 @@ import { sizesCubre, TRAMOS_HERO } from "../../lib/imagenes";
 import Ubication from "../../components/Ubication.astro";
 import AntesDespues from "../../components/AntesDespues.astro";
 import { gruposPublicados, numero, partirPrecio, type Grupo } from "../../lib/precios";
-import { faqPage, migas, negocio } from "../../lib/schema";
+import { faqPage, migas, negocio, zonaServida } from "../../lib/schema";
 import { whatsapp } from "../../data/contacto";
 import { slugify } from "../../lib/texto";
 import data from "../../data/micropigmentacion.json";
@@ -37,7 +37,7 @@ const schema = {
       serviceType: "Maquillaje semipermanente",
       description: seo.description,
       url: new URL("/micropigmentacion/", site).href,
-      areaServed: { "@type": "City", name: "León" },
+      areaServed: zonaServida,
       provider: negocio(site),
       hasOfferCatalog: {
         "@type": "OfferCatalog",
