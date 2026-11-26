@@ -11,7 +11,10 @@ import { TEMPORADAS } from "../data/temporadas";
 // Las temporadas se deciden en el navegador, pero sus fechas se comprueban
 // aquí, en el build: una mal escrita ("7 fbr") lo hace fallar con un error
 // claro, en vez de dejar la temporada apagada sin avisar
-for (const t of TEMPORADAS) [t.desde, t.hasta].forEach((f) => fecha(f));
+for (const t of TEMPORADAS) {
+  fecha(t.desde);
+  fecha(t.hasta);
+}
 
 interface Props {
   title?: string;
