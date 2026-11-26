@@ -1,6 +1,8 @@
 // src/lib/fechas.ts
 // Días del año escritos sin año ("15 jun", "1 dic"), como en el periodo de
-// verano de contacto.ts y en las temporadas de temporadas.ts.
+// verano de contacto.ts y en las temporadas de temporadas.ts, y el reloj de
+// León para saber qué día y qué hora es. Herramientas generales: aquí no hay
+// nada del horario de la clínica (eso va en horario.ts).
 
 const MESES = ["ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic"];
 
@@ -24,15 +26,39 @@ export const fecha = (texto: string): DiaDelAño => {
   return { mes, dia };
 };
 
-/** Mes y día de hoy en León, esté donde esté quien visita la web */
-export const hoyEnLeon = (): DiaDelAño => {
-  const partes = new Intl.DateTimeFormat("es-ES", {
-    timeZone: "Europe/Madrid",
-    month: "numeric",
-    day: "numeric",
-  }).formatToParts(new Date());
-  const valor = (tipo: string) => Number(partes.find((p) => p.type === tipo)?.value);
-  return { mes: valor("month"), dia: valor("day") };
+/** Lo que marca el reloj en León en este momento */
+export interface AhoraEnLeon extends DiaDelAño {
+  /** Como Date.getDay(): 0 = domingo … 6 = sábado */
+  diaSemana: number;
+  /** Minutos desde medianoche: 17:30 → 1050 */
+  minutos: number;
+}
+
+// El reloj de León: la hora de España, no la del dispositivo de quien visita
+const RELOJ_LEON = new Intl.DateTimeFormat("es-ES", {
+  timeZone: "Europe/Madrid",
+  year: "numeric",
+  month: "numeric",
+  day: "numeric",
+  hour: "numeric",
+  minute: "numeric",
+  hourCycle: "h23", // medianoche = 0, nunca 24
+});
+
+/** Fecha y hora de ahora en León, esté donde esté quien visita la web */
+export const ahoraEnLeon = (): AhoraEnLeon => {
+  const partes = RELOJ_LEON.formatToParts(new Date());
+  const valor = (tipo: Intl.DateTimeFormatPartTypes) =>
+    Number(partes.find((p) => p.type === tipo)?.value);
+  const [año, mes, dia] = [valor("year"), valor("month"), valor("day")];
+  return {
+    mes,
+    dia,
+    // El día de la semana sale de la fecha de León: a la 1:00 del sábado en
+    // León, en México aún es viernes
+    diaSemana: new Date(Date.UTC(año, mes - 1, dia)).getUTCDay(),
+    minutos: valor("hour") * 60 + valor("minute"),
+  };
 };
 
 /** ¿Cae `diaBuscado` entre `desde` y `hasta`, ambos incluidos? Admite

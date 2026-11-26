@@ -224,8 +224,7 @@ const temporadas = [
 </section>
 
 <script>
-  import { HORARIO } from "../data/contacto";
-  import { DIAS, franja, minutos, VERANO } from "../lib/horario";
+  import { abiertoAhora } from "../lib/horario";
   import { darPermisoMapa, permisoMapa } from "../scripts/mapa";
 
   // ---------- Mapa bajo demanda ----------
@@ -259,21 +258,8 @@ const temporadas = [
     const badge = document.getElementById("status-badge");
     if (!badge) return;
 
-    const now = new Date();
-    const minutosAhora = now.getHours() * 60 + now.getMinutes();
-
-    // Verano según HORARIO.periodoVerano (comparando mes*100 + día)
-    const hoy = (now.getMonth() + 1) * 100 + now.getDate();
-    const { inicio, fin } = VERANO;
-    const esVerano =
-      hoy >= inicio.mes * 100 + inicio.dia && hoy <= fin.mes * 100 + fin.dia;
-
-    // Fila del horario que incluye hoy; sin horas (o sin fila) = cerrado
-    const fila = (esVerano ? HORARIO.verano : HORARIO.invierno).find((f) =>
-      DIAS[f.dias]?.numeros.includes(now.getDay()),
-    );
-    const [abre, cierra] = fila?.horas ? franja(fila.horas).map(minutos) : [0, 0];
-    const isOpen = minutosAhora >= abre && minutosAhora < cierra;
+    // Verano o invierno, qué día y qué hora: lo decide lib/horario.ts
+    const isOpen = abiertoAhora();
 
     badge.textContent = isOpen ? "● Abierto ahora" : "● Cerrado ahora";
     badge.classList.toggle("bg-success/15", isOpen);

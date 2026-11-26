@@ -8,7 +8,7 @@
 // la apaga. Se recuerda mientras la pestaña siga abierta (sessionStorage, solo
 // para quien abre ese enlace); ?tema=auto vuelve a seguir el calendario.
 import { TEMPORADAS } from "../data/temporadas";
-import { enPeriodo, hoyEnLeon } from "../lib/fechas";
+import { ahoraEnLeon, enPeriodo } from "../lib/fechas";
 
 type Adorno = { decorar: (zona: HTMLElement) => void };
 
@@ -38,7 +38,7 @@ function temporadaDeHoy() {
   const pedida = vistaPrevia();
   if (pedida) return TEMPORADAS.find((t) => t.id === pedida); // "ninguna" → nada
 
-  const hoy = hoyEnLeon();
+  const hoy = ahoraEnLeon();
   return TEMPORADAS.find(
     (t) => t.estado === "encendida" || (t.estado === "auto" && enPeriodo(hoy, t.desde, t.hasta)),
   );
