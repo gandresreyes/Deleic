@@ -82,12 +82,14 @@ const ogImage = new URL(urlImagen(image), Astro.site ?? Astro.url).href;
 
     <!-- Aparición al hacer scroll (clases .reveal en global.css), textura
          que sigue al cursor (.textura-cursor), foco de tarjetas en táctil
-         ([data-foco]) y escáner de luces del Método Deleic ([data-escaner]) -->
+         ([data-foco]), escáner de luces del Método Deleic ([data-escaner])
+         y decoración de temporada ([data-adorno]) -->
     <script>
       import "../scripts/reveal.ts";
       import "../scripts/textura.ts";
       import "../scripts/foco.ts";
       import "../scripts/escaner.ts";
+      import "../scripts/temporadas.ts";
     </script>
   </body>
 </html>

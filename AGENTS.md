@@ -93,6 +93,23 @@ Usa las clases canónicas de Tailwind v4 (`bg-linear-to-r`, `bg-size-[...]`,
   grandes), `.reveal-stagger` (los hijos aparecen en cascada). No las pongas en un
   elemento con `transform`, `opacity` o `filter` propios: envuélvelo.
 
+### Decoración de temporada (Navidad…)
+
+- Fechas y estado de cada temporada en `src/data/temporadas.ts`: se enciende sola
+  entre `desde` y `hasta` (hora de España; puede cruzar de año) o se fuerza con
+  `estado: "encendida" | "apagada"`. Lo decide el navegador
+  (`src/scripts/temporadas.ts`), así que no hace falta publicar el día que empieza.
+- El adorno se pinta solo en las zonas con `data-adorno`: hoy, el hero de la portada
+  (una zona oscura, `relative overflow-hidden`). No lo extiendas a todas las páginas.
+- Cada adorno es `src/scripts/temporadas/<id>.ts`, con su CSS importado con
+  `?inline`: así solo se descarga en temporada. Con un import normal, Astro mete el
+  CSS en el HTML de todas las páginas todo el año.
+- Normas: discreto y con los colores del tema; `pointer-events: none`; solo anima
+  `transform`/`opacity`; con "reducir movimiento" no se mueve (o no se ve); no
+  cambia textos ni títulos (SEO).
+- Vista previa en cualquier fecha: `?tema=navidad` (`?tema=ninguna` la apaga y
+  `?tema=auto` vuelve a seguir las fechas). Se mantiene al navegar por la pestaña.
+
 ### Imágenes
 
 - Las fotos van en `src/assets/img/<sección>/` y se pintan con `<Foto>`

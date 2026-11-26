@@ -1,0 +1,71 @@
+/* src/scripts/temporadas/navidad.css
+   Nieve de Navidad (los copos los crea navidad.ts). Solo se descarga en
+   temporada. Solo anima transform y opacity: va por GPU y no ocupa el hilo
+   principal. Va encima de todo lo de la zona, pero no recibe clics */
+
+.nieve {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  animation: nieve-aparece 2.5s ease-out both;
+}
+
+/* Cada copo es una columna del alto de la zona que baja entera: el % de
+   translate se mide sobre la propia columna, así que 100% = alto de la zona */
+.nieve > span {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: var(--tam);
+  animation: nieve-cae var(--caida) linear var(--retraso) infinite;
+}
+
+/* El copo: sale justo por encima del borde y se mece a los lados */
+.nieve > span::before {
+  content: "";
+  position: absolute;
+  bottom: 100%;
+  width: var(--tam);
+  height: var(--tam);
+  border-radius: 50%;
+  opacity: var(--opacidad);
+  background: radial-gradient(closest-side, white 45%, transparent);
+  animation: nieve-vaiven var(--ritmo) ease-in-out var(--retraso-vaiven) infinite alternate;
+}
+
+/* Fuera de pantalla (navidad.ts pone .pausada) */
+.nieve.pausada > span,
+.nieve.pausada > span::before {
+  animation-play-state: paused;
+}
+
+/* Con "reducir movimiento" no hay nieve: quieta parece polvo sobre el texto */
+@media (prefers-reduced-motion: reduce) {
+  .nieve {
+    display: none;
+  }
+}
+
+@keyframes nieve-aparece {
+  from {
+    opacity: 0;
+  }
+}
+
+/* Termina con el copo entero por debajo del borde inferior */
+@keyframes nieve-cae {
+  to {
+    transform: translateY(calc(100% + 2 * var(--tam)));
+  }
+}
+
+@keyframes nieve-vaiven {
+  from {
+    transform: translateX(calc(-1 * var(--vaiven)));
+  }
+
+  to {
+    transform: translateX(var(--vaiven));
+  }
+}
