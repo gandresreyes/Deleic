@@ -36,6 +36,15 @@ export const partirPrecio = (s: string) => {
   return m ? { precio: m[1], extra: m[2] } : { precio: s, extra: undefined };
 };
 
+// Importe escrito como en los JSON: 1199 → "1.199€", 2.5 → "2,50€".
+// useGrouping "always": en español, Intl no pone el punto en números de 4 cifras
+const euros = (n: number) =>
+  `${n.toLocaleString("es-ES", {
+    useGrouping: "always",
+    minimumFractionDigits: Number.isInteger(n) ? 0 : 2,
+    maximumFractionDigits: 2,
+  })}€`;
+
 // Precio de entrada ("desde 250€") calculado con el número inicial de cada tarifa
 export const desde = (precios?: Precio[]) => {
   if (!precios?.length) return null;
@@ -44,7 +53,7 @@ export const desde = (precios?: Precio[]) => {
     .filter((n): n is number => n !== null);
   if (!nums.length) return null;
   const varios = precios.length > 1 || /^desde/i.test(precios[0].precio);
-  return `${varios ? "desde " : ""}${Math.min(...nums)}€`;
+  return `${varios ? "desde " : ""}${euros(Math.min(...nums))}`;
 };
 
 // Solo se muestran los tratamientos con publicar !== false
