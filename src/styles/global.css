@@ -22,6 +22,14 @@
     --color-luz-uv: #9a4dff;
     --color-luz-wood: #3fd6ee;
     --color-luz-calor: #ffc23d;
+
+    /* Dorado champán de la decoración de Navidad (scripts/temporadas/).
+       No es color de marca: úsalo solo en adornos de temporada */
+    --color-oro: #e8c98f;
+
+    /* Rosa empolvado de la decoración de San Valentín (scripts/temporadas/).
+       No es color de marca: úsalo solo en adornos de temporada */
+    --color-rosa: #efb6c2;
 }
 
 [data-theme="light"] {

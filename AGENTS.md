@@ -93,7 +93,7 @@ Usa las clases canónicas de Tailwind v4 (`bg-linear-to-r`, `bg-size-[...]`,
   grandes), `.reveal-stagger` (los hijos aparecen en cascada). No las pongas en un
   elemento con `transform`, `opacity` o `filter` propios: envuélvelo.
 
-### Decoración de temporada (Navidad…)
+### Decoración de temporada (Navidad, San Valentín…)
 
 - Fechas y estado de cada temporada en `src/data/temporadas.ts`: se enciende sola
   entre `desde` y `hasta` (hora de España; puede cruzar de año) o se fuerza con
@@ -101,14 +101,28 @@ Usa las clases canónicas de Tailwind v4 (`bg-linear-to-r`, `bg-size-[...]`,
   (`src/scripts/temporadas.ts`), así que no hace falta publicar el día que empieza.
 - El adorno se pinta solo en las zonas con `data-adorno`: hoy, el hero de la portada
   (una zona oscura, `relative overflow-hidden`). No lo extiendas a todas las páginas.
-- Cada adorno es `src/scripts/temporadas/<id>.ts`, con su CSS importado con
-  `?inline`: así solo se descarga en temporada. Con un import normal, Astro mete el
-  CSS en el HTML de todas las páginas todo el año.
-- Normas: discreto y con los colores del tema; `pointer-events: none`; solo anima
-  `transform`/`opacity`; con "reducir movimiento" no se mueve (o no se ve); no
-  cambia textos ni títulos (SEO).
-- Vista previa en cualquier fecha: `?tema=navidad` (`?tema=ninguna` la apaga y
-  `?tema=auto` vuelve a seguir las fechas). Se mantiene al navegar por la pestaña.
+  Dentro de la zona, el chip con `data-adorno-saludo` cambia su texto por el saludo
+  de la temporada (un icono y una frase corta que quepa en una línea a 375px).
+- Temporadas actuales:
+  - Navidad (1 dic – 6 ene): nieve con unos pocos cristales, guirnalda de luces en
+    el borde superior y «Felices fiestas · Deleic» con una estrella. Color `--color-oro`.
+  - San Valentín (7 – 14 feb): pocos corazones que suben y se desvanecen y «Feliz
+    San Valentín · Deleic» con un corazón que late. Color `--color-rosa`.
+  Los dos colores están en `global.css` y son solo para adornos de temporada, nunca
+  como color de marca.
+- Cada adorno es `src/scripts/temporadas/<id>.ts` + `<id>.css`, y se registra en
+  `ADORNOS` de `src/scripts/temporadas.ts`. El CSS se importa con `?inline` y se mete
+  con `ponerEstilos` (`comun.ts`): así solo se descarga en temporada. Con un import
+  normal, Astro mete el CSS en el HTML de todas las páginas todo el año.
+  `comun.ts` también da el saludo, las capas y la pausa fuera de pantalla
+  (`.adorno-pausado` en la zona).
+- Normas: discreto y con los colores del tema; capas con `z-index: 1` (si no, la foto
+  del hero, con `order`, las tapa) y `pointer-events: none`; solo anima
+  `transform`/`opacity`/`scale`/`rotate`; con "reducir movimiento" no se mueve (o no
+  se ve); no cambia el h1 ni el title (SEO).
+- Vista previa en cualquier fecha: `?tema=<id>` (`?tema=navidad`, `?tema=sanvalentin`;
+  `?tema=ninguna` la apaga y `?tema=auto` vuelve a seguir las fechas). Se mantiene
+  al navegar por la pestaña.
 
 ### Imágenes
 

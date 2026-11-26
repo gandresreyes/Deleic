@@ -15,4 +15,5 @@ export interface Temporada {
 
 export const TEMPORADAS: Temporada[] = [
   { id: "navidad", desde: "1 dic", hasta: "6 ene", estado: "auto" },
+  { id: "sanvalentin", desde: "7 feb", hasta: "14 feb", estado: "auto" },
 ];

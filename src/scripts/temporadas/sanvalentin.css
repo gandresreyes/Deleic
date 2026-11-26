@@ -1,0 +1,140 @@
+/* src/scripts/temporadas/sanvalentin.css
+   Adornos de San Valentín (los crea sanvalentin.ts). Solo se descargan en
+   temporada. Solo animan transform, scale y opacity: van por GPU y no ocupan
+   el hilo principal. Van encima de todo lo de la zona, pero no reciben clics.
+   El rosa es --color-rosa (global.css), solo para adornos de temporada */
+
+/* z-index 1: por encima de todo lo de la zona. Sin él, un hijo con `order`
+   (la foto del hero lleva lg:order-2) se pinta después y tapa el adorno */
+.corazones {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  overflow: hidden;
+  pointer-events: none;
+  animation: sanvalentin-aparece 2.5s ease-out both;
+}
+
+/* ---------- Corazones ----------
+   Cada corazón es una columna del alto de la zona que sube entera: el % de
+   translate se mide sobre la propia columna, así que 100% = alto de la zona.
+   La columna también lleva el fundido: aparece abajo y se desvanece antes de
+   llegar arriba, como una burbuja */
+.corazones > span {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: var(--tam);
+  animation: corazon-sube var(--subida) linear var(--retraso) infinite;
+}
+
+/* El corazón: sale justo por debajo del borde y se mece a los lados. Su
+   forma es una máscara, así el color sale del tema */
+.corazones > span::before {
+  content: "";
+  position: absolute;
+  top: 100%;
+  width: var(--tam);
+  height: var(--tam);
+  opacity: var(--opacidad);
+  rotate: var(--inclinacion);
+  background: var(--color-rosa);
+  -webkit-mask: var(--forma) center / contain no-repeat;
+  mask: var(--forma) center / contain no-repeat;
+  animation: corazon-vaiven var(--ritmo) ease-in-out var(--retraso-vaiven) infinite alternate;
+  --forma: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z'/%3E%3C/svg%3E");
+}
+
+.corazones > .blanco::before {
+  background: white;
+}
+
+/* Solo el contorno: el mismo corazón en trazo */
+.corazones > .contorno::before {
+  --forma: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-1 -1 26 26' fill='none' stroke='black' stroke-width='1.8' stroke-linejoin='round'%3E%3Cpath d='M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z'/%3E%3C/svg%3E");
+}
+
+/* ---------- Saludo ----------
+   Corazón rosa que sustituye al punto del chip [data-adorno-saludo] y late
+   suave: dos golpes y una pausa */
+.sanvalentin-corazon {
+  width: 12px;
+  height: 12px;
+  flex: none;
+  color: var(--color-rosa);
+  filter: drop-shadow(0 0 4px color-mix(in oklab, var(--color-rosa) 60%, transparent));
+  animation: corazon-late 2.4s ease-in-out infinite;
+}
+
+/* ---------- Pausas ---------- */
+
+/* Fuera de pantalla (comun.ts pone .adorno-pausado en la zona) */
+.adorno-pausado .corazones > span,
+.adorno-pausado .corazones > span::before,
+.adorno-pausado .sanvalentin-corazon {
+  animation-play-state: paused;
+}
+
+/* Con "reducir movimiento": sin corazones (quietos parecen pegatinas sobre
+   el texto), y el del saludo, sin latir */
+@media (prefers-reduced-motion: reduce) {
+  .corazones {
+    display: none;
+  }
+
+  .sanvalentin-corazon {
+    animation: none;
+  }
+}
+
+@keyframes sanvalentin-aparece {
+  from {
+    opacity: 0;
+  }
+}
+
+/* Cada propiedad se interpola entre los pasos que la nombran: la subida va
+   lineal de principio a fin y el fundido, por tramos */
+@keyframes corazon-sube {
+  0% {
+    transform: translateY(0);
+    opacity: 0;
+  }
+
+  15%,
+  60% {
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateY(calc(-100% - 2 * var(--tam)));
+    opacity: 0;
+  }
+}
+
+@keyframes corazon-vaiven {
+  from {
+    transform: translateX(calc(-1 * var(--vaiven)));
+  }
+
+  to {
+    transform: translateX(var(--vaiven));
+  }
+}
+
+@keyframes corazon-late {
+  0%,
+  20%,
+  40%,
+  100% {
+    scale: 1;
+  }
+
+  10% {
+    scale: 1.2;
+  }
+
+  30% {
+    scale: 1.1;
+  }
+}

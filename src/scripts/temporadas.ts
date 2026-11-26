@@ -16,6 +16,7 @@ type Adorno = { decorar: (zona: HTMLElement) => void };
 // el resto del año no pesa nada
 const ADORNOS: Record<string, () => Promise<Adorno>> = {
   navidad: () => import("./temporadas/navidad"),
+  sanvalentin: () => import("./temporadas/sanvalentin"),
 };
 
 const PARAMETRO = "tema";

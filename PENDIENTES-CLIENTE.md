@@ -68,3 +68,10 @@ Las recomendaciones las hemos preparado nosotros a partir de los textos de la we
 - **No lo tengo claro:** Diagnóstico facial-corporal gratuito
 
 También nos sirve saber si **falta algún problema** por el que te pregunten a menudo.
+
+## 5. Navidad
+
+Del 1 de diciembre al 6 de enero, la portada lleva un pequeño adorno navideño: unas lucecitas, un poco de nieve y un "Felices fiestas". Se pone y se quita solo. Para completar la Navidad nos faltan dos cosas:
+
+- **Horario de fiestas (lo más urgente: el primer festivo es el 8 de diciembre).** Junto a la dirección, la web indica si el centro está abierto o cerrado en ese momento, pero no sabe qué días son festivos. Este año el 8 y el 25 de diciembre y el 1 y el 6 de enero caen entre semana, y esos días pondría "Abierto ahora" aunque esté cerrado. ¿Qué días cerráis y cuáles tenéis horario reducido (por ejemplo, el 24 y el 31)? Te recomendamos ponerlo también en tu ficha de Google, que es lo que enseña Google Maps.
+- **Bonos o tarjetas regalo:** ¿los vendéis? Si es así, en Navidad podemos poner una franja arriba en todas las páginas, "Regala Deleic", con un botón para pedirlos por WhatsApp. Para eso necesitamos saber qué se puede regalar (un tratamiento concreto o un importe) y cómo se entrega (en papel, por correo…).
