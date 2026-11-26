@@ -74,7 +74,8 @@ para salir en el mapa de "estética León".
 **6. Medicina estética es la página con más potencial y la más débil.**
 
 - Son unos 25 tratamientos en una sola URL, con un H1 sin palabra clave
-  ("Belleza, armonía…"). Cada uno de los principales merece su propia ficha, como
+  ("Belleza, armonía…"). ✅ H1 hecho el 26/11/2026: "Medicina estética en León",
+  con "Resultados naturales" de antetítulo. Cada uno de los principales merece su propia ficha, como
   ya hay en facial: ácido hialurónico (labios, ojeras, surcos), hilos tensores, PRP,
   mesoterapia, varices, papada y foxy eyes.
 - **Toxina botulínica no debería tener ficha propia**, por lo de la Ley del
