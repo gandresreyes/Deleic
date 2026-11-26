@@ -55,7 +55,9 @@ const icons = {
 };
 ---
 
+<!-- Se esconde al bajar y vuelve al subir (global.css, "Cabecera que se esconde") -->
 <header
+  data-cabecera
   class="sticky top-0 z-50 border-b border-black/5 bg-base-100/80 backdrop-blur-md text-secondary-content"
 >
   <div
@@ -358,6 +360,61 @@ const icons = {
     Reservar cita
   </a>
 </div>
+
+<script>
+  // Cabecera que se esconde (global.css): al bajar sube y deja la pantalla
+  // libre; al subir, vuelve. Siempre a la vista arriba del todo y con el menú
+  // móvil abierto; el foco del teclado (Tab) dentro de ella la trae de vuelta
+  const raiz = document.documentElement;
+  // Píxeles seguidos en un sentido antes de reaccionar, para que un temblor
+  // del dedo no la haga aparecer y desaparecer
+  const MARGEN = 10;
+
+  let oculta = false;
+  let ultima = 0;
+  let frame = 0;
+
+  const poner = (si: boolean) => {
+    oculta = si;
+    raiz.toggleAttribute("data-cabecera-oculta", si);
+  };
+
+  // Sin el rebote de iOS al pasarse de arriba o de abajo: al volver, parecería
+  // un cambio de sentido
+  const posicion = () => Math.min(Math.max(scrollY, 0), raiz.scrollHeight - innerHeight);
+
+  const revisar = () => {
+    frame = 0;
+    const cabecera = document.querySelector<HTMLElement>("[data-cabecera]");
+    if (!cabecera) return;
+    const y = posicion();
+    if (y <= cabecera.offsetHeight || cabecera.querySelector("details[open]")) {
+      if (oculta) poner(false);
+      ultima = y;
+      return;
+    }
+    if (Math.abs(y - ultima) < MARGEN) return;
+    const bajando = y > ultima;
+    if (bajando !== oculta) poner(bajando);
+    ultima = y;
+  };
+
+  // Sin animaciones ligadas al scroll (p. ej. Firefox) no sale el botón
+  // flotante y "Reservar cita" solo está en la cabecera: ahí no se esconde
+  if (CSS.supports("animation-timeline: scroll()")) {
+    addEventListener("scroll", () => (frame ||= requestAnimationFrame(revisar)), { passive: true });
+  }
+
+  document.addEventListener("focusin", (evento) => {
+    if (oculta && (evento.target as Element).closest?.("[data-cabecera]")) poner(false);
+  });
+
+  // Página nueva (ClientRouter): empieza con la cabecera a la vista
+  document.addEventListener("astro:page-load", () => {
+    poner(false);
+    ultima = posicion();
+  });
+</script>
 
 {
   /*

@@ -145,6 +145,9 @@ function iniciarEscaner() {
   );
   observer.observe(seccion);
   dosColumnas.addEventListener("change", pedir, { signal });
+  // El visor acompaña a la cabecera cuando se esconde o vuelve, y con él se
+  // mueve la zona de lectura: al acabar de moverse se repinta
+  fijo.addEventListener("transitionend", (evento) => evento.target === fijo && pedir(), { signal });
 
   // Dos columnas: el visor se suelta cuando la lista acaba, así que debajo de
   // la última tarjeta hace falta aire para que esta llegue a barrer su luz

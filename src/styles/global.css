@@ -68,6 +68,55 @@
   }
 }
 
+/* ---------- Cabecera que se esconde ----------
+   Al bajar, la cabecera sube y deja libre la pantalla; al subir, vuelve.
+   El script de Navbar.astro pone data-cabecera-oculta en <html>.
+   - --cabecera         alto de la cabecera a la vista: 4rem (5rem desde lg),
+                        0 cuando está oculta.
+   - .bajo-cabecera-N   para lo que va sticky bajo la cabecera, en vez de top-N:
+                        top = cabecera + N (escala de espaciado, como top-N) y
+                        la acompaña al subir y bajar. Con un top-N fijo
+                        quedaría un hueco al esconderse.
+   Con "reducir movimiento", todo cambia de golpe, sin deslizarse */
+:root {
+  --cabecera: 4rem;
+}
+
+@media (width >= 64rem) {
+  :root {
+    --cabecera: 5rem;
+  }
+}
+
+:root[data-cabecera-oculta] {
+  --cabecera: 0rem;
+}
+
+@layer components {
+  [data-cabecera] {
+    transition: translate 0.3s ease-out;
+  }
+
+  [data-cabecera-oculta] [data-cabecera] {
+    translate: 0 -100%;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    [data-cabecera] {
+      transition: none;
+    }
+  }
+}
+
+@utility bajo-cabecera-* {
+  top: calc(var(--cabecera) + var(--spacing) * --value(integer));
+  transition: top 0.3s ease-out;
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}
+
 /* ---------- Aparición al hacer scroll (estilo Apple) ----------
    .reveal          sube, se enfoca y aparece (textos y bloques)
    .reveal-scale    aparece creciendo un poco (imágenes y bloques grandes)
